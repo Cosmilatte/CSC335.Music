@@ -1,5 +1,8 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 // MusicStore.java
@@ -11,7 +14,6 @@ public class MusicStore
 {
 	// INSTANCE VARIABLES
 	private ArrayList<Artist> artists;
-	
 	
 	// CONSTRUCTOR
 	public MusicStore()
@@ -41,4 +43,7 @@ public class MusicStore
 	
 	
 	// MISC. METHODS
+	private void readAlbums() throws IOException{
+		BufferedReader reader = new BufferedReader(new FileReader("albums.txt"));
+	}
 }
