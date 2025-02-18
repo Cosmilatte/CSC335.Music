@@ -13,13 +13,15 @@ import java.util.ArrayList;
 public class MusicStore
 {
 	// INSTANCE VARIABLES
-	private ArrayList<Artist> artists;
+	// private ArrayList<Artist> artists;
+	private ArrayList<Album> albums;
 	
 	// CONSTRUCTOR
 	public MusicStore()
 	{
 		// When we read in the files, Artists will contain Albums will contain Songs?
 		this.artists = new ArrayList<Artist>();
+		this.albums = new ArrayList<>();
 		
 		setStore();
 	}
@@ -44,6 +46,20 @@ public class MusicStore
 	
 	// MISC. METHODS
 	private void readAlbums() throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader("albums.txt"));
+		BufferedReader titlesReader = new BufferedReader(new FileReader("albums.txt"));
+		String title_artist = titlesReader.readLine();
+		while (title_artist != null) {
+			BufferedReader albumReader = new BufferedReader(new FileReader(title_artist.split(",")[0] + "_" + title_artist.split(",")[1] + ".txt"));
+			String[] information = albumReader.readLine().split(",");
+			Album curAlbum = new Album(information[0], information[1], information[2], Integer.parseInt(information[3].trim()));
+			String songTitle = albumReader.readLine();
+			while (songTitle != null) {
+				curAlbum.addSong(songTitle, curAlbum.getArtist());
+				songTitle = albumReader.readLine();
+			}
+
+			albums.add(curAlbum);
+			title_artist = titlesReader.readLine();
+		}
 	}
 }
