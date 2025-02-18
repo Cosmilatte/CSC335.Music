@@ -47,20 +47,20 @@ public class MusicStore
 	// MISC. METHODS
 	private void readAlbums() throws IOException{
 		BufferedReader titlesReader = new BufferedReader(new FileReader("albums.txt"));
-		String title_artist = titlesReader.readLine();
-		while (title_artist != null) {
-			BufferedReader albumReader = new BufferedReader(new FileReader(title_artist.split(",")[0] + "_" + title_artist.split(",")[1] + ".txt"));
-			String[] information = albumReader.readLine().split(",");
-			Album curAlbum = new Album(information[0], information[1], information[2], Integer.parseInt(information[3].trim()));
-			String songTitle = albumReader.readLine();
-			while (songTitle != null) {
-				curAlbum.addSong(songTitle, curAlbum.getArtist());
-				songTitle = albumReader.readLine();
-				
-			}
+		// String title_artist = titlesReader.readLine();
+		// while (title_artist != null) {
+		// 	BufferedReader albumReader = new BufferedReader(new FileReader(title_artist.split(",")[0] + "_" + title_artist.split(",")[1] + ".txt"));
+		// 	String[] information = albumReader.readLine().split(",");
+		// 	Album curAlbum = new Album(information[0], information[1], information[2], Integer.parseInt(information[3].trim()));
+		// 	String songTitle = albumReader.readLine();
+		// 	while (songTitle != null) {
+		// 		curAlbum.addSong(songTitle, curAlbum.getArtist());
+		// 		songTitle = albumReader.readLine();
 
-			albums.add(curAlbum);
-			title_artist = titlesReader.readLine();
-		}
+		// 	}
+
+		// 	albums.add(curAlbum);
+		// 	title_artist = titlesReader.readLine();
+		// }
 	}
 }
