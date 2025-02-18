@@ -56,6 +56,7 @@ public class MusicStore
 			while (songTitle != null) {
 				curAlbum.addSong(songTitle, curAlbum.getArtist());
 				songTitle = albumReader.readLine();
+				
 			}
 
 			albums.add(curAlbum);
