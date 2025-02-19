@@ -20,9 +20,9 @@ public class MusicStore
 	public MusicStore()
 	{
 		// When we read in the files, Artists will contain Albums will contain Songs?
-		this.artists = new ArrayList<Artist>();
+		// this.artists = new ArrayList<Artist>();
 		this.albums = new ArrayList<>();
-		
+		readAlbums();
 		setStore();
 	}
 	
@@ -46,21 +46,32 @@ public class MusicStore
 	
 	// MISC. METHODS
 	private void readAlbums() throws IOException{
-		BufferedReader titlesReader = new BufferedReader(new FileReader("albums.txt"));
+		try {
+			BufferedReader titlesReader = new BufferedReader(new FileReader("albums/albums.txt"));
+		}
+
+		catch (IOException e) {
+			System.out.println("Error: This is not a valid input file");
+			System.exit(1);
+		}
+		
 		String title_artist = titlesReader.readLine();
 		while (title_artist != null) {
-			BufferedReader albumReader = new BufferedReader(new FileReader(title_artist.split(",")[0] + "_" + title_artist.split(",")[1] + ".txt"));
+			BufferedReader albumReader = new BufferedReader(new FileReader("albums/" + title_artist.split(",")[0] + "_" + title_artist.split(",")[1] + ".txt"));
 			String[] information = albumReader.readLine().split(",");
 			Album curAlbum = new Album(information[0], information[1], information[2], Integer.parseInt(information[3].trim()));
 			String songTitle = albumReader.readLine();
 			while (songTitle != null) {
-				curAlbum.addSong(songTitle, curAlbum.getArtist());
+				curAlbum.addSong(new Song(songTitle, curAlbum.getArtist()));
 				songTitle = albumReader.readLine();
 				
 			}
 
+			albumReader.close();
 			albums.add(curAlbum);
 			title_artist = titlesReader.readLine();
 		}
+
+		titlesReader.close();
 	}
 }
