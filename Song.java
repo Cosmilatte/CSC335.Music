@@ -56,4 +56,9 @@ public class Song
 	
 	
 	// MISC. METHODS
+	public Song songCpy() {
+		Song song = new Song(this.title, this.artist);
+		song.setRating(this.getRating());
+		return song;
+	}
 }

@@ -73,7 +73,16 @@ public class Album
 			songs.add(s);
 		}
 	}
-	
+
+	public Song songByTitle(String title) {
+		for (Song song : this.songs) {
+			if (song.getTitle().equals(title)) {
+				return song.songCpy();
+			}
+		}
+
+		return null;
+	}
 	
 	@Override
 	public String toString()

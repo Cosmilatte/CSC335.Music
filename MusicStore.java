@@ -36,6 +36,10 @@ public class MusicStore
 	
 	
 	// GETTERS+SETTERS
+	public ArrayList<Album> getAlbums() {
+		return this.albums;
+	}
+
 	public void setStore()
 	{
 		// THIS IS THE CONSTRUCTOR. 
@@ -53,6 +57,17 @@ public class MusicStore
 	
 	
 	// MISC. METHODS
+	public ArrayList<Song> songsByTitle(String title) {
+		ArrayList<Song> foundSongs = new ArrayList<>();
+		for (Album album : this.albums) {
+			if (album.songByTitle(title) != null) {
+				foundSongs.add(album.songByTitle(title).songCpy());
+			}
+		}
+
+		return new ArrayList<>(foundSongs);
+	}
+	
 	private void readAlbums() throws IOException{
 		try {
 			BufferedReader titlesReader = new BufferedReader(new FileReader("albums/albums.txt"));
@@ -87,12 +102,6 @@ public class MusicStore
 		catch (IOException e) {
 			System.out.println("Error: This is not a valid input file");
 			System.exit(1);
-		}
-
-		
-	}
-
-	public ArrayList<Album> getAlbums() {
-		return this.albums;
+		}	
 	}
 }
