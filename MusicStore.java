@@ -65,6 +65,15 @@ public class MusicStore
 			}
 		}
 
+		int songIndex = 1;
+		System.out.println("Song Title: " + title);
+		for (Song song : foundSongs) {
+			System.out.println(songIndex + ":");
+			System.out.println("Artist: " + song.getArtist());
+			System.out.println("Album: " + song.getAlbum());
+		}
+
+
 		return new ArrayList<>(foundSongs);
 	}
 

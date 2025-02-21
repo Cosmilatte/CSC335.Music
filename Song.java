@@ -11,15 +11,15 @@ public class Song
 	private String title;
 	private String artist;
 	private int rating;
-	
+	private Album album;
 	
 	// CONSTRUCTOR
-	public Song(String title, String artist)
+	public Song(String title, String artist, Album album)
 	{
 		this.title = title;
 		this.artist = artist;
-		
 		this.rating = 0;
+		this.album = album.albumCpy();
 	}
 	
 	
@@ -41,6 +41,9 @@ public class Song
 		return rating;
 	}
 	
+	public Album getAlbum() {
+		return this.album.albumCpy();
+	}
 	
 	public void setRating(int r)
 	{
@@ -57,7 +60,7 @@ public class Song
 	
 	// MISC. METHODS
 	public Song songCpy() {
-		Song song = new Song(this.title, this.artist);
+		Song song = new Song(this.title, this.artist, this.album.albumCpy());
 		song.setRating(this.getRating());
 		return song;
 	}
