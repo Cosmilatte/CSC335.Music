@@ -104,11 +104,11 @@ public class MusicStore
 				System.out.println("Artist: " + album.getArtist());
 				System.out.println("Genre: " + album.getGenre());
 				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ")
+				System.out.println("Songs: ");
 				for (Song song : album.getSongs()) {
-					System.out.println(song.getTitle());
+					System.out.println("\t•" + song.getTitle());
 				}
-				
+
 				return album.albumCpy();
 			}
 		}
@@ -118,9 +118,20 @@ public class MusicStore
 
 	public ArrayList<Album> albumByArtist(String artist) {
 		ArrayList<Album> foundAlbums = new ArrayList<>();
+		int albumIndex = 1;
+		System.out.println("Artist: " + artist);
 		for (Album album : this.albums) {
 			if (album.getArtist().equals(artist)) {
 				foundAlbums.add(album.albumCpy());
+				System.out.println("Album " + albumIndex + ": " + album.getTitle());
+				System.out.println("Genre: " + album.getGenre());
+				System.out.println("Year: " + album.getYear());
+				System.out.println("Songs: ");
+				for (Song song : album.getSongs()) {
+					System.out.println("\t•" + song.getTitle());
+				}
+
+				albumIndex++;
 			}
 		}
 
