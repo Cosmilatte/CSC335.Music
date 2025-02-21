@@ -40,4 +40,10 @@ public class PlayList
 	public void removeSong(Song song) {
 		songs.remove(song);
 	}
+
+	public PlayList songs() {
+		PlayList playlist = new PlayList(name);
+		playlist.songs = getSongs();
+		return playlist;
+	}
 }

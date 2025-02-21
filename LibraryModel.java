@@ -26,6 +26,21 @@ public class LibraryModel
 	}
 	
 	// GETTERS+SETTERS
+	public ArrayList<Album> getAlbums() {
+		ArrayList<Album> albums = new ArrayList<>();
+		for (Album album : this.albums)
+			albums.add(album.albumCpy());
+
+		return albums;
+	}
+
+	public ArrayList<Album> getPlaylists() {
+		ArrayList<Album> playLists = new ArrayList<>();
+		for (Album playlist : playlists)
+			albums.add(album.albumCpy());
+
+		return albums;
+	}
 	
 	// MISC. METHODS
 	public void addSong(Song song) {
@@ -165,6 +180,7 @@ public class LibraryModel
 		return true;
 	}
 
+	// Helper Methods
 	private boolean isInStore(Song song) {
 		for (Album album : store.getAlbums()) {
 			for (Song s : album.getSongs()) {
