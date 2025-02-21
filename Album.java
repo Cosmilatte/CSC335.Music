@@ -60,11 +60,11 @@ public class Album
 	}
 
 	public ArrayList<Song> getSongs() {
-		ArrayList<Song> returnSongs = new ArrayList<>();
-		for (Song song : songs)
-			returnSongs.add(song.songCpy());
+		ArrayList<Song> songs = new ArrayList<>();
+		for (Song song : this.songs)
+			songs.add(song.songCpy());
 
-		return returnSongs;
+		return songs;
 	}
 	
 	
@@ -84,11 +84,11 @@ public class Album
 	}
 
 	public Album albumCpy() {
-		Album returningAlbum = new Album(title, artist, genre, year);
+		Album album = new Album(title, artist, genre, year);
 		for (Song song : songs)
-			returningAlbum.addSong(song.songCpy());
+			album.addSong(song.songCpy());
 
-		return returningAlbum;
+		return album;
 	}
 	
 	@Override

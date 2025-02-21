@@ -58,43 +58,43 @@ public class MusicStore
 	
 	// MISC. METHODS
 	public ArrayList<Song> songsByTitle(String title) {
-		ArrayList<Song> foundSongs = new ArrayList<>();
+		ArrayList<Song> songs = new ArrayList<>();
 		for (Album album : albums) {
 			for (Song song : album.getSongs()) {
 				if (song.getTitle().equals(title))
-					foundSongs.add(song.songCpy());
+				songs.add(song.songCpy());
 			}
 		}
 
 		int songIndex = 1;
 		System.out.print("Title: " + title);
-		for (Song song : foundSongs) {
+		for (Song song : songs) {
 			System.out.println("\n" + songIndex + ":");
 			System.out.println("Artist: " + song.getArtist());
 			System.out.println("Album: " + song.getAlbum().getTitle());
 			songIndex++;
 		}
 
-		return new ArrayList<>(foundSongs);
+		return songs;
 	}
 
 	public ArrayList<Song> songsByArtist(String artist) {
-		ArrayList<Song> foundSongs = new ArrayList<>();
+		ArrayList<Song> songs = new ArrayList<>();
 		for (Album album : albums) {
 			if (album.getArtist().equals(artist))
-				foundSongs.addAll(album.getSongs());
+				songs.addAll(album.getSongs());
 		}
 
 		int artistIndex = 1;
 		System.out.print("Artist: " + artist);
-		for (Song song : foundSongs) {
+		for (Song song : songs) {
 			System.out.println("\nSong " + artistIndex + ":");
 			System.out.println("Title: " + song.getTitle());
 			System.out.println("Album: " + song.getAlbum().getTitle());
 			artistIndex++;
 		}
 
-		return foundSongs;
+		return songs;
 	}
 
 	public Album albumByTitle(String title) {
@@ -116,12 +116,12 @@ public class MusicStore
 	}
 
 	public ArrayList<Album> albumByArtist(String artist) {
-		ArrayList<Album> foundAlbums = new ArrayList<>();
+		ArrayList<Album> albums = new ArrayList<>();
 		int albumIndex = 1;
 		System.out.println("Artist: " + artist);
-		for (Album album : albums) {
+		for (Album album : this.albums) {
 			if (album.getArtist().equals(artist)) {
-				foundAlbums.add(album.albumCpy());
+				albums.add(album.albumCpy());
 				System.out.println("Album " + albumIndex + ": " + album.getTitle());
 				System.out.println("Genre: " + album.getGenre());
 				System.out.println("Year: " + album.getYear());
@@ -133,7 +133,7 @@ public class MusicStore
 			}
 		}
 
-		return foundAlbums;
+		return albums;
 	}
 
 	private void readAlbums() throws IOException{
