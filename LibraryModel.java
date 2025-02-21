@@ -141,13 +141,13 @@ public class LibraryModel
 		return titles;
 	}
 
-	// public ArrayList<String> getArtists() {
-	// 	ArrayList<String> artists = new ArrayList<>();
-	// 	for (Song song : songs)
-	// 		artists.add(song.getArtist());
+	public ArrayList<String> getArtists() {
+		ArrayList<String> artists = new ArrayList<>();
+		for (Song song : songs)
+			artists.add(song.getArtist());
 
-	// 	return artists;
-	// }
+		return artists;
+	}
 
 	// not sure if we are required to create playlists or add them to the library
 	// public void createPlaylist(String name) {
