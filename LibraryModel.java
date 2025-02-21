@@ -95,6 +95,27 @@ public class LibraryModel
 		return null;
 	}
 
+	public ArrayList<Album> albumByArtist(String artist) {
+		ArrayList<Album> foundAlbums = new ArrayList<>();
+		int albumIndex = 1;
+		System.out.println("Artist: " + artist);
+		for (Album album : albums) {
+			if (album.getArtist().equals(artist)) {
+				foundAlbums.add(album.albumCpy());
+				System.out.println("Album " + albumIndex + ": " + album.getTitle());
+				System.out.println("Genre: " + album.getGenre());
+				System.out.println("Year: " + album.getYear());
+				System.out.println("Songs: ");
+				for (Song song : album.getSongs())
+					System.out.println("\t•" + song.getTitle());
+
+				albumIndex++;
+			}
+		}
+
+		return foundAlbums;
+	}
+
 	// not sure if we are required to create playlists or add them to the library
 	// public void createPlaylist(String name) {
 	// 	playlists.add(new PlayList(name));
