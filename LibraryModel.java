@@ -34,12 +34,12 @@ public class LibraryModel
 		return albums;
 	}
 
-	public ArrayList<Album> getPlaylists() {
-		ArrayList<Album> playLists = new ArrayList<>();
-		for (Album playlist : playlists)
-			albums.add(album.albumCpy());
+	public ArrayList<PlayList> getPlaylists() {
+		ArrayList<PlayList> playLists = new ArrayList<>();
+		for (PlayList playlist : playlists)
+			playLists.add(playlist.playlistCpy());
 
-		return albums;
+		return playLists;
 	}
 	
 	// MISC. METHODS

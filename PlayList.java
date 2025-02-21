@@ -41,7 +41,7 @@ public class PlayList
 		songs.remove(song);
 	}
 
-	public PlayList songs() {
+	public PlayList playlistCpy() {
 		PlayList playlist = new PlayList(name);
 		playlist.songs = getSongs();
 		return playlist;
