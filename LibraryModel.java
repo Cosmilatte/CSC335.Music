@@ -27,10 +27,10 @@ public class LibraryModel
 	// GETTERS+SETTERS
 	
 	// MISC. METHODS
-	// public void addSong(Song song) {
-	// 	if (isInLibrary(song)) 
-	// 		songs.add(song.songCpy());
-	// }
+	public void addSong(Song song) {
+		if (isInLibrary(song)) 
+			songs.add(song.songCpy());
+	}
 
 	private boolean isInLibrary(Song song) {
 		for (Song s : songs) {
