@@ -79,9 +79,15 @@ public class MusicStore
 		return foundSongs;
 	}
 
-	// public Album albumByTitle(String title) {
+	public Album albumByTitle(String title) {
+		for (Album album : this.albums) {
+			if (album.getTitle().equals(title)) {
+				return album.albumCpy();
+			}
+		}
 
-	// }
+		return null;
+	}
 
 	private void readAlbums() throws IOException{
 		try {
