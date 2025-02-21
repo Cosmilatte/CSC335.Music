@@ -66,7 +66,7 @@ public class MusicStore
 		}
 
 		int songIndex = 1;
-		System.out.print("Song Title: " + title);
+		System.out.print("Title: " + title);
 		for (Song song : foundSongs) {
 			System.out.println("\n" + songIndex + ":");
 			System.out.println("Artist: " + song.getArtist());
@@ -83,6 +83,15 @@ public class MusicStore
 			if (album.getArtist().equals(artist)) {
 				foundSongs.addAll(album.getSongs());
 			}
+		}
+
+		int artistIndex = 1;
+		System.out.print("Artist: " + artist);
+		for (Song song : foundSongs) {
+			System.out.println("\nSong " + artistIndex + ":");
+			System.out.println("Title: " + song.getTitle());
+			System.out.println("Album: " + song.getAlbum());
+			artistIndex++;
 		}
 
 		return foundSongs;
