@@ -66,13 +66,13 @@ public class MusicStore
 		}
 
 		int songIndex = 1;
-		System.out.println("Song Title: " + title);
+		System.out.print("Song Title: " + title);
 		for (Song song : foundSongs) {
-			System.out.println(songIndex + ":");
+			System.out.println("\n" + songIndex + ":");
 			System.out.println("Artist: " + song.getArtist());
 			System.out.println("Album: " + song.getAlbum());
+			songIndex++;
 		}
-
 
 		return new ArrayList<>(foundSongs);
 	}
@@ -120,7 +120,7 @@ public class MusicStore
 					Album curAlbum = new Album(information[0], information[1], information[2], Integer.parseInt(information[3].trim()));
 					String songTitle = albumReader.readLine();
 					while (songTitle != null) {
-						curAlbum.addSong(new Song(songTitle, curAlbum.getArtist()));
+						curAlbum.addSong(new Song(songTitle, curAlbum.getArtist(), curAlbum));
 						songTitle = albumReader.readLine();
 						
 					}
