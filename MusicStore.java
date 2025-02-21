@@ -100,6 +100,15 @@ public class MusicStore
 	public Album albumByTitle(String title) {
 		for (Album album : this.albums) {
 			if (album.getTitle().equals(title)) {
+				System.out.println("Album: " + title);
+				System.out.println("Artist: " + album.getArtist());
+				System.out.println("Genre: " + album.getGenre());
+				System.out.println("Year: " + album.getYear());
+				System.out.println("Songs: ")
+				for (Song song : album.getSongs()) {
+					System.out.println(song.getTitle());
+				}
+				
 				return album.albumCpy();
 			}
 		}
