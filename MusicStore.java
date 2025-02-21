@@ -60,9 +60,8 @@ public class MusicStore
 	public ArrayList<Song> songsByTitle(String title) {
 		ArrayList<Song> foundSongs = new ArrayList<>();
 		for (Album album : this.albums) {
-			if (album.songByTitle(title) != null) {
+			if (album.songByTitle(title) != null)
 				foundSongs.add(album.songByTitle(title).songCpy());
-			}
 		}
 
 		int songIndex = 1;
@@ -80,9 +79,8 @@ public class MusicStore
 	public ArrayList<Song> songsByArtist(String artist) {
 		ArrayList<Song> foundSongs = new ArrayList<>();
 		for (Album album : this.albums) {
-			if (album.getArtist().equals(artist)) {
+			if (album.getArtist().equals(artist))
 				foundSongs.addAll(album.getSongs());
-			}
 		}
 
 		int artistIndex = 1;
@@ -105,9 +103,8 @@ public class MusicStore
 				System.out.println("Genre: " + album.getGenre());
 				System.out.println("Year: " + album.getYear());
 				System.out.println("Songs: ");
-				for (Song song : album.getSongs()) {
+				for (Song song : album.getSongs())
 					System.out.println("\t•" + song.getTitle());
-				}
 
 				return album.albumCpy();
 			}
@@ -127,9 +124,8 @@ public class MusicStore
 				System.out.println("Genre: " + album.getGenre());
 				System.out.println("Year: " + album.getYear());
 				System.out.println("Songs: ");
-				for (Song song : album.getSongs()) {
+				for (Song song : album.getSongs())
 					System.out.println("\t•" + song.getTitle());
-				}
 
 				albumIndex++;
 			}
