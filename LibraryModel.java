@@ -28,16 +28,38 @@ public class LibraryModel
 	
 	// MISC. METHODS
 	public void addSong(Song song) {
-		if (isInLibrary(song)) 
+		if (isInLibrary(song) ) 
 			songs.add(song.songCpy());
 	}
 
+
+
 	private boolean isInLibrary(Song song) {
 		for (Song s : songs) {
-			if (song.getTitle().equals(s.getTitle()) && song.getTitle().equals(s.getTitle()))
+			if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
 				return false;
 		}
 
 		return true;
+	}
+
+	private boolean isInStore(Song song) {
+		for (Album album : store.getAlbums()) {
+			for (Song s : album.getSongs()) {
+				if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean isInStore(Album album) {
+		for (Album a : store.getAlbums()) {
+			if (album.getTitle().equals(a.getTitle()) && album.getArtist().equals(a.getArtist()))
+				return true;
+		}
+
+		return false;
 	}
 }
