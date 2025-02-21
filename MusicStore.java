@@ -67,7 +67,22 @@ public class MusicStore
 
 		return new ArrayList<>(foundSongs);
 	}
-	
+
+	public ArrayList<Song> songsByArtist(String artist) {
+		ArrayList<Song> foundSongs = new ArrayList<>();
+		for (Album album : this.albums) {
+			if (album.getArtist().equals(artist)) {
+				foundSongs.addAll(album.getSongs());
+			}
+		}
+
+		return foundSongs;
+	}
+
+	// public Album albumByTitle(String title) {
+
+	// }
+
 	private void readAlbums() throws IOException{
 		try {
 			BufferedReader titlesReader = new BufferedReader(new FileReader("albums/albums.txt"));

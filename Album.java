@@ -58,6 +58,15 @@ public class Album
 	{
 		return songs.size();
 	}
+
+	public ArrayList<Song> getSongs() {
+		ArrayList<Song> returnSongs = new ArrayList<>();
+		for (Song song : this.songs) {
+			returnSongs.add(song.songCpy());
+		}
+
+		return returnSongs;
+	}
 	
 	
 	// MISC. METHODS
@@ -68,6 +77,7 @@ public class Album
 			System.err.println("ERROR: Song's artist does not align with Album");
 			System.err.println("Song: " + s.getArtist() + " VS Album: " + artist);
 		}
+
 		else
 		{
 			songs.add(s);
@@ -82,6 +92,15 @@ public class Album
 		}
 
 		return null;
+	}
+
+	public Album albumCpy() {
+		Album returningAlbum = new Album(this.title, this.artist, this.genre, this.year);
+		for (Song song : this.songs) {
+			returningAlbum.addSong(song.songCpy());
+		}
+
+		return returningAlbum;
 	}
 	
 	@Override
