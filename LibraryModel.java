@@ -39,9 +39,10 @@ public class LibraryModel
 		}
 	}
 
-	public void createPlaylist(String name) {
-		playlists.add(new PlayList(name));
-	}
+	// not sure if we are required to create playlists or add them to the library
+	// public void createPlaylist(String name) {
+	// 	playlists.add(new PlayList(name));
+	// }
 
 	private boolean isInLibrary(Song song) {
 		for (Song s : songs) {
