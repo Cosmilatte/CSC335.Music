@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class Album
 {
 	// INSTANCE VARIABLES
-	ArrayList<Song> songs;
-	String title;
-	String artist;
-	String genre;
-	int year;
+	private ArrayList<Song> songs;
+	private String title;
+	private String artist;
+	private String genre;
+	private int year;
 	
 	
 	// CONSTRUCTOR
