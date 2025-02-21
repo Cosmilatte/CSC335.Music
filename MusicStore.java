@@ -59,7 +59,7 @@ public class MusicStore
 	// MISC. METHODS
 	public ArrayList<Song> songsByTitle(String title) {
 		ArrayList<Song> foundSongs = new ArrayList<>();
-		for (Album album : this.albums) {
+		for (Album album : albums) {
 			if (album.songByTitle(title) != null)
 				foundSongs.add(album.songByTitle(title).songCpy());
 		}
