@@ -116,6 +116,12 @@ public class LibraryModel
 		return foundAlbums;
 	}
 
+	public PlayList getPlaylist(String name) {
+		for (PlayList playlist : playlists) {
+			if (playlist.get)
+		}
+	}
+
 	// not sure if we are required to create playlists or add them to the library
 	// public void createPlaylist(String name) {
 	// 	playlists.add(new PlayList(name));

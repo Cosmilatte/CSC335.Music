@@ -20,6 +20,17 @@ public class PlayList
 	}
 	
 	// GETTERS+SETTERS
+	public String getName() {
+		return name;
+	}
+
+	public ArrayList<Song> getSongs() {
+		ArrayList<Song> songs = new ArrayList<>();
+		for (Song song : this.songs)
+			songs.add(song.songCpy());
+
+		return songs;
+	}
 	
 	// MISC. METHODS
 	public void addSong(Song song) {
