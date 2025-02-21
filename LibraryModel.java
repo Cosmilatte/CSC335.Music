@@ -1,6 +1,8 @@
 // package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 // LibraryModel.java
 // Created 2 - 15 - 2025
@@ -133,20 +135,20 @@ public class LibraryModel
 		return null;
 	}
 
-	public ArrayList<String> getSongTitles() {
-		ArrayList<String> titles = new ArrayList<>();
+	public String[] getSongTitles() {
+		Set<String> titles = new HashSet<>();
 		for (Song song : songs)
-			titles.add(song.getTitle());
+			titles.add(song.getArtist());
 
-		return titles;
+		return (String[]) titles.toArray();
 	}
 
-	public ArrayList<String> getArtists() {
-		ArrayList<String> artists = new ArrayList<>();
+	public String[] getArtists() {
+		Set<String> artists = new HashSet<>();
 		for (Song song : songs)
 			artists.add(song.getArtist());
 
-		return artists;
+		return (String[]) artists.toArray();
 	}
 
 	// not sure if we are required to create playlists or add them to the library
