@@ -83,15 +83,6 @@ public class Album
 		}
 	}
 
-	public Song songByTitle(String title) {
-		for (Song song : songs) {
-			if (song.getTitle().equals(title))
-				return song.songCpy();
-		}
-
-		return null;
-	}
-
 	public Album albumCpy() {
 		Album returningAlbum = new Album(title, artist, genre, year);
 		for (Song song : songs)
