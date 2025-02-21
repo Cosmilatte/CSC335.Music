@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public class LibraryModel
 {
 	// INSTANCE VARIABLES
+	private ArrayList<Song> songs;
+	private ArrayList<Album> albums;
+	private ArrayList<PlayList> playlists;
 	
 	// CONSTRUCTOR
 	
