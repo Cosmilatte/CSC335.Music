@@ -35,16 +35,12 @@ public class LibraryModel
 	}
 
 	public ArrayList<PlayList> getPlaylists() {
-		ArrayList<PlayList> playLists = new ArrayList<>();
-		for (PlayList playlist : playlists)
-			playLists.add(playlist.playlistCpy());
-
-		return playLists;
+		return playlists;
 	}
 	
 	// MISC. METHODS
 	public void addSong(Song song) {
-		if (isInLibrary(song) && isInStore(song)) 
+		if (!isInLibrary(song) && isInStore(song)) 
 			songs.add(song.songCpy());
 	}
 
@@ -166,18 +162,46 @@ public class LibraryModel
 		return (String[]) artists.toArray();
 	}
 
+	public ArrayList<Song> getFavorite() {
+		ArrayList<Song> favorites = new ArrayList<>();
+		for (Song song : songs) {
+			if (song.getRating() == 5)
+				favorites.add(song.songCpy());
+		}
+
+		return favorites;
+	}
+
 	// not sure if we are required to create playlists or add them to the library
-	// public void createPlaylist(String name) {
-	// 	playlists.add(new PlayList(name));
-	// }
+	public void createPlaylist(String name) {
+		playlists.add(new PlayList(name));
+	}
+
+	public void addPlaylist(String name, Song song) {
+		if (isInLibrary(song)) {
+			if (!isInLibrary(name))
+				createPlaylist(name);
+
+			getPlaylist(name).addSong(song);
+		}
+	}
 
 	private boolean isInLibrary(Song song) {
 		for (Song s : songs) {
 			if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
-				return false;
+				return true;
 		}
 
-		return true;
+		return false;
+	}
+
+	private boolean isInLibrary(String name) { // only for PlayList name
+		for (PlayList playlist : playlists) {
+			if (playlist.getName().equals(name))
+				return true;
+		}
+
+		return false;
 	}
 
 	// Helper Methods
