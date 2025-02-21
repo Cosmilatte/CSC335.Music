@@ -184,6 +184,15 @@ public class LibraryModel
 
 			getPlaylist(name).addSong(song);
 		}
+
+		else
+			System.err.println("ERROR: The song" + song.toString() + "hasn't been added to this library");
+	}
+
+	public void removePlaylist(String name, Song song) {
+		if (isInLibrary(song) && isInLibrary(name)) {
+			getPlaylist(name).removeSong(song);
+		}
 	}
 
 	private boolean isInLibrary(Song song) {
