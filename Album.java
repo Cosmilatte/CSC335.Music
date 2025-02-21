@@ -85,9 +85,7 @@ public class Album
 
 	public Album albumCpy() {
 		Album album = new Album(title, artist, genre, year);
-		for (Song song : songs)
-			album.addSong(song.songCpy());
-
+		album.songs = getSongs();
 		return album;
 	}
 	
