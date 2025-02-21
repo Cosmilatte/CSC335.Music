@@ -21,7 +21,6 @@ public class LibraryModel
 		songs = new ArrayList<>();
 		albums = new ArrayList<>();
 		playlists = new ArrayList<>();
-
 	}
 	
 	// GETTERS+SETTERS
@@ -38,6 +37,10 @@ public class LibraryModel
 			for (Song song : album.getSongs())
 				addSong(song);
 		}
+	}
+
+	public void createPlaylist(String name) {
+		playlists.add(new PlayList(name));
 	}
 
 	private boolean isInLibrary(Song song) {
