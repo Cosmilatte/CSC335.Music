@@ -61,7 +61,7 @@ public class Album
 
 	public ArrayList<Song> getSongs() {
 		ArrayList<Song> returnSongs = new ArrayList<>();
-		for (Song song : this.songs)
+		for (Song song : songs)
 			returnSongs.add(song.songCpy());
 
 		return returnSongs;
@@ -84,7 +84,7 @@ public class Album
 	}
 
 	public Song songByTitle(String title) {
-		for (Song song : this.songs) {
+		for (Song song : songs) {
 			if (song.getTitle().equals(title))
 				return song.songCpy();
 		}
@@ -93,8 +93,8 @@ public class Album
 	}
 
 	public Album albumCpy() {
-		Album returningAlbum = new Album(this.title, this.artist, this.genre, this.year);
-		for (Song song : this.songs)
+		Album returningAlbum = new Album(title, artist, genre, year);
+		for (Song song : songs)
 			returningAlbum.addSong(song.songCpy());
 
 		return returningAlbum;

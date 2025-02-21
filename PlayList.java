@@ -16,17 +16,17 @@ public class PlayList
 	
 	// CONSTRUCTOR
 	public PlayList(String title) {
-		this.name = title;
+		name = title;
 	}
 	
 	// GETTERS+SETTERS
 	
 	// MISC. METHODS
 	public void addSong(Song song) {
-		this.songs.add(song);
+		songs.add(song);
 	}
 
 	public void removeSong(Song song) {
-		this.songs.remove(song);
+		songs.remove(song);
 	}
 }

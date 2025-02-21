@@ -42,7 +42,7 @@ public class Song
 	}
 	
 	public Album getAlbum() {
-		return this.album.albumCpy();
+		return album.albumCpy();
 	}
 	
 	public void setRating(int r)
@@ -60,8 +60,8 @@ public class Song
 	
 	// MISC. METHODS
 	public Song songCpy() {
-		Song song = new Song(this.title, this.artist, this.album.albumCpy());
-		song.setRating(this.getRating());
+		Song song = new Song(title, artist, album.albumCpy());
+		song.setRating(getRating());
 		return song;
 	}
 }

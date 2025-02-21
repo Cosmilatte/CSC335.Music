@@ -21,7 +21,7 @@ public class MusicStore
 	{
 		// When we read in the files, Artists will contain Albums will contain Songs?
 		// this.artists = new ArrayList<Artist>();
-		this.albums = new ArrayList<>();
+		albums = new ArrayList<>();
 		try {
 			readAlbums();
 		}
@@ -37,7 +37,7 @@ public class MusicStore
 	
 	// GETTERS+SETTERS
 	public ArrayList<Album> getAlbums() {
-		return this.albums;
+		return albums;
 	}
 
 	public void setStore()
@@ -78,7 +78,7 @@ public class MusicStore
 
 	public ArrayList<Song> songsByArtist(String artist) {
 		ArrayList<Song> foundSongs = new ArrayList<>();
-		for (Album album : this.albums) {
+		for (Album album : albums) {
 			if (album.getArtist().equals(artist))
 				foundSongs.addAll(album.getSongs());
 		}
@@ -96,7 +96,7 @@ public class MusicStore
 	}
 
 	public Album albumByTitle(String title) {
-		for (Album album : this.albums) {
+		for (Album album : albums) {
 			if (album.getTitle().equals(title)) {
 				System.out.println("Album: " + title);
 				System.out.println("Artist: " + album.getArtist());
@@ -117,7 +117,7 @@ public class MusicStore
 		ArrayList<Album> foundAlbums = new ArrayList<>();
 		int albumIndex = 1;
 		System.out.println("Artist: " + artist);
-		for (Album album : this.albums) {
+		for (Album album : albums) {
 			if (album.getArtist().equals(artist)) {
 				foundAlbums.add(album.albumCpy());
 				System.out.println("Album " + albumIndex + ": " + album.getTitle());
@@ -151,7 +151,7 @@ public class MusicStore
 					}
 		
 					albumReader.close();
-					this.albums.add(curAlbum);
+					albums.add(curAlbum);
 					title_artist = titlesReader.readLine();
 				}
 
