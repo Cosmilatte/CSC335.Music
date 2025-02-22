@@ -33,7 +33,35 @@ class MusicStoreTest
 	
 	// TESTS!
 	@Test
-	void test()
+	void testGetAlbums()
+	{
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	void testSongsByTitle()
+	{
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	void testSongsByArtist()
+	{
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	void testAlbumByTitle()
+	{
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	void testAlbumByArtist()
 	{
 		fail("Not yet implemented");
 	}
