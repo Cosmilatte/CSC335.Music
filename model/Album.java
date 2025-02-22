@@ -71,16 +71,16 @@ class Album
 	
 	
 	// MISC. METHODS
-	void addSong(Song s)
+	int addSong(Song s)
 	{
 		if ((s.getArtist()).compareTo(artist) != 0)
 		{
-			System.err.println("ERROR: Song's artist does not align with Album");
-			System.err.println("Song: " + s.getArtist() + " VS Album: " + artist);
+			return 1;
 		}
 
 		else
 			songs.add(s);
+		return 0;
 	}
 
 	
