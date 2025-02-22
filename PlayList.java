@@ -14,17 +14,23 @@ public class PlayList
 	private String name;
 	private ArrayList<Song> songs;
 	
+	
 	// CONSTRUCTOR
-	public PlayList(String title) {
+	public PlayList(String title)
+	{
 		name = title;
 	}
 	
+	
 	// GETTERS+SETTERS
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
-	public ArrayList<Song> getSongs() {
+	
+	public ArrayList<Song> getSongs()
+	{
 		ArrayList<Song> songs = new ArrayList<>();
 		for (Song song : this.songs)
 			songs.add(song.songCpy());
@@ -32,16 +38,22 @@ public class PlayList
 		return songs;
 	}
 	
+	
 	// MISC. METHODS
-	public void addSong(Song song) {
+	public void addSong(Song song)
+	{
 		songs.add(song);
 	}
 
-	public void removeSong(Song song) {
+	
+	public void removeSong(Song song)
+	{
 		songs.remove(song);
 	}
 
-	public PlayList playlistCpy() {
+	
+	public PlayList playlistCpy()
+	{
 		PlayList playlist = new PlayList(name);
 		playlist.songs = getSongs();
 		return playlist;
