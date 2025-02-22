@@ -1,4 +1,4 @@
-// package model;
+package model;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 // Authors: Lilian and Lucian
 // Purpose: 
 
-public class Album
+class Album
 {
 	// INSTANCE VARIABLES
 	private ArrayList<Song> songs;
@@ -18,7 +18,7 @@ public class Album
 	
 	
 	// CONSTRUCTOR
-	public Album(String title, String artist, String genre, int year)
+	Album(String title, String artist, String genre, int year)
 	{
 		this.songs = new ArrayList<Song>();
 		
@@ -30,37 +30,37 @@ public class Album
 	
 	
 	// GETTERS+SETTERS
-	public String getTitle()
+	String getTitle()
 	{
 		return title;
 	}
 	
 	
-	public String getArtist()
+	String getArtist()
 	{
 		return artist;
 	}
 	
 	
-	public String getGenre()
+	String getGenre()
 	{
 		return genre;
 	}
 	
 	
-	public int getYear()
+	int getYear()
 	{
 		return year;
 	}
 	
 	
-	public int getLength()
+	int getLength()
 	{
 		return songs.size();
 	}
 
 	
-	public ArrayList<Song> getSongs()
+	ArrayList<Song> getSongs()
 	{
 		ArrayList<Song> songs = new ArrayList<>();
 		for (Song song : this.songs)
@@ -71,7 +71,7 @@ public class Album
 	
 	
 	// MISC. METHODS
-	public void addSong(Song s)
+	void addSong(Song s)
 	{
 		if ((s.getArtist()).compareTo(artist) != 0)
 		{
@@ -84,24 +84,10 @@ public class Album
 	}
 
 	
-	public Album albumCpy()
+	Album albumCpy()
 	{
 		Album album = new Album(title, artist, genre, year);
 		album.songs = getSongs();
 		return album;
-	}
-	
-	
-	@Override
-	public String toString()
-	{
-		String result = "";
-		
-		for (Song s : songs)
-			result += s.getTitle() + ", ";
-		
-		result = result.substring(0, result.length()-2);
-		
-		return result;
 	}
 }

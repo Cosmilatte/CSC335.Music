@@ -1,4 +1,4 @@
-// package model;
+package model;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 // Authors: Lilian and Lucian
 // Purpose: 
 
-public class PlayList
+class PlayList
 {
 	// INSTANCE VARIABLES
 	private String name;
@@ -16,20 +16,20 @@ public class PlayList
 	
 	
 	// CONSTRUCTOR
-	public PlayList(String title)
+	PlayList(String title)
 	{
 		name = title;
 	}
 	
 	
 	// GETTERS+SETTERS
-	public String getName()
+	String getName()
 	{
 		return name;
 	}
 
 	
-	public ArrayList<Song> getSongs()
+	ArrayList<Song> getSongs()
 	{
 		ArrayList<Song> songs = new ArrayList<>();
 		for (Song song : this.songs)
@@ -40,19 +40,19 @@ public class PlayList
 	
 	
 	// MISC. METHODS
-	public void addSong(Song song)
+	void addSong(Song song)
 	{
 		songs.add(song);
 	}
 
 	
-	public void removeSong(Song song)
+	void removeSong(Song song)
 	{
 		songs.remove(song);
 	}
 
 	
-	public PlayList playlistCpy()
+	PlayList playlistCpy()
 	{
 		PlayList playlist = new PlayList(name);
 		playlist.songs = getSongs();
