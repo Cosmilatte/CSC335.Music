@@ -11,15 +11,16 @@ public class Song
 	private String title;
 	private String artist;
 	private int rating;
-	private Album album;
+	private String album;
+	
 	
 	// CONSTRUCTOR
-	public Song(String title, String artist, Album album)
+	public Song(String title, String artist, String album)
 	{
 		this.title = title;
 		this.artist = artist;
 		this.rating = 0;
-		this.album = album.albumCpy();
+		this.album = album;
 	}
 	
 	
@@ -41,26 +42,30 @@ public class Song
 		return rating;
 	}
 	
-	public Album getAlbum() {
-		return album.albumCpy();
+	
+	public String getAlbum() {
+		return album;
 	}
 	
-	public void setRating(int r)
+	
+	public int setRating(int r)
 	{
 		if ((r > 5) || (r < 1))
 		{
-			System.err.println("ERROR: Rating number must be betweem 1 - 5, was " + r);
+			return 1;
 		}
 		else
 		{
 			this.rating = r;
+			return 0;
 		}
 	}
 	
 	
 	// MISC. METHODS
-	public Song songCpy() {
-		Song song = new Song(title, artist, album.albumCpy());
+	public Song songCpy()
+	{
+		Song song = new Song(title, artist, album);
 		song.setRating(getRating());
 		return song;
 	}
