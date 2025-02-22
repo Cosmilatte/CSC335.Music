@@ -59,7 +59,9 @@ public class Album
 		return songs.size();
 	}
 
-	public ArrayList<Song> getSongs() {
+	
+	public ArrayList<Song> getSongs()
+	{
 		ArrayList<Song> songs = new ArrayList<>();
 		for (Song song : this.songs)
 			songs.add(song.songCpy());
@@ -78,16 +80,17 @@ public class Album
 		}
 
 		else
-		{
 			songs.add(s);
-		}
 	}
 
-	public Album albumCpy() {
+	
+	public Album albumCpy()
+	{
 		Album album = new Album(title, artist, genre, year);
 		album.songs = getSongs();
 		return album;
 	}
+	
 	
 	@Override
 	public String toString()
@@ -95,9 +98,8 @@ public class Album
 		String result = "";
 		
 		for (Song s : songs)
-		{
 			result += s.getTitle() + ", ";
-		}
+		
 		result = result.substring(0, result.length()-2);
 		
 		return result;

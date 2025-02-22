@@ -51,9 +51,7 @@ public class Song
 	public int setRating(int r)
 	{
 		if ((r > 5) || (r < 1))
-		{
 			return 1;
-		}
 		else
 		{
 			this.rating = r;

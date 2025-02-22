@@ -20,11 +20,13 @@ public class MusicStore
 	public MusicStore()
 	{
 		albums = new ArrayList<>();
-		try {
+		try
+		{
 			readAlbums();
 		}
 		
-		catch (IOException e) {
+		catch (IOException e)
+		{
 			System.out.println("Error: This is not a valid input file");
 			System.exit(1);
 		}
@@ -53,7 +55,8 @@ public class MusicStore
 
 		int songIndex = 1;
 		System.out.print("Title: " + title);
-		for (Song song : songs) {
+		for (Song song : songs)
+		{
 			System.out.println("\n" + songIndex + ":");
 			System.out.println("Artist: " + song.getArtist());
 			System.out.println("Album: " + song.getAlbum());
@@ -75,7 +78,8 @@ public class MusicStore
 
 		int artistIndex = 1;
 		System.out.print("Artist: " + artist);
-		for (Song song : songs) {
+		for (Song song : songs)
+		{
 			System.out.println("\nSong " + artistIndex + ":");
 			System.out.println("Title: " + song.getTitle());
 			System.out.println("Album: " + song.getAlbum());
@@ -161,7 +165,8 @@ public class MusicStore
 					title_artist = titlesReader.readLine();
 				}
 
-				catch (IOException e) {
+				catch (IOException e)
+				{
 					System.out.println("Error: This is not a valid input file");
 					System.exit(1);
 				}
@@ -176,7 +181,5 @@ public class MusicStore
 			System.out.println("Error: This is not a valid input file");
 			System.exit(1);
 		}	
-	}
-}
 	}
 }

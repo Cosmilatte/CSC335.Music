@@ -13,6 +13,7 @@ public class Artist
 	ArrayList<Album> albums;
 	String name;
 	
+	
 	// CONSTRUCTOR
 	public Artist(String name)
 	{
@@ -33,8 +34,6 @@ public class Artist
 			System.err.println("Album: " + a.getArtist() + " VS: " + name);
 		}
 		else
-		{
 			albums.add(a);
-		}
 	}
 }

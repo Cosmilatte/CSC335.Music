@@ -234,9 +234,7 @@ public class LibraryModel
 	public void removePlaylist(String name, Song song)
 	{
 		if (isInLibrary(song) && isInLibrary(name))
-		{
 			getPlaylist(name).removeSong(song);
-		}
 	}
 
 	
