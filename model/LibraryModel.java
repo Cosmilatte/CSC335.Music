@@ -1,4 +1,4 @@
-// package model;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -211,13 +211,12 @@ public class LibraryModel
 	}
 
 	
-	// not sure if we are required to create playlists or add them to the library
 	public void createPlaylist(String name) {
 		playlists.add(new PlayList(name));
 	}
 
 	
-	public void addPlaylist(String name, Song song)
+	public void addToPlaylist(String name, Song song)
 	{
 		if (isInLibrary(song))
 		{
@@ -231,7 +230,7 @@ public class LibraryModel
 	}
 
 	
-	public void removePlaylist(String name, Song song)
+	public void removeFromPlaylist(String name, Song song)
 	{
 		if (isInLibrary(song) && isInLibrary(name))
 			getPlaylist(name).removeSong(song);
