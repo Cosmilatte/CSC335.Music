@@ -1,4 +1,4 @@
-// package model;
+package model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,117 +36,110 @@ public class MusicStore
 	// GETTERS+SETTERS
 	public ArrayList<Album> getAlbums()
 	{
-		return albums;
+		ArrayList<Album> albumsCopy = new ArrayList<Album>();
+		for (Album album : albums)
+		{
+			Album a2 = new Album(album.getTitle(), album.getArtist(), album.getGenre(), album.getYear());
+			for (Song s : album.getSongs())
+				a2.addSong(s);
+			
+			albumsCopy.add(a2);
+		}
+		
+		return albumsCopy;
 	}
 	
 	
 	// MISC. METHODS
-	public ArrayList<Song> songsByTitle(String title)
+	public ArrayList<String> songsByTitle(String title)
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		ArrayList<String> songs = new ArrayList<String>();
 		for (Album album : albums)
 		{
 			for (Song song : album.getSongs())
 			{
 				if (song.getTitle().equals(title))
-				songs.add(song.songCpy());
+					songs.add(song.getTitle() + " by " + song.getArtist() + " in " +
+							song.getAlbum());
 			}
 		}
 
-		int songIndex = 1;
-		System.out.print("Title: " + title);
-		for (Song song : songs)
-		{
-			System.out.println("\n" + songIndex + ":");
-			System.out.println("Artist: " + song.getArtist());
-			System.out.println("Album: " + song.getAlbum());
-			songIndex++;
-		}
-
 		return songs;
 	}
 
 	
-	public ArrayList<Song> songsByArtist(String artist)
+	public ArrayList<String> songsByArtist(String artist)
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		ArrayList<String> songs = new ArrayList<String>();
+		
 		for (Album album : albums)
 		{
 			if (album.getArtist().equals(artist))
-				songs.addAll(album.getSongs());
-		}
-
-		int artistIndex = 1;
-		System.out.print("Artist: " + artist);
-		for (Song song : songs)
-		{
-			System.out.println("\nSong " + artistIndex + ":");
-			System.out.println("Title: " + song.getTitle());
-			System.out.println("Album: " + song.getAlbum());
-			artistIndex++;
+			{
+				for (Song song : album.getSongs())
+				{
+					songs.add(song.getTitle() + " by " + song.getArtist() + " in " +
+						song.getAlbum());
+				}
+			}
 		}
 
 		return songs;
 	}
 
 	
-	public Album albumByTitle(String title)
+	public ArrayList<String> albumByTitle(String title)
 	{
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
 		for (Album album : albums)
 		{
 			if (album.getTitle().equals(title))
 			{
-				System.out.println("Album: " + title);
-				System.out.println("Artist: " + album.getArtist());
-				System.out.println("Genre: " + album.getGenre());
-				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ");
+				albumsArr.add(title + " by " + album.getArtist() + ", " +
+						album.getGenre() + ", " + album.getYear());
+				albumsArr.add("Songs: ");
 				for (Song song : album.getSongs())
-					System.out.println("\t•" + song.getTitle());
-
-				return album.albumCpy();
+					albumsArr.add(song.getTitle());
 			}
 		}
 
-		return null;
+		return albumsArr;
 	}
 
 	
-	public ArrayList<Album> albumByArtist(String artist)
+	public ArrayList<String> albumByArtist(String artist)
 	{
-		ArrayList<Album> albums = new ArrayList<>();
-		int albumIndex = 1;
-		System.out.println("Artist: " + artist);
-		for (Album album : this.albums)
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
+		for (Album album : albums)
 		{
 			if (album.getArtist().equals(artist))
 			{
-				albums.add(album.albumCpy());
-				System.out.println("Album " + albumIndex + ": " + album.getTitle());
-				System.out.println("Genre: " + album.getGenre());
-				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ");
+				albumsArr.add(album.getTitle() + " by " + artist + ", " +
+						album.getGenre() + ", " + album.getYear());
+				albumsArr.add("Songs: ");
 				for (Song song : album.getSongs())
-					System.out.println("\t•" + song.getTitle());
-
-				albumIndex++;
+					albumsArr.add(song.getTitle());
 			}
 		}
 
-		return albums;
+		return albumsArr;
 	}
 
 	
 	private void readAlbums() throws IOException
 	{
 		try {
-			BufferedReader titlesReader = new BufferedReader(new FileReader("albums/albums.txt"));
+			String absolutePath = "C:\\Users\\akjon\\300sWorkspace\\CSC335la1\\src\\albums\\";
+			BufferedReader titlesReader = new BufferedReader(new FileReader(absolutePath + "albums.txt"));
 			String title_artist = titlesReader.readLine();
+			
 			while (title_artist != null)
 			{
 				try
 				{
-					BufferedReader albumReader = new BufferedReader(new FileReader("albums/" + 
+					BufferedReader albumReader = new BufferedReader(new FileReader(absolutePath + 
 							title_artist.split(",")[0] + "_" + title_artist.split(",")[1] +
 							".txt"));
 					String[] information = albumReader.readLine().split(",");

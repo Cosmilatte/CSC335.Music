@@ -50,13 +50,14 @@ class Song
 	
 	int setRating(int r)
 	{
+		// NOTE: This only works if the song has not been rated before
+		// This helps with making this Class almost immutable
+		
 		if ((r > 5) || (r < 1))
 			return 1;
-		else
-		{
+		else if (r == 0)
 			this.rating = r;
-			return 0;
-		}
+		return 0;
 	}
 	
 	
