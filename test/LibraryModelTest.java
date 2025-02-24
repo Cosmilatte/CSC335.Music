@@ -14,8 +14,8 @@ import model.MusicStore;
 class LibraryModelTest
 {
 	// PRIVATE INSTANCE VARIABLE
-	private LibraryModel l;
-	private MusicStore m;
+	private LibraryModel lm;
+	private MusicStore ms;
 	
 	
 	// MAIN
@@ -29,39 +29,15 @@ class LibraryModelTest
 	// CONSTRUCTOR
 	public LibraryModelTest()
 	{
-		this.m = new MusicStore();
-		this.l = new LibraryModel(m);
+		this.ms = new MusicStore();
+		this.lm = new LibraryModel(ms);
 	}
 	
 	
 	// TESTS!
-	@Test
-	void testGetAlbums()
-	{
-		fail("Not yet implemented");
-	}
 	
-	
-	@Test
-	void testGetPlaylists()
-	{
-		fail("Not yet implemented");
-	}
-	
-	
-	@Test
-	void testAddSong()
-	{
-		fail("Not yet implemented");
-	}
-	
-	
-	@Test
-	void testAddAlbum()
-	{
-		fail("Not yet implemented");
-	}
-	
+	// NOTE: We do not have methods for testing the Adders as these
+	//       will be proven functional when we use the search methods.
 	
 	@Test
 	void testSongsByTitle()
@@ -92,7 +68,7 @@ class LibraryModelTest
 	
 	
 	@Test
-	void testGetPlaylist()
+	void testPlaylistByTitle()
 	{
 		fail("Not yet implemented");
 	}
@@ -113,28 +89,14 @@ class LibraryModelTest
 	
 	
 	@Test
+	void testAlbums()
+	{
+		fail("Not yet implemented");
+	}
+	
+	
+	@Test
 	void testGetFavorite()
-	{
-		fail("Not yet implemented");
-	}
-	
-	
-	@Test
-	void testCreatePlaylist()
-	{
-		fail("Not yet implemented");
-	}
-	
-	
-	@Test
-	void testAddToPlaylist()
-	{
-		fail("Not yet implemented");
-	}
-	
-	
-	@Test
-	void testRemoveFromPlaylist()
 	{
 		fail("Not yet implemented");
 	}
