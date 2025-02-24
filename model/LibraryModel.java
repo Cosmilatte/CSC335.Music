@@ -186,6 +186,11 @@ public class LibraryModel
 		for (Song song : songs)
 			songsArr.add(song.getTitle());
 
+		if (songsArr.size() == 0)
+		{
+			songsArr.add("THIS IS EMPTY.");
+		}
+		
 		return songsArr;
 	}
 
@@ -200,6 +205,11 @@ public class LibraryModel
 				artistsArr.add(song.getArtist());
 		}
 
+		if (artistsArr.size() == 0)
+		{
+			artistsArr.add("THIS IS EMPTY.");
+		}
+		
 		return artistsArr;
 	}
 	
@@ -211,6 +221,11 @@ public class LibraryModel
 		for (Album album : albums)
 			albumsArr.add(album.getTitle());
 
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("THIS IS EMPTY.");
+		}
+		
 		return albumsArr;
 	}
 
@@ -223,6 +238,11 @@ public class LibraryModel
 		{
 			if (song.getRating() == 5)
 				favorites.add(song.getTitle());
+		}
+		
+		if (favorites.size() == 0)
+		{
+			favorites.add("THIS IS EMPTY.");
 		}
 
 		return favorites;
