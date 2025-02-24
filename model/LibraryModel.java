@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 // LibraryModel.java
 // Created 2 - 15 - 2025
@@ -28,25 +26,9 @@ public class LibraryModel
 	}
 	
 	
-	// GETTERS+SETTERS
-	public ArrayList<Album> getAlbums()
+	// ADDERS
+	public void addSong(Song song)
 	{
-		ArrayList<Album> albums = new ArrayList<>();
-		for (Album album : this.albums)
-			albums.add(album.albumCpy());
-
-		return albums;
-	}
-
-	
-	public ArrayList<PlayList> getPlaylists()
-	{
-		return playlists;
-	}
-	
-	
-	// MISC. METHODS
-	public void addSong(Song song) {
 		if (!isInLibrary(song) && isInStore(song)) 
 			songs.add(song.songCpy());
 	}
@@ -63,112 +45,182 @@ public class LibraryModel
 	}
 
 	
-	public ArrayList<Song> songsByTitle(String title)
+	// SEARCHERS
+	public ArrayList<String> songsByTitle(String title)
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
 		for (Song song : this.songs)
 		{
 			if (song.getTitle().equals(title))
-				songs.add(song.songCpy());
+				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
+						song.getAlbum());
 		}
 
-		int songIndex = 1;
-		System.out.print("Title: " + title);
-		for (Song song : songs)
+		if (songsArr.size() == 0)
 		{
-			System.out.println("\n" + songIndex + ":");
-			System.out.println("Artist: " + song.getArtist());
-			System.out.println("Album: " + song.getAlbum());
-			songIndex++;
+			songsArr.add("ITEM NOT FOUND.");
 		}
-
-		return songs;
+		
+		return songsArr;
 	}
 
 	
-	public ArrayList<Song> songsByArtist(String artist)
+	public ArrayList<String> songsByArtist(String artist)
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
 		for (Song song : this.songs)
 		{
 			if (song.getArtist().equals(artist))
-				songs.add(song.songCpy());
+				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
+						song.getAlbum());
 		}
-
-		int artistIndex = 1;
-		System.out.print("Artist: " + artist);
-		for (Song song : songs)
+		
+		if (songsArr.size() == 0)
 		{
-			System.out.println("\nSong " + artistIndex + ":");
-			System.out.println("Title: " + song.getTitle());
-			System.out.println("Album: " + song.getAlbum());
-			artistIndex++;
+			songsArr.add("ITEM NOT FOUND.");
 		}
-
-		return songs;
+		
+		return songsArr;
 	}
 
 	
-	public Album albumByTitle(String title)
+	public ArrayList<String> albumByTitle(String title)
 	{
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
 		for (Album album : albums)
 		{
 			if (album.getTitle().equals(title))
 			{
-				System.out.println("Album: " + title);
-				System.out.println("Artist: " + album.getArtist());
-				System.out.println("Genre: " + album.getGenre());
-				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ");
+				albumsArr.add(title + " by " + album.getArtist() + ", " +
+						album.getGenre() + ", " + album.getYear());
+				albumsArr.add("Songs: ");
 				for (Song song : album.getSongs())
-					System.out.println("\t•" + song.getTitle());
-
-				return album.albumCpy();
+					albumsArr.add(song.getTitle());
 			}
 		}
 
-		return null;
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return albumsArr;
 	}
 
 	
-	public ArrayList<Album> albumByArtist(String artist)
+	public ArrayList<String> albumByArtist(String artist)
 	{
-		ArrayList<Album> albums = new ArrayList<>();
-		int albumIndex = 1;
-		System.out.println("Artist: " + artist);
-		for (Album album : this.albums)
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
+		for (Album album : albums)
 		{
 			if (album.getArtist().equals(artist))
 			{
-				albums.add(album.albumCpy());
-				System.out.println("Album " + albumIndex + ": " + album.getTitle());
-				System.out.println("Genre: " + album.getGenre());
-				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ");
+				albumsArr.add(album.getTitle() + " by " + artist + ", " +
+						album.getGenre() + ", " + album.getYear());
+				albumsArr.add("Songs: ");
 				for (Song song : album.getSongs())
-					System.out.println("\t•" + song.getTitle());
-
-				albumIndex++;
+					albumsArr.add(song.getTitle());
 			}
 		}
 
-		return albums;
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return albumsArr;
 	}
 
 	
-	public PlayList getPlaylist(String name)
+	public ArrayList<String> playlistByTitle(String title)
+	{
+		ArrayList<String> playlistArr = new ArrayList<String>();
+		
+		for (PlayList playlist : playlists)
+		{
+			if (playlist.getName().equals(title))
+			{
+				for (Song song : playlist.getSongs())
+					playlistArr.add(song.getTitle() + " by " + song.getArtist());
+
+				return playlistArr;
+			}
+		}
+
+		if (playlistArr.size() == 0)
+		{
+			playlistArr.add("ITEM NOT FOUND.");
+		}
+		
+		return playlistArr;
+	}
+
+	
+	// SEARCHERS (LIST EDITION)
+	public ArrayList<String> getSongTitles()
+	{
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
+		for (Song song : songs)
+			songsArr.add(song.getTitle());
+
+		return songsArr;
+	}
+
+	
+	public ArrayList<String> getArtists()
+	{
+		ArrayList<String> artistsArr = new ArrayList<String>();
+		
+		for (Song song : songs)
+		{
+			if (!artistsArr.contains(song.getArtist()))
+				artistsArr.add(song.getArtist());
+		}
+
+		return artistsArr;
+	}
+	
+	
+	public ArrayList<String> getAlbums()
+	{
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
+		for (Album album : albums)
+			albumsArr.add(album.getTitle());
+
+		return albumsArr;
+	}
+
+	
+	public ArrayList<String> getFavorite()
+	{
+		ArrayList<String> favorites = new ArrayList<String>();
+		
+		for (Song song : songs)
+		{
+			if (song.getRating() == 5)
+				favorites.add(song.getTitle());
+		}
+
+		return favorites;
+	}
+	
+	
+	// PLAYLIST METHODS
+	private PlayList getPlaylist(String name)
 	{
 		for (PlayList playlist : playlists)
 		{
 			if (playlist.getName().equals(name))
 			{
 				PlayList foundPlaylist = new PlayList(name);
-				System.out.println("Playlist Name: " + name + "\nSongs: ");
 				for (Song song : playlist.getSongs())
-				{
-					System.out.println("\t•" + song.getTitle() + " by " + song.getArtist());
 					foundPlaylist.addSong(song.songCpy());
-				}
 
 				return foundPlaylist;
 			}
@@ -178,40 +230,8 @@ public class LibraryModel
 	}
 
 	
-	public String[] getSongTitles()
+	public void createPlaylist(String name)
 	{
-		Set<String> titles = new HashSet<>();
-		for (Song song : songs)
-			titles.add(song.getArtist());
-
-		return (String[]) titles.toArray();
-	}
-
-	
-	public String[] getArtists()
-	{
-		Set<String> artists = new HashSet<>();
-		for (Song song : songs)
-			artists.add(song.getArtist());
-
-		return (String[]) artists.toArray();
-	}
-
-	
-	public ArrayList<Song> getFavorite()
-	{
-		ArrayList<Song> favorites = new ArrayList<>();
-		for (Song song : songs)
-		{
-			if (song.getRating() == 5)
-				favorites.add(song.songCpy());
-		}
-
-		return favorites;
-	}
-
-	
-	public void createPlaylist(String name) {
 		playlists.add(new PlayList(name));
 	}
 
@@ -236,7 +256,8 @@ public class LibraryModel
 			getPlaylist(name).removeSong(song);
 	}
 
-	
+
+	// HELPERS
 	private boolean isInLibrary(Song song)
 	{
 		for (Song s : songs)
@@ -262,7 +283,6 @@ public class LibraryModel
 	}
 
 	
-	// Helper Methods
 	private boolean isInStore(Song song)
 	{
 		for (Album album : store.getAlbums())

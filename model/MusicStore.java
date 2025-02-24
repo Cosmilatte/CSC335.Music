@@ -33,7 +33,7 @@ public class MusicStore
 	}
 	
 	
-	// GETTERS+SETTERS
+	// GETTER
 	public ArrayList<Album> getAlbums()
 	{
 		ArrayList<Album> albumsCopy = new ArrayList<Album>();
@@ -50,27 +50,32 @@ public class MusicStore
 	}
 	
 	
-	// MISC. METHODS
+	// SEARCHERS
 	public ArrayList<String> songsByTitle(String title)
 	{
-		ArrayList<String> songs = new ArrayList<String>();
+		ArrayList<String> songsArr = new ArrayList<String>();
 		for (Album album : albums)
 		{
 			for (Song song : album.getSongs())
 			{
 				if (song.getTitle().equals(title))
-					songs.add(song.getTitle() + " by " + song.getArtist() + " in " +
+					songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 							song.getAlbum());
 			}
 		}
 
-		return songs;
+		if (songsArr.size() == 0)
+		{
+			songsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return songsArr;
 	}
 
 	
 	public ArrayList<String> songsByArtist(String artist)
 	{
-		ArrayList<String> songs = new ArrayList<String>();
+		ArrayList<String> songsArr = new ArrayList<String>();
 		
 		for (Album album : albums)
 		{
@@ -78,13 +83,18 @@ public class MusicStore
 			{
 				for (Song song : album.getSongs())
 				{
-					songs.add(song.getTitle() + " by " + song.getArtist() + " in " +
+					songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 						song.getAlbum());
 				}
 			}
 		}
 
-		return songs;
+		if (songsArr.size() == 0)
+		{
+			songsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return songsArr;
 	}
 
 	
@@ -104,6 +114,11 @@ public class MusicStore
 			}
 		}
 
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
 		return albumsArr;
 	}
 
@@ -124,10 +139,16 @@ public class MusicStore
 			}
 		}
 
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
 		return albumsArr;
 	}
 
 	
+	// THE READ-IN
 	private void readAlbums() throws IOException
 	{
 		try {
