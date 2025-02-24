@@ -27,20 +27,38 @@ public class LibraryModel
 	
 	
 	// ADDERS
-	public void addSong(Song song)
+	public void addSong(String title, String artist)
 	{
-		if (!isInLibrary(song) && isInStore(song)) 
-			songs.add(song.songCpy());
+		if (!isInLibrarySong(title, artist) && isInStoreSong(title, artist)) 
+		{
+			for (Album album : store.getAlbums())
+			{
+				for (Song song : album.getSongs())
+				{
+					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getTitle()))
+					{	
+						songs.add(song.songCpy());
+						return;
+					}
+				}
+			}
+		}
 	}
 
 	
-	public void addAlbum(Album album)
+	public void addAlbum(String title, String artist)
 	{
-		if (isInStore(album))
+		if (!isInLibraryAlbum(title, artist) && isInStoreAlbum(title, artist)) 
 		{
-			albums.add(album.albumCpy());
-			for (Song song : album.getSongs())
-				addSong(song);
+			for (Album album : store.getAlbums())
+			{
+				if (title.contentEquals(album.getTitle()) && artist.contentEquals(album.getArtist()))
+				{
+					albums.add(album);
+					for (Song song : album.getSongs())
+						songs.add(song.songCpy());
+				}
+			}
 		}
 	}
 
@@ -238,9 +256,9 @@ public class LibraryModel
 	
 	public void addToPlaylist(String name, Song song)
 	{
-		if (isInLibrary(song))
+		if (isInLibrarySong(song.getTitle(), song.getArtist()))
 		{
-			if (!isInLibrary(name))
+			if (!isInLibraryPlaylist(name))
 				createPlaylist(name);
 			getPlaylist(name).addSong(song);
 		}
@@ -252,17 +270,29 @@ public class LibraryModel
 	
 	public void removeFromPlaylist(String name, Song song)
 	{
-		if (isInLibrary(song) && isInLibrary(name))
+		if (isInLibrarySong(song.getTitle(), song.getArtist()) && isInLibraryPlaylist(name))
 			getPlaylist(name).removeSong(song);
 	}
 
 
 	// HELPERS
-	private boolean isInLibrary(Song song)
+	private boolean isInLibrarySong(String title, String artist)
 	{
 		for (Song s : songs)
 		{
-			if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
+			if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+				return true;
+		}
+
+		return false;
+	}
+	
+	
+	private boolean isInLibraryAlbum(String title, String artist)
+	{
+		for (Album album : albums)
+		{
+			if (title.equals(album.getTitle()) && artist.equals(album.getArtist()))
 				return true;
 		}
 
@@ -271,7 +301,7 @@ public class LibraryModel
 
 	
 	// only for PlayList name
-	private boolean isInLibrary(String name)
+	private boolean isInLibraryPlaylist(String name)
 	{
 		for (PlayList playlist : playlists)
 		{
@@ -283,13 +313,13 @@ public class LibraryModel
 	}
 
 	
-	private boolean isInStore(Song song)
+	private boolean isInStoreSong(String title, String artist)
 	{
 		for (Album album : store.getAlbums())
 		{
 			for (Song s : album.getSongs())
 			{
-				if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
+				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
 					return true;
 			}
 		}
@@ -298,11 +328,11 @@ public class LibraryModel
 	}
 
 	
-	private boolean isInStore(Album album)
+	private boolean isInStoreAlbum(String title, String artist)
 	{
 		for (Album a : store.getAlbums())
 		{
-			if (album.getTitle().equals(a.getTitle()) && album.getArtist().equals(a.getArtist()))
+			if (title.equals(a.getTitle()) && artist.equals(a.getArtist()))
 				return true;
 		}
 
