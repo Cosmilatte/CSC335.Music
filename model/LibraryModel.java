@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 // LibraryModel.java
 // Created 2 - 15 - 2025
@@ -179,73 +181,56 @@ public class LibraryModel
 
 	
 	// SEARCHERS (LIST EDITION)
-	public ArrayList<String> getSongTitles()
-	{
-		ArrayList<String> songsArr = new ArrayList<String>();
-		
+	public String[] getSongTitles()
+	{	
+		Set<String> titlesArr = new HashSet<>();
 		for (Song song : songs)
-			songsArr.add(song.getTitle());
+			titlesArr.add(song.getTitle());
 
-		if (songsArr.size() == 0)
-		{
-			songsArr.add("THIS IS EMPTY.");
-		}
-		
-		return songsArr;
+		return (String[]) titlesArr.toArray();
 	}
 
 	
-	public ArrayList<String> getArtists()
+	public String[] getArtists()
 	{
-		ArrayList<String> artistsArr = new ArrayList<String>();
-		
+		Set<String> artistsArr = new HashSet<>();
 		for (Song song : songs)
-		{
-			if (!artistsArr.contains(song.getArtist()))
-				artistsArr.add(song.getArtist());
-		}
+			artistsArr.add(song.getArtist());
 
-		if (artistsArr.size() == 0)
-		{
-			artistsArr.add("THIS IS EMPTY.");
-		}
-		
-		return artistsArr;
+		return (String[]) artistsArr.toArray();
 	}
 	
 	
-	public ArrayList<String> getAlbums()
+	public String[] getAlbums()
 	{
-		ArrayList<String> albumsArr = new ArrayList<String>();
-		
+		Set<String> albumsArr = new HashSet<>();
 		for (Album album : albums)
 			albumsArr.add(album.getTitle());
 
-		if (albumsArr.size() == 0)
-		{
-			albumsArr.add("THIS IS EMPTY.");
-		}
-		
-		return albumsArr;
+		return (String[]) albumsArr.toArray();
+	}
+	
+	
+	public String[] getPlaylistNames()
+	{
+		Set<String> playlistsArr = new HashSet<>();
+		for (PlayList playlist : playlists)
+			playlistsArr.add(playlist.getName());
+
+		return (String[]) playlistsArr.toArray();
 	}
 
 	
-	public ArrayList<String> getFavorite()
+	public String[] getFavorites()
 	{
-		ArrayList<String> favorites = new ArrayList<String>();
-		
+		Set<String> favoritesArr = new HashSet<>();
 		for (Song song : songs)
 		{
 			if (song.getRating() == 5)
-				favorites.add(song.getTitle());
-		}
-		
-		if (favorites.size() == 0)
-		{
-			favorites.add("THIS IS EMPTY.");
+				favoritesArr.add(song.getTitle());
 		}
 
-		return favorites;
+		return (String[]) favoritesArr.toArray();
 	}
 	
 	
