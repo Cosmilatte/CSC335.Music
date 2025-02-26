@@ -32,8 +32,13 @@ class MusicStoreTest
 	
 	
 	// TESTS!
-	// We are not testing getAlbums() as that is a helper for
-	// LibraryModel methods and will be covered there.
+	@Test
+	void testGetAlbums()
+	{
+		assertTrue(ms.getAlbums().size() == 15);
+	}
+	
+	
 	@Test
 	void testSongsByTitle()
 	{
