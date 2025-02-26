@@ -36,11 +36,20 @@ class LibraryModelTest
 		lm.addAlbum("21", "Adele");
 		lm.addAlbum("Fight for Your Mind", "Ben Harper");
 		lm.addSong("Rise to the Sun", "Alabama Shakes");
+		lm.addSong("Hang Loose", "Alabama Shakes");
 		
 		lm.createPlaylist("Some songs I know");
 		lm.addToPlaylist("Some songs I know", "Rise to the Sun", "Alabama Shakes");
 		lm.addToPlaylist("Some songs I know", "Chasing Pavements", "Adele");
 		lm.addToPlaylist("Some songs I know", "Set Fire to the Rain", "Adele");
+		
+		lm.addToPlaylist("Some songs I know", "Hang Loose", "Alabama Shakes");
+		lm.removeFromPlaylist("Some songs I know", "Hang Loose", "Alabama Shakes");
+		
+		lm.rateSong("Rise to the Sun", "Alabama Shakes", 5);
+		lm.rateSong("Cold Shoulder", "Adele", 5);
+		lm.rateSong("Rumor has it", "Adele", 3);
+		lm.rateSong("Give a Man a Home", "Ben Harper", 5);
 	}
 	
 	
@@ -134,8 +143,6 @@ class LibraryModelTest
 		assertTrue(albumsArr.get(12).contentEquals("Power of the Gospel"));
 		assertTrue(albumsArr.get(13).contentEquals("God Fearing Man"));
 		assertTrue(albumsArr.get(14).contentEquals("One Road to Freedom"));
-		
-		
 	}
 	
 	
@@ -224,7 +231,7 @@ class LibraryModelTest
 	void testGetSongTitles()
 	{
 		String[] songsArr = lm.getSongTitles();
-		assertEquals(38, songsArr.length);
+		assertEquals(39, songsArr.length);
 	}
 	
 	
@@ -256,6 +263,6 @@ class LibraryModelTest
 	void testGetFavorite()
 	{
 		String[] favoritesArr = lm.getFavorites();
-		assertEquals(0, favoritesArr.length);
+		assertEquals(3, favoritesArr.length);
 	}
 }
