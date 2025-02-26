@@ -3,7 +3,7 @@ package test;
 // MusicStore.java
 // Created 2 - 22 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: To test all the accessible methods of the Store
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;

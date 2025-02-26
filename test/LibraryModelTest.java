@@ -3,7 +3,7 @@ package test;
 // LibraryModelTest.java
 // Created 2 - 22 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: To test all the accessible methods of the Library
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
