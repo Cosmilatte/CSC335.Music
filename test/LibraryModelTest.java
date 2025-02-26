@@ -36,6 +36,11 @@ class LibraryModelTest
 		lm.addAlbum("21", "Adele");
 		lm.addAlbum("Fight for Your Mind", "Ben Harper");
 		lm.addSong("Rise to the Sun", "Alabama Shakes");
+		
+		lm.createPlaylist("Some songs I know");
+		lm.addToPlaylist("Some songs I know", "Rise to the Sun", "Alabama Shakes");
+		lm.addToPlaylist("Some songs I know", "Chasing Pavements", "Adele");
+		lm.addToPlaylist("Some songs I know", "Set Fire to the Rain", "Adele");
 	}
 	
 	
@@ -148,8 +153,6 @@ class LibraryModelTest
 	void testAlbumByArtist()
 	{
 		ArrayList<String> songsArr = lm.albumByArtist("Adele");
-		String alOne = " by Adele in 19";
-		String alTwo = " by Adele in 21";
 		
 		assertTrue(songsArr.size() == 28);
 		assertTrue(songsArr.get(0).contentEquals("19 by Adele, Pop, 2008"));
@@ -197,34 +200,62 @@ class LibraryModelTest
 	@Test
 	void testPlaylistByTitle()
 	{
-		fail("Not yet implemented");
+		ArrayList<String> playlistArr = lm.playlistByTitle("Some songs I know");
+		assertEquals(4, playlistArr.size());
+		
+		assertTrue(playlistArr.get(0).contentEquals("Playlist: Some songs I know"));
+		assertTrue(playlistArr.get(1).contentEquals("Rise to the Sun by Alabama Shakes"));
+		assertTrue(playlistArr.get(2).contentEquals("Chasing Pavements by Adele"));
+		assertTrue(playlistArr.get(3).contentEquals("Set Fire to the Rain by Adele"));
+	}
+	
+	
+	@Test
+	void testPlaylistByTitleEMPTY()
+	{
+		ArrayList<String> playlistArr = lm.playlistByTitle("SEVERE WEATHER ADVISORY");
+		assertEquals(1, playlistArr.size());
+		
+		assertTrue(playlistArr.get(0).contentEquals("ITEM NOT FOUND."));
 	}
 	
 	
 	@Test
 	void testGetSongTitles()
 	{
-		fail("Not yet implemented");
+		String[] songsArr = lm.getSongTitles();
+		assertEquals(38, songsArr.length);
 	}
 	
 	
 	@Test
-	void testArtists()
+	void testGetArtists()
 	{
-		fail("Not yet implemented");
+		String[] artistsArr = lm.getArtists();
+		assertEquals(3, artistsArr.length);
 	}
 	
 	
 	@Test
-	void testAlbums()
+	void testGetAlbums()
 	{
-		fail("Not yet implemented");
+		String[] albumsArr = lm.getAlbums();
+		assertEquals(3, albumsArr.length);
+	}
+	
+	
+	@Test
+	void testGetPlaylistNames()
+	{
+		String[] playlistsArr = lm.getPlaylistNames();
+		assertEquals(1, playlistsArr.length);
 	}
 	
 	
 	@Test
 	void testGetFavorite()
 	{
-		fail("Not yet implemented");
+		String[] favoritesArr = lm.getFavorites();
+		assertEquals(0, favoritesArr.length);
 	}
 }
