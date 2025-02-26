@@ -16,6 +16,7 @@ public class LibraryModel
 	private ArrayList<Song> songs;
 	private ArrayList<Album> albums;
 	private ArrayList<PlayList> playlists;
+	private ArrayList<Song> favorites;
 	
 	
 	// CONSTRUCTOR
@@ -25,6 +26,28 @@ public class LibraryModel
 		songs = new ArrayList<>();
 		albums = new ArrayList<>();
 		playlists = new ArrayList<>();
+		favorites = new ArrayList<>();
+	}
+	
+	
+	// MISCELLANEOUS (RATING)
+	public void rateSong(String title, String artist, int r)
+	{
+		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
+		{
+			for (Album album : store.getAlbums())
+			{
+				for (Song song : album.getSongs())
+				{
+					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+					{
+						song.setRating(r);
+						if (r == 5)
+							favorites.add(song);
+					}
+				}
+			}
+		}
 	}
 	
 	
@@ -38,10 +61,7 @@ public class LibraryModel
 				for (Song song : album.getSongs())
 				{
 					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
-					{	
 						songs.add(song.songCpy());
-						return;
-					}
 				}
 			}
 		}
@@ -167,8 +187,6 @@ public class LibraryModel
 				playlistArr.add("Playlist: " + title);
 				for (Song song : playlist.getSongs())
 					playlistArr.add(song.getTitle() + " by " + song.getArtist());
-
-				return playlistArr;
 			}
 		}
 
@@ -230,9 +248,8 @@ public class LibraryModel
 	public String[] getFavorites()
 	{
 		Set<String> favoritesArr = new HashSet<>();
-		for (Song song : songs)
+		for (Song song : favorites)
 		{
-			if (song.getRating() == 5)
 				favoritesArr.add(song.getTitle());
 		}
 		String arr[] = new String[favoritesArr.size()];
@@ -275,10 +292,16 @@ public class LibraryModel
 	}
 
 	
-	public void removeFromPlaylist(String name, Song song)
+	public void removeFromPlaylist(String pName, String title, String artist)
 	{
-		if (isInLibrarySong(song.getTitle(), song.getArtist()) && isInLibraryPlaylist(name))
-			getPlaylist(name).removeSong(song);
+		if (isInLibrarySong(title, artist))
+		{
+			for (Song s : songs)
+			{
+				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+					getPlaylist(pName).removeSong(s);
+			}
+		}
 	}
 
 
