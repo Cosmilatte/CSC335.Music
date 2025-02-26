@@ -8,7 +8,9 @@ import java.util.ArrayList;
 // MusicStore.java
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: MusicStore is a Class that represents, using an ArrayList
+//   to store Albums, a virtual store that Users can take Songs and
+//   Albums from to put into their own personal library.
 
 public class MusicStore
 {
@@ -36,12 +38,16 @@ public class MusicStore
 	// GETTER
 	public ArrayList<Album> getAlbums()
 	{
+		// Clones the item to prevent escaping reference
 		ArrayList<Album> albumsCopy = new ArrayList<Album>();
+		
 		for (Album album : albums)
 		{
-			Album a2 = new Album(album.getTitle(), album.getArtist(), album.getGenre(), album.getYear());
-			for (Song s : album.getSongs())
-				a2.addSong(s.songCpy());
+			Album a2 = new Album(album.getTitle(), album.getArtist(), album.getGenre(), 
+					album.getYear());
+			
+			for (Song song : album.getSongs())
+				a2.addSong(song.songCpy());
 			
 			albumsCopy.add(a2);
 		}
@@ -53,12 +59,15 @@ public class MusicStore
 	// SEARCHERS
 	public ArrayList<String> songsByTitle(String title)
 	{
+		// Make a String ArrayList of the requested info for printing
 		ArrayList<String> songsArr = new ArrayList<String>();
+		
 		for (Album album : albums)
 		{
 			for (Song song : album.getSongs())
 			{
 				if (song.getTitle().equals(title))
+					// Format: "Title by Artist in Album"
 					songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 							song.getAlbum());
 			}
@@ -75,6 +84,7 @@ public class MusicStore
 	
 	public ArrayList<String> songsByArtist(String artist)
 	{
+		// Make a String ArrayList of the requested info for printing
 		ArrayList<String> songsArr = new ArrayList<String>();
 		
 		for (Album album : albums)
@@ -83,6 +93,7 @@ public class MusicStore
 			{
 				for (Song song : album.getSongs())
 				{
+					// Format: "Title by Artist in Album"
 					songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 						song.getAlbum());
 				}
@@ -100,15 +111,18 @@ public class MusicStore
 	
 	public ArrayList<String> albumByTitle(String title)
 	{
+		// Make a String ArrayList of the requested info for printing
 		ArrayList<String> albumsArr = new ArrayList<String>();
 		
 		for (Album album : albums)
 		{
 			if (album.getTitle().equals(title))
 			{
+				// Format: "Album by Artist, Genre, Year"
 				albumsArr.add(title + " by " + album.getArtist() + ", " +
 						album.getGenre() + ", " + album.getYear());
 				albumsArr.add("Songs: ");
+				
 				for (Song song : album.getSongs())
 					albumsArr.add(song.getTitle());
 			}
@@ -125,15 +139,18 @@ public class MusicStore
 	
 	public ArrayList<String> albumByArtist(String artist)
 	{
+		// Make a String ArrayList of the requested info for printing
 		ArrayList<String> albumsArr = new ArrayList<String>();
 		
 		for (Album album : albums)
 		{
 			if (album.getArtist().equals(artist))
 			{
+				// Format: "Album by Artist, Genre, Year"
 				albumsArr.add(album.getTitle() + " by " + artist + ", " +
 						album.getGenre() + ", " + album.getYear());
 				albumsArr.add("Songs: ");
+				
 				for (Song song : album.getSongs())
 					albumsArr.add(song.getTitle());
 			}

@@ -2,11 +2,12 @@ package model;
 
 import java.util.ArrayList;
 
-
 // PlayList.java
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: PlayList is a Class that represents, using an ArrayList
+//   and name, a PlayList created by the user to store Songs of
+//   their choosing.
 
 class PlayList
 {
@@ -32,6 +33,7 @@ class PlayList
 	
 	ArrayList<Song> getSongs()
 	{
+		// Clones the array and its songs to prevent escaping reference
 		ArrayList<Song> songsArr = new ArrayList<>();
 		
 		for (Song song : this.songs)
@@ -51,13 +53,5 @@ class PlayList
 	void removeSong(Song song)
 	{
 		songs.remove(song);
-	}
-
-	
-	PlayList playlistCpy()
-	{
-		PlayList playlist = new PlayList(name);
-		playlist.songs = getSongs();
-		return playlist;
 	}
 }

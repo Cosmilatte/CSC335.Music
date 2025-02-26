@@ -7,7 +7,9 @@ import java.util.Set;
 // LibraryModel.java
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: LibraryModel is a Class that represents, using ArrayLists,
+//   a user's editable song library. This interacts with the Store by
+//   pulling information from it to store in this Library.
 
 public class LibraryModel
 {
@@ -33,6 +35,7 @@ public class LibraryModel
 	// MISCELLANEOUS (RATING)
 	public void rateSong(String title, String artist, int r)
 	{
+		// If the Song is in the Library and store, find and rate it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
 			for (Album album : store.getAlbums())
@@ -42,6 +45,7 @@ public class LibraryModel
 					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
 					{
 						song.setRating(r);
+						// If the rating is 5, add to favorites
 						if (r == 5)
 							favorites.add(song);
 					}
@@ -54,6 +58,7 @@ public class LibraryModel
 	// ADDERS
 	public void addSong(String title, String artist)
 	{
+		// If the Song is not in the Library and is in store, find and add it
 		if ( (!isInLibrarySong(title, artist)) && isInStoreSong(title, artist) ) 
 		{
 			for (Album album : store.getAlbums())
@@ -70,6 +75,7 @@ public class LibraryModel
 	
 	public void addAlbum(String title, String artist)
 	{
+		// If the Song is not in the Library and is in store, find and add it
 		if (!isInLibraryAlbum(title, artist) && isInStoreAlbum(title, artist)) 
 		{
 			for (Album album : store.getAlbums())
@@ -88,10 +94,12 @@ public class LibraryModel
 	// SEARCHERS
 	public ArrayList<String> songsByTitle(String title)
 	{
+		// Find the item(s), store into a String array to be printed
 		ArrayList<String> songsArr = new ArrayList<String>();
 		
 		for (Song song : this.songs)
 		{
+			// Format: "Title by Artist in Album"
 			if (song.getTitle().equals(title))
 				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 						song.getAlbum());
@@ -108,10 +116,12 @@ public class LibraryModel
 	
 	public ArrayList<String> songsByArtist(String artist)
 	{
+		// Find the item(s), store into a String array to be printed
 		ArrayList<String> songsArr = new ArrayList<String>();
 		
 		for (Song song : this.songs)
 		{
+			// Format: "Title by Artist in Album"
 			if (song.getArtist().equals(artist))
 				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 						song.getAlbum());
@@ -128,15 +138,18 @@ public class LibraryModel
 	
 	public ArrayList<String> albumByTitle(String title)
 	{
+		// Find the item(s), store into a String array to be printed
 		ArrayList<String> albumsArr = new ArrayList<String>();
 		
 		for (Album album : albums)
 		{
 			if (album.getTitle().equals(title))
 			{
+				// Format: "Album by Artist, Genre, Year"
 				albumsArr.add(title + " by " + album.getArtist() + ", " +
 						album.getGenre() + ", " + album.getYear());
 				albumsArr.add("Songs: ");
+				
 				for (Song song : album.getSongs())
 					albumsArr.add(song.getTitle());
 			}
@@ -153,15 +166,18 @@ public class LibraryModel
 	
 	public ArrayList<String> albumByArtist(String artist)
 	{
+		// Find the item(s), store into a String array to be printed
 		ArrayList<String> albumsArr = new ArrayList<String>();
 		
 		for (Album album : albums)
 		{
 			if (album.getArtist().equals(artist))
 			{
+				// Format: "Album by Artist, Genre, Year"
 				albumsArr.add(album.getTitle() + " by " + artist + ", " +
 						album.getGenre() + ", " + album.getYear());
 				albumsArr.add("Songs: ");
+				
 				for (Song song : album.getSongs())
 					albumsArr.add(song.getTitle());
 			}
@@ -178,6 +194,7 @@ public class LibraryModel
 	
 	public ArrayList<String> playlistByTitle(String title)
 	{
+		// Find the item(s), store into a String array to be printed
 		ArrayList<String> playlistArr = new ArrayList<String>();
 		
 		for (PlayList playlist : playlists)
@@ -185,6 +202,8 @@ public class LibraryModel
 			if (playlist.getName().equals(title))
 			{
 				playlistArr.add("Playlist: " + title);
+				
+				// Format: "Title by Artist in Album"
 				for (Song song : playlist.getSongs())
 					playlistArr.add(song.getTitle() + " by " + song.getArtist());
 			}
@@ -201,8 +220,10 @@ public class LibraryModel
 	
 	// SEARCHERS (LIST EDITION)
 	public String[] getSongTitles()
-	{	
+	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> titlesArr = new HashSet<>();
+		
 		for (Song song : songs)
 			titlesArr.add(song.getTitle());
 		String arr[] = new String[titlesArr.size()];
@@ -213,7 +234,9 @@ public class LibraryModel
 	
 	public String[] getArtists()
 	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> artistsArr = new HashSet<>();
+		
 		for (Song song : songs)
 			artistsArr.add(song.getArtist());
 		String arr[] = new String[artistsArr.size()];
@@ -224,7 +247,9 @@ public class LibraryModel
 	
 	public String[] getAlbums()
 	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> albumsArr = new HashSet<>();
+		
 		for (Album album : albums)
 			albumsArr.add(album.getTitle());
 		String arr[] = new String[albumsArr.size()];
@@ -235,6 +260,7 @@ public class LibraryModel
 	
 	public String[] getPlaylistNames()
 	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> playlistsArr = new HashSet<>();
 		
 		for (PlayList playlist : playlists)
@@ -247,7 +273,9 @@ public class LibraryModel
 	
 	public String[] getFavorites()
 	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> favoritesArr = new HashSet<>();
+		
 		for (Song song : favorites)
 		{
 				favoritesArr.add(song.getTitle());
@@ -279,10 +307,13 @@ public class LibraryModel
 	
 	public void addToPlaylist(String pName, String title, String artist)
 	{
+		// If the Song exists, find and add it to the playlist
 		if (isInLibrarySong(title, artist))
 		{
+			// If the playlist doesn't exist, create that first
 			if (!isInLibraryPlaylist(pName))
 				createPlaylist(pName);
+			
 			for (Song s : songs)
 			{
 				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
@@ -294,8 +325,13 @@ public class LibraryModel
 	
 	public void removeFromPlaylist(String pName, String title, String artist)
 	{
+		// If the Song exists, find and remove from the playlist
 		if (isInLibrarySong(title, artist))
 		{
+			// If the playlist doesn't exist, exist
+			if (!isInLibraryPlaylist(pName))
+				return;
+			
 			for (Song s : songs)
 			{
 				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
@@ -308,9 +344,9 @@ public class LibraryModel
 	// HELPERS
 	private boolean isInLibrarySong(String title, String artist)
 	{
-		for (Song s : songs)
+		for (Song song : songs)
 		{
-			if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+			if (title.equals(song.getTitle()) && artist.equals(song.getArtist()))
 				return true;
 		}
 
@@ -347,9 +383,9 @@ public class LibraryModel
 	{
 		for (Album album : store.getAlbums())
 		{
-			for (Song s : album.getSongs())
+			for (Song song : album.getSongs())
 			{
-				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+				if (title.equals(song.getTitle()) && artist.equals(song.getArtist()))
 					return true;
 			}
 		}
@@ -360,9 +396,9 @@ public class LibraryModel
 	
 	private boolean isInStoreAlbum(String title, String artist)
 	{
-		for (Album a : store.getAlbums())
+		for (Album album : store.getAlbums())
 		{
-			if (title.equals(a.getTitle()) && artist.equals(a.getArtist()))
+			if (title.equals(album.getTitle()) && artist.equals(album.getArtist()))
 				return true;
 		}
 
