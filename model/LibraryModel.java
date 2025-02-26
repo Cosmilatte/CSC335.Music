@@ -31,13 +31,13 @@ public class LibraryModel
 	// ADDERS
 	public void addSong(String title, String artist)
 	{
-		if (!isInLibrarySong(title, artist) && isInStoreSong(title, artist)) 
+		if ( (!isInLibrarySong(title, artist)) && isInStoreSong(title, artist) ) 
 		{
 			for (Album album : store.getAlbums())
 			{
 				for (Song song : album.getSongs())
 				{
-					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getTitle()))
+					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
 					{	
 						songs.add(song.songCpy());
 						return;
@@ -164,6 +164,7 @@ public class LibraryModel
 		{
 			if (playlist.getName().equals(title))
 			{
+				playlistArr.add("Playlist: " + title);
 				for (Song song : playlist.getSongs())
 					playlistArr.add(song.getTitle() + " by " + song.getArtist());
 
@@ -186,8 +187,9 @@ public class LibraryModel
 		Set<String> titlesArr = new HashSet<>();
 		for (Song song : songs)
 			titlesArr.add(song.getTitle());
+		String arr[] = new String[titlesArr.size()];
 
-		return (String[]) titlesArr.toArray();
+		return titlesArr.toArray(arr);
 	}
 
 	
@@ -196,8 +198,9 @@ public class LibraryModel
 		Set<String> artistsArr = new HashSet<>();
 		for (Song song : songs)
 			artistsArr.add(song.getArtist());
+		String arr[] = new String[artistsArr.size()];
 
-		return (String[]) artistsArr.toArray();
+		return artistsArr.toArray(arr);
 	}
 	
 	
@@ -206,18 +209,21 @@ public class LibraryModel
 		Set<String> albumsArr = new HashSet<>();
 		for (Album album : albums)
 			albumsArr.add(album.getTitle());
+		String arr[] = new String[albumsArr.size()];
 
-		return (String[]) albumsArr.toArray();
+		return albumsArr.toArray(arr);
 	}
 	
 	
 	public String[] getPlaylistNames()
 	{
 		Set<String> playlistsArr = new HashSet<>();
+		
 		for (PlayList playlist : playlists)
 			playlistsArr.add(playlist.getName());
+		String arr[] = new String[playlistsArr.size()];
 
-		return (String[]) playlistsArr.toArray();
+		return playlistsArr.toArray(arr);
 	}
 
 	
@@ -229,8 +235,9 @@ public class LibraryModel
 			if (song.getRating() == 5)
 				favoritesArr.add(song.getTitle());
 		}
+		String arr[] = new String[favoritesArr.size()];
 
-		return (String[]) favoritesArr.toArray();
+		return favoritesArr.toArray(arr);
 	}
 	
 	
@@ -240,13 +247,7 @@ public class LibraryModel
 		for (PlayList playlist : playlists)
 		{
 			if (playlist.getName().equals(name))
-			{
-				PlayList foundPlaylist = new PlayList(name);
-				for (Song song : playlist.getSongs())
-					foundPlaylist.addSong(song.songCpy());
-
-				return foundPlaylist;
-			}
+				return playlist;
 		}
 
 		return null;
@@ -259,17 +260,18 @@ public class LibraryModel
 	}
 
 	
-	public void addToPlaylist(String name, Song song)
+	public void addToPlaylist(String pName, String title, String artist)
 	{
-		if (isInLibrarySong(song.getTitle(), song.getArtist()))
+		if (isInLibrarySong(title, artist))
 		{
-			if (!isInLibraryPlaylist(name))
-				createPlaylist(name);
-			getPlaylist(name).addSong(song);
+			if (!isInLibraryPlaylist(pName))
+				createPlaylist(pName);
+			for (Song s : songs)
+			{
+				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+					getPlaylist(pName).addSong(s);
+			}
 		}
-
-		else
-			System.err.println("ERROR: The song" + song.toString() + "hasn't been added to this library");
 	}
 
 	

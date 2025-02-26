@@ -18,7 +18,8 @@ class PlayList
 	// CONSTRUCTOR
 	PlayList(String title)
 	{
-		name = title;
+		this.name = title;
+		this.songs = new ArrayList<Song>();
 	}
 	
 	
@@ -31,11 +32,12 @@ class PlayList
 	
 	ArrayList<Song> getSongs()
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		ArrayList<Song> songsArr = new ArrayList<>();
+		
 		for (Song song : this.songs)
-			songs.add(song.songCpy());
+			songsArr.add(song.songCpy());
 
-		return songs;
+		return songsArr;
 	}
 	
 	

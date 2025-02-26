@@ -41,7 +41,7 @@ public class MusicStore
 		{
 			Album a2 = new Album(album.getTitle(), album.getArtist(), album.getGenre(), album.getYear());
 			for (Song s : album.getSongs())
-				a2.addSong(s);
+				a2.addSong(s.songCpy());
 			
 			albumsCopy.add(a2);
 		}
