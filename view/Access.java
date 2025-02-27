@@ -13,7 +13,7 @@ public class Access
 {
 	// PRIVATE INSTANCE VARIABLES
 	// private MusicStore ms;
-	private LibraryModel model;
+	private static LibraryModel library;
 	
 	// Main
 	public static void main(String[] args)
@@ -26,7 +26,7 @@ public class Access
 	public Access()
 	{
 		// this.ms = new MusicStore();
-		this.model = new LibraryModel(new MusicStore());
+		this.library = new LibraryModel(new MusicStore());
 		
 		run();
 	}
@@ -58,13 +58,45 @@ public class Access
 
 			else
 			{
-				// if (keywords[0].equals("song_T")) {
-					
-				// }
+				if (keywords[0].equals("song_T")) {
+					for (String song : library.songsByTitle(keywords[1])) {
+						System.out.println(song);
+					}
+				}
+
+				else if (keywords[0].equals("song_A")) {
+					for (String song : library.songsByArtist(keywords[1])) {
+						System.out.println(song);
+					}
+				}
+
+				else if (keywords[0].equals("album_T")) {
+					System.out.println(library.albumByTitle(response).get(0));
+				}
+
+				else if (keywords[0].equals("album_A")) {
+					for (String album : library.albumByArtist(keywords[1])) {
+						System.out.println(album);
+					}
+				}
+
+				else if (keywords[0].equals("playlist"))
+				{
+					for (String playlist : library.playlistByTitle(keywords[1])) {
+						System.out.println(playlist);
+					}
+				}
+
+				else
+				{
+					System.out.println("Invalid Command: Please type again");
+				}
 			}
 
 			response = scanner.nextLine();
 		}
+
+		scanner.close();
 	}
 	
 	
@@ -90,7 +122,7 @@ public class Access
 
 		System.out.println("• To search ALBUMS by ARTIST");
 		System.out.println("    album_A: <artist name>");
-		System.out.println("    Ex: slbum_A: Adele\n");
+		System.out.println("    Ex: album_A: Adele\n");
 
 		System.out.println("• To search a PLAYLIST");
 		System.out.println("    playlist: <playlist name>");
