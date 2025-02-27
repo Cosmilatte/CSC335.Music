@@ -57,6 +57,7 @@ public class MusicStore
 	
 	
 	// SEARCHERS
+	/** @pre Input != null */
 	public ArrayList<String> songsByTitle(String title)
 	{
 		// Make a String ArrayList of the requested info for printing
@@ -82,6 +83,7 @@ public class MusicStore
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> songsByArtist(String artist)
 	{
 		// Make a String ArrayList of the requested info for printing
@@ -109,6 +111,7 @@ public class MusicStore
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> albumByTitle(String title)
 	{
 		// Make a String ArrayList of the requested info for printing
@@ -137,6 +140,7 @@ public class MusicStore
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> albumByArtist(String artist)
 	{
 		// Make a String ArrayList of the requested info for printing

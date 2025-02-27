@@ -22,6 +22,7 @@ public class LibraryModel
 	
 	
 	// CONSTRUCTOR
+	/** @pre Input != null */
 	public LibraryModel(MusicStore ms)
 	{
 		store = ms;
@@ -33,6 +34,7 @@ public class LibraryModel
 	
 	
 	// MISCELLANEOUS (RATING)
+	/** @pre Inputs != null, int >= 1, int <= 5 */
 	public void rateSong(String title, String artist, int r)
 	{
 		// If the Song is in the Library and store, find and rate it
@@ -56,6 +58,7 @@ public class LibraryModel
 	
 	
 	// ADDERS
+	/** @pre Inputs != null */
 	public void addSong(String title, String artist)
 	{
 		// If the Song is not in the Library and is in store, find and add it
@@ -73,6 +76,7 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Inputs != null */
 	public void addAlbum(String title, String artist)
 	{
 		// If the Song is not in the Library and is in store, find and add it
@@ -92,6 +96,7 @@ public class LibraryModel
 
 	
 	// SEARCHERS
+	/** @pre Input != null */
 	public ArrayList<String> songsByTitle(String title)
 	{
 		// Find the item(s), store into a String array to be printed
@@ -114,6 +119,7 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> songsByArtist(String artist)
 	{
 		// Find the item(s), store into a String array to be printed
@@ -136,6 +142,7 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> albumByTitle(String title)
 	{
 		// Find the item(s), store into a String array to be printed
@@ -164,6 +171,7 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> albumByArtist(String artist)
 	{
 		// Find the item(s), store into a String array to be printed
@@ -192,6 +200,7 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Input != null */
 	public ArrayList<String> playlistByTitle(String title)
 	{
 		// Find the item(s), store into a String array to be printed
@@ -299,12 +308,14 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Input != null */
 	public void createPlaylist(String name)
 	{
 		playlists.add(new PlayList(name));
 	}
 
 	
+	/** @pre Inputs != null */
 	public void addToPlaylist(String pName, String title, String artist)
 	{
 		// If the Song exists, find and add it to the playlist
@@ -323,6 +334,7 @@ public class LibraryModel
 	}
 
 	
+	/** @pre Inputs != null */
 	public void removeFromPlaylist(String pName, String title, String artist)
 	{
 		// If the Song exists, find and remove from the playlist

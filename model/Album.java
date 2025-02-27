@@ -19,6 +19,7 @@ class Album
 	
 	
 	// CONSTRUCTOR
+	/** @pre Inputs != null */
 	Album(String title, String artist, String genre, int year)
 	{
 		this.songs = new ArrayList<Song>();
@@ -68,6 +69,7 @@ class Album
 	
 	
 	// MISC. METHODS
+	/** @pre Input != null */
 	void addSong(Song s)
 	{
 		if ((s.getArtist()).compareTo(artist) == 0)

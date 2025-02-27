@@ -17,6 +17,7 @@ class PlayList
 	
 	
 	// CONSTRUCTOR
+	/** @pre Input != null */
 	PlayList(String title)
 	{
 		this.name = title;
@@ -44,12 +45,14 @@ class PlayList
 	
 	
 	// MISC. METHODS
+	/** @pre Input != null */
 	void addSong(Song song)
 	{
 		songs.add(song);
 	}
 
 	
+	/** @pre Inputs != null */
 	void removeSong(Song song)
 	{
 		songs.remove(song);

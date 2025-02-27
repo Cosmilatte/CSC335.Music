@@ -17,6 +17,7 @@ class Song
 	
 	
 	// CONSTRUCTOR
+	/** @pre Inputs != null */
 	Song(String title, String artist, String album)
 	{
 		this.title = title;
@@ -50,6 +51,7 @@ class Song
 	}
 	
 	
+	/** @pre Input >= 1, input <= 5 */
 	void setRating(int r)
 	{
 		if (rating == 0)
