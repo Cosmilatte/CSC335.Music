@@ -15,7 +15,6 @@ public class Access
 	// private MusicStore ms;
 	private LibraryModel model;
 	
-	
 	// Main
 	public static void main(String[] args)
 	{
@@ -54,12 +53,15 @@ public class Access
 			if (response.contentEquals("help"))
 				help();
 
-			// else
-			// {
-			// 	if (keywords[0].equals("song_T")) {
-			// 		System.out.println(lm.songsByTitle)
-			// 	}
-			// }
+			else if (keywords.length != 2)
+				System.out.println("Invalid Command: Please type again");
+
+			else
+			{
+				if (keywords[0].equals("song_T")) {
+					// System.out.println(model.songsByTitle(keywords[1]));
+				}
+			}
 
 			response = scanner.nextLine();
 		}

@@ -90,4 +90,20 @@ class Album
 		album.songs = getSongs();
 		return album;
 	}
+
+	@Override
+	public String toString()
+	{
+		String info = "Album: " + title;
+		info += "\nArtist: " + artist;
+		info += "\nGenre: " + genre;
+		info += "\nYear: " + year;
+		info += "\nSongs: ";
+		for (Song song : songs)
+		{
+			info += "\n• " + song.getTitle();
+		}
+
+		return info;
+	}
 }

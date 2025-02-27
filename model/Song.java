@@ -68,4 +68,10 @@ class Song
 		song.setRating(getRating());
 		return song;
 	}
+
+	@Override
+	public String toString()
+	{
+		return title + " by " + artist + " from " + album;
+	}
 }
