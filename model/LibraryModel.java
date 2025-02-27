@@ -63,96 +63,135 @@ public class LibraryModel
 	}
 
 	
-	public ArrayList<Song> songsByTitle(String title)
+	// SEARCHERS
+	/** @pre Input != null */
+	public ArrayList<String> songsByTitle(String title)
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
 		for (Song song : this.songs)
 		{
+			// Format: "Title by Artist in Album"
 			if (song.getTitle().equals(title))
-				songs.add(song.songCpy());
+				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
+						song.getAlbum());
 		}
 
-		int songIndex = 1;
-		System.out.print("Title: " + title);
-		for (Song song : songs)
+		if (songsArr.size() == 0)
 		{
-			System.out.println("\n" + songIndex + ":");
-			System.out.println("Artist: " + song.getArtist());
-			System.out.println("Album: " + song.getAlbum());
-			songIndex++;
+			songsArr.add("ITEM NOT FOUND.");
 		}
-
-		return songs;
+		
+		return songsArr;
 	}
 
 	
-	public ArrayList<Song> songsByArtist(String artist)
+	/** @pre Input != null */
+	public ArrayList<String> songsByArtist(String artist)
 	{
-		ArrayList<Song> songs = new ArrayList<>();
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
 		for (Song song : this.songs)
 		{
+			// Format: "Title by Artist in Album"
 			if (song.getArtist().equals(artist))
-				songs.add(song.songCpy());
+				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
+						song.getAlbum());
 		}
-
-		int artistIndex = 1;
-		System.out.print("Artist: " + artist);
-		for (Song song : songs)
+		
+		if (songsArr.size() == 0)
 		{
-			System.out.println("\nSong " + artistIndex + ":");
-			System.out.println("Title: " + song.getTitle());
-			System.out.println("Album: " + song.getAlbum());
-			artistIndex++;
+			songsArr.add("ITEM NOT FOUND.");
 		}
-
-		return songs;
+		
+		return songsArr;
 	}
 
 	
-	public Album albumByTitle(String title)
+	/** @pre Input != null */
+	public ArrayList<String> albumByTitle(String title)
 	{
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
 		for (Album album : albums)
 		{
 			if (album.getTitle().equals(title))
 			{
-				System.out.println("Album: " + title);
-				System.out.println("Artist: " + album.getArtist());
-				System.out.println("Genre: " + album.getGenre());
-				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ");
+				// Format: "Album by Artist, Genre, Year"
+				albumsArr.add(title + " by " + album.getArtist() + ", " +
+						album.getGenre() + ", " + album.getYear());
+				albumsArr.add("Songs: ");
+				
 				for (Song song : album.getSongs())
-					System.out.println("\t•" + song.getTitle());
-
-				return album.albumCpy();
+					albumsArr.add(song.getTitle());
 			}
 		}
 
-		return null;
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return albumsArr;
 	}
 
 	
-	public ArrayList<Album> albumByArtist(String artist)
+	/** @pre Input != null */
+	public ArrayList<String> albumByArtist(String artist)
 	{
-		ArrayList<Album> albums = new ArrayList<>();
-		int albumIndex = 1;
-		System.out.println("Artist: " + artist);
-		for (Album album : this.albums)
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		
+		for (Album album : albums)
 		{
 			if (album.getArtist().equals(artist))
 			{
-				albums.add(album.albumCpy());
-				System.out.println("Album " + albumIndex + ": " + album.getTitle());
-				System.out.println("Genre: " + album.getGenre());
-				System.out.println("Year: " + album.getYear());
-				System.out.println("Songs: ");
+				// Format: "Album by Artist, Genre, Year"
+				albumsArr.add(album.getTitle() + " by " + artist + ", " +
+						album.getGenre() + ", " + album.getYear());
+				albumsArr.add("Songs: ");
+				
 				for (Song song : album.getSongs())
-					System.out.println("\t•" + song.getTitle());
-
-				albumIndex++;
+					albumsArr.add(song.getTitle());
 			}
 		}
 
-		return albums;
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return albumsArr;
+	}
+
+	
+	/** @pre Input != null */
+	public ArrayList<String> playlistByTitle(String title)
+	{
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> playlistArr = new ArrayList<String>();
+		
+		for (PlayList playlist : playlists)
+		{
+			if (playlist.getName().equals(title))
+			{
+				playlistArr.add("Playlist: " + title);
+				
+				// Format: "Title by Artist in Album"
+				for (Song song : playlist.getSongs())
+					playlistArr.add(song.getTitle() + " by " + song.getArtist());
+			}
+		}
+
+		if (playlistArr.size() == 0)
+		{
+			playlistArr.add("ITEM NOT FOUND.");
+		}
+		
+		return playlistArr;
 	}
 
 	
