@@ -5,8 +5,7 @@ import java.util.ArrayList;
 // Album.java
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
-// Purpose: Album is a Class that represents, using an ArrayList
-//   and other instance variables, a collection of Songs.
+// Purpose: 
 
 class Album
 {
@@ -19,7 +18,6 @@ class Album
 	
 	
 	// CONSTRUCTOR
-	/** @pre Inputs != null */
 	Album(String title, String artist, String genre, int year)
 	{
 		this.songs = new ArrayList<Song>();
@@ -54,13 +52,17 @@ class Album
 	{
 		return year;
 	}
+	
+	
+	int getLength()
+	{
+		return songs.size();
+	}
 
 	
 	ArrayList<Song> getSongs()
 	{
-		// Clones the array and its songs to prevent escaping reference
-		ArrayList<Song> songs = new ArrayList<Song>();
-		
+		ArrayList<Song> songs = new ArrayList<>();
 		for (Song song : this.songs)
 			songs.add(song.songCpy());
 
@@ -69,10 +71,23 @@ class Album
 	
 	
 	// MISC. METHODS
-	/** @pre Input != null */
-	void addSong(Song s)
+	int addSong(Song s)
 	{
-		if ((s.getArtist()).compareTo(artist) == 0)
+		if ((s.getArtist()).compareTo(artist) != 0)
+		{
+			return 1;
+		}
+
+		else
 			songs.add(s);
+		return 0;
+	}
+
+	
+	Album albumCpy()
+	{
+		Album album = new Album(title, artist, genre, year);
+		album.songs = getSongs();
+		return album;
 	}
 }
