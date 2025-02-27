@@ -12,8 +12,8 @@ import java.util.Scanner;
 public class Access 
 {
 	// PRIVATE INSTANCE VARIABLES
-	private MusicStore ms;
-	private LibraryModel lm;
+	// private MusicStore ms;
+	private LibraryModel model;
 	
 	
 	// Main
@@ -26,8 +26,8 @@ public class Access
 	// Constructor
 	public Access()
 	{
-		this.ms = new MusicStore();
-		this.lm = new LibraryModel(ms);
+		// this.ms = new MusicStore();
+		this.model = new LibraryModel(new MusicStore());
 		
 		run();
 	}
