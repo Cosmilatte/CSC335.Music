@@ -58,14 +58,4 @@ class PlayList
 		playlist.songs = getSongs();
 		return playlist;
 	}
-
-	@Override
-	public String toString()
-	{
-		String info = "Playlist: " + name + "\nSongs: ";
-		for (Song song : songs)
-			info += "\n• " + song.toString().split(" from")[0];
-
-		return info;
-	}
 }
