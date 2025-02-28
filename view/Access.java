@@ -12,20 +12,28 @@ import java.util.Scanner;
 public class Access 
 {
 	// PRIVATE INSTANCE VARIABLES
+<<<<<<< Updated upstream
 	// private MusicStore ms;
 	private static LibraryModel library;
+=======
+	private static LibraryModel library;
+	
+>>>>>>> Stashed changes
 	
 	// Main
 	public static void main(String[] args)
 	{
-		//Access runProgram = new Access();
-		run();
+		Access runProgram = new Access();
 	}
+	
 	
 	// Constructor
 	public Access()
 	{
+<<<<<<< Updated upstream
 		// this.ms = new MusicStore();
+=======
+>>>>>>> Stashed changes
 		this.library = new LibraryModel(new MusicStore());
 		
 		run();
@@ -108,6 +116,22 @@ public class Access
 		System.out.println("Type 'quit' at any time to exit the program.");
 		System.out.println("\n");
 		System.out.println("USABLE COMMANDS:");
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+		System.out.println("• To add a SONG to the library");
+		System.out.println("    add_S: <song title>");
+		System.out.println("    Ex: add_S: La Temperatura\n");
+
+		System.out.println("• To add an ALBUM to the library");
+		System.out.println("    add_A: <album title>");
+		System.out.println("    Ex: song_T: 19\n");
+
+=======
+>>>>>>> 41d99b2eb8b7655a4a8651f494286dabf39b04b3
+>>>>>>> Stashed changes
 		System.out.println("• To search SONGS by TITLE");
 		System.out.println("    song_T: <song title>");
 		System.out.println("    Ex: song_T: Ground on Down\n");
@@ -115,6 +139,13 @@ public class Access
 		System.out.println("• To search SONGS by ARTIST");
 		System.out.println("    song_A: <artist name>");
 		System.out.println("    Ex: song_A: Adele\n");
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+=======
+>>>>>>> 41d99b2eb8b7655a4a8651f494286dabf39b04b3
+>>>>>>> Stashed changes
 		
 		System.out.println("• To search ALBUM by TITLE");
 		System.out.println("    album_T: <album title>");
