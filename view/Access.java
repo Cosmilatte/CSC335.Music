@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class Access 
 {
 	// PRIVATE INSTANCE VARIABLES
+	private static MusicStore store;
 	private static LibraryModel library;
 	
 	// Main
@@ -24,7 +25,8 @@ public class Access
 	// Constructor
 	public Access()
 	{
-		this.library = new LibraryModel(new MusicStore());
+		this.store = new MusicStore();
+		this.library = new LibraryModel(store);
 		
 		run();
 	}
@@ -57,15 +59,13 @@ public class Access
 			else
 			{
 				if (keywords[0].equals("song_T")) {
-					for (String song : library.songsByTitle(keywords[1])) {
+					for (String song : library.songsByTitle(keywords[1]))
 						System.out.println(song);
-					}
 				}
 
 				else if (keywords[0].equals("song_A")) {
-					for (String song : library.songsByArtist(keywords[1])) {
+					for (String song : library.songsByArtist(keywords[1]))
 						System.out.println(song);
-					}
 				}
 
 				else if (keywords[0].equals("album_T")) {
@@ -73,16 +73,14 @@ public class Access
 				}
 
 				else if (keywords[0].equals("album_A")) {
-					for (String album : library.albumByArtist(keywords[1])) {
+					for (String album : library.albumByArtist(keywords[1]))
 						System.out.println(album);
-					}
 				}
 
 				else if (keywords[0].equals("playlist"))
 				{
-					for (String playlist : library.playlistByTitle(keywords[1])) {
+					for (String playlist : library.playlistByTitle(keywords[1]))
 						System.out.println(playlist);
-					}
 				}
 
 				else
@@ -108,29 +106,37 @@ public class Access
 		System.out.println("USABLE COMMANDS:");
 		System.out.println("• To add a SONG to the library");
 		System.out.println("    add_S: <song title>");
-		System.out.println("    Ex: add_S: La Temperatura\n");
+		System.out.println("    Ex: add_S: My Same\n");
 
 		System.out.println("• To add an ALBUM to the library");
 		System.out.println("    add_A: <album title>");
-		System.out.println("    Ex: song_T: 19\n");
+		System.out.println("    Ex: add_A: 19\n");
 
-		System.out.println("• To search SONGS by TITLE");
-		System.out.println("    song_T: <song title>");
-		System.out.println("    Ex: song_T: Ground on Down\n");
+		System.out.println("• To search for SONGS by TITLE from the STORE");
+		System.out.println("    song_TS: <song title>");
+		System.out.println("    Ex: song_TS: My Same\n");
 
-		System.out.println("• To search SONGS by ARTIST");
-		System.out.println("    song_A: <artist name>");
-		System.out.println("    Ex: song_A: Adele\n");
+		System.out.println("• To search for SONGS by TITLE from the LIBRARY");
+		System.out.println("    song_TL: <song title>");
+		System.out.println("    Ex: song_TL: My Same\n");
+
+		System.out.println("• To search for SONGS by ARTIST from the STORE");
+		System.out.println("    song_AS: <artist name>");
+		System.out.println("    Ex: song_AS: Adele\n");
+
+		System.out.println("• To search for SONGS by ARTIST from the LIBRARY");
+		System.out.println("    song_AL: <artist name>");
+		System.out.println("    Ex: song_AL: Adele\n");
 		
-		System.out.println("• To search ALBUM by TITLE");
+		System.out.println("• To search for ALBUM by TITLE");
 		System.out.println("    album_T: <album title>");
 		System.out.println("    Ex: album_T: Coat of Many Colors\n");
 
-		System.out.println("• To search ALBUMS by ARTIST");
+		System.out.println("• To search for ALBUMS by ARTIST");
 		System.out.println("    album_A: <artist name>");
 		System.out.println("    Ex: album_A: Adele\n");
 
-		System.out.println("• To search a PLAYLIST");
+		System.out.println("• To search for a PLAYLIST");
 		System.out.println("    playlist: <playlist name>");
 		System.out.println("    Ex: playlist: recent");
 		System.out.println();
