@@ -40,17 +40,13 @@ public class LibraryModel
 		// If the Song is in the Library and store, find and rate it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
-			for (Album album : store.getAlbums())
+			for (Song song : songs)
 			{
-				for (Song song : album.getSongs())
+				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
 				{
-					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
-					{
-						song.setRating(r);
-						// If the rating is 5, add to favorites
-						if (r == 5)
-							favorites.add(song);
-					}
+					song.setRating(r);
+					if (r == 5)
+						favorites.add(song);
 				}
 			}
 		}
@@ -90,6 +86,21 @@ public class LibraryModel
 					for (Song song : album.getSongs())
 						songs.add(song.songCpy());
 				}
+			}
+		}
+	}
+	
+	
+	/** @pre Inputs != null */
+	public void addFavorite(String title, String artist)
+	{
+		// If the Song is in the Library and store, find and rate it
+		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
+		{
+			for (Song song : songs)
+			{
+				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+					favorites.add(song);
 			}
 		}
 	}
