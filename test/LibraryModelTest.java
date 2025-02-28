@@ -29,15 +29,18 @@ class LibraryModelTest
 	// CONSTRUCTOR
 	public LibraryModelTest()
 	{
+		// The Store and Library
 		this.ms = new MusicStore();
 		this.lm = new LibraryModel(ms);
 		
+		// Adders
 		lm.addAlbum("19", "Adele");
 		lm.addAlbum("21", "Adele");
 		lm.addAlbum("Fight for Your Mind", "Ben Harper");
 		lm.addSong("Rise to the Sun", "Alabama Shakes");
 		lm.addSong("Hang Loose", "Alabama Shakes");
 		
+		// Playlist
 		lm.createPlaylist("Some songs I know");
 		lm.addToPlaylist("Some songs I know", "Rise to the Sun", "Alabama Shakes");
 		lm.addToPlaylist("Some songs I know", "Chasing Pavements", "Adele");
@@ -46,10 +49,12 @@ class LibraryModelTest
 		lm.addToPlaylist("Some songs I know", "Hang Loose", "Alabama Shakes");
 		lm.removeFromPlaylist("Some songs I know", "Hang Loose", "Alabama Shakes");
 		
+		// Rating + favorite
 		lm.rateSong("Rise to the Sun", "Alabama Shakes", 5);
 		lm.rateSong("Cold Shoulder", "Adele", 5);
 		lm.rateSong("Rumor has it", "Adele", 3);
 		lm.rateSong("Give a Man a Home", "Ben Harper", 5);
+		lm.addFavorite("Burn One Down", "Ben Harper");
 	}
 	
 	
@@ -263,6 +268,6 @@ class LibraryModelTest
 	void testGetFavorite()
 	{
 		String[] favoritesArr = lm.getFavorites();
-		assertEquals(3, favoritesArr.length);
+		assertEquals(4, favoritesArr.length);
 	}
 }
