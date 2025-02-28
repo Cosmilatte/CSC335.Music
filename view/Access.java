@@ -58,29 +58,112 @@ public class Access
 
 			else
 			{
-				if (keywords[0].equals("song_T")) {
-					for (String song : library.songsByTitle(keywords[1]))
+				String command = keywords[0];
+				String option = keywords[1];
+				if (command.equals("add_S"))
+					library.addSong(option.split("/")[0], option.split("/")[1]);
+
+				else if (command.equals("add_A"))
+					library.addAlbum(option.split("/")[0], option.split("/")[1]);
+
+				else if (command.equals("add_P"))
+				{
+					String[] newSong = option.split("/");
+					library.addToPlaylist(newSong[0], newSong[1], newSong[2]);
+				}
+
+				else if (command.equals("rm"))
+				{
+					String[] newSong = option.split("/");
+					library.removeFromPlaylist(newSong[0], newSong[1], newSong[2]);
+				}
+
+				else if (command.equals("song_TS")) {
+					for (String song : store.songsByTitle(option))
 						System.out.println(song);
 				}
 
-				else if (keywords[0].equals("song_A")) {
-					for (String song : library.songsByArtist(keywords[1]))
+				else if (command.equals("song_TL")) {
+					for (String song : library.songsByTitle(option))
 						System.out.println(song);
 				}
 
-				else if (keywords[0].equals("album_T")) {
-					System.out.println(library.albumByTitle(response).get(0));
+				else if (command.equals("song_AS")) {
+					for (String song : store.songsByArtist(option))
+						System.out.println(song);
+				}
+				
+				else if (command.equals("song_AL")) {
+					for (String song : library.songsByArtist(option))
+						System.out.println(song);
 				}
 
-				else if (keywords[0].equals("album_A")) {
-					for (String album : library.albumByArtist(keywords[1]))
+				else if (command.equals("album_TS")) {
+					System.out.println(store.albumByTitle(option).get(0));
+				}
+
+				else if (command.equals("album_TL")) {
+					System.out.println(library.albumByTitle(option).get(0));
+				}
+
+				else if (command.equals("album_AS")) {
+					for (String album : store.albumByArtist(option))
 						System.out.println(album);
 				}
 
-				else if (keywords[0].equals("playlist"))
+				else if (command.equals("album_AL")) {
+					for (String album : library.albumByArtist(option))
+						System.out.println(album);
+				}
+
+				else if (command.equals("playlist"))
 				{
-					for (String playlist : library.playlistByTitle(keywords[1]))
+					for (String playlist : library.playlistByTitle(option))
 						System.out.println(playlist);
+				}
+
+				else if (command.equals("get"))
+				{
+					if (option.equals("songs"))
+					{
+						for (String song : library.getSongTitles())
+							System.out.println(song);
+					}
+
+					else if (option.equals("artists"))
+					{
+						for (String artist : library.getArtists())
+							System.out.println(artist);
+					}
+
+					else if (option.equals("albums"))
+					{
+						for (String album : library.getAlbums())
+							System.out.println(album);
+					}
+
+					else if (option.equals("albums"))
+					{
+						for (String album : library.getAlbums())
+							System.out.println(album);
+					}
+
+					else if (option.equals("playlists"))
+					{
+						for (String playlist : library.getPlaylistNames())
+							System.out.println(playlist);
+					}
+
+					else if (option.equals("favorites"))
+					{
+						for (String goodSong : library.getFavorites())
+							System.out.println(goodSong);
+					}
+					
+					else
+					{
+						System.out.println("Invalid Command: Please type again");
+					}
 				}
 
 				else
@@ -104,42 +187,87 @@ public class Access
 		System.out.println("Type 'quit' at any time to exit the program.");
 		System.out.println("\n");
 		System.out.println("USABLE COMMANDS:");
-		System.out.println("• To add a SONG to the library");
-		System.out.println("    add_S: <song title>");
-		System.out.println("    Ex: add_S: My Same\n");
 
-		System.out.println("• To add an ALBUM to the library");
-		System.out.println("    add_A: <album title>");
-		System.out.println("    Ex: add_A: 19\n");
+		/*
+		 * Command Rule:
+		 * The 'command id' is isolated by ": ",
+		 * The input(arguments) of the command can only be separated by /
+		 */
+		
+		System.out.println("• Add a SONG to the library");
+		System.out.println("    add_S: <song title>/<artist name>");
+		System.out.println("    Ex: add_S: My Same/Adele\n");
 
-		System.out.println("• To search for SONGS by TITLE from the STORE");
+		System.out.println("• Add an ALBUM to the library");
+		System.out.println("    add_A: <album title>/<artist name>");
+		System.out.println("    Ex: add_A: 1/Adele9\n");
+
+		System.out.println("• Add a SONG to the PLAYLIST");
+		System.out.println("    add_P: <playlist name/<song title>/<artist name>");
+		System.out.println("    Ex: add_P: Driving/My Same/Adele\n");
+
+		System.out.println("• Remove a SONG from the PLAYLIST");
+		System.out.println("    rm: <playlist name/<song title>/<artist name>");
+		System.out.println("    Ex: rm: Driving/My Same/Adele\n");
+
+		System.out.println("• Create a PLAYLIST");
+		System.out.println("    new: <playlist name>");
+		System.out.println("    Ex: new: driving\n");
+
+		System.out.println("• Search for SONGS by TITLE from the STORE");
 		System.out.println("    song_TS: <song title>");
 		System.out.println("    Ex: song_TS: My Same\n");
 
-		System.out.println("• To search for SONGS by TITLE from the LIBRARY");
+		System.out.println("• Search for SONGS by TITLE from the LIBRARY");
 		System.out.println("    song_TL: <song title>");
 		System.out.println("    Ex: song_TL: My Same\n");
 
-		System.out.println("• To search for SONGS by ARTIST from the STORE");
+		System.out.println("• Search for SONGS by ARTIST from the STORE");
 		System.out.println("    song_AS: <artist name>");
 		System.out.println("    Ex: song_AS: Adele\n");
 
-		System.out.println("• To search for SONGS by ARTIST from the LIBRARY");
+		System.out.println("• Search for SONGS by ARTIST from the LIBRARY");
 		System.out.println("    song_AL: <artist name>");
 		System.out.println("    Ex: song_AL: Adele\n");
 		
-		System.out.println("• To search for ALBUM by TITLE");
+		System.out.println("• Search for ALBUM by TITLE from the STORE");
 		System.out.println("    album_T: <album title>");
 		System.out.println("    Ex: album_T: Coat of Many Colors\n");
 
-		System.out.println("• To search for ALBUMS by ARTIST");
+		System.out.println("• Search for ALBUM by TITLE from the LIBRARY");
+		System.out.println("    album_T: <album title>");
+		System.out.println("    Ex: album_T: Coat of Many Colors\n");
+
+		System.out.println("• Search for ALBUMS by ARTIST from the STORE");
 		System.out.println("    album_A: <artist name>");
 		System.out.println("    Ex: album_A: Adele\n");
 
-		System.out.println("• To search for a PLAYLIST");
+		System.out.println("• Search for ALBUMS by ARTIST from the LIBRARY");
+		System.out.println("    album_A: <artist name>");
+		System.out.println("    Ex: album_A: Adele\n");
+
+		System.out.println("• Search for a PLAYLIST");
 		System.out.println("    playlist: <playlist name>");
 		System.out.println("    Ex: playlist: recent");
+
+		System.out.println("• Get a list of song titles");
+		System.out.println("    get: songs");
+
+		System.out.println("• Get a list of artists");
+		System.out.println("    get: artists");
+
+		System.out.println("• Get a list of albums");
+		System.out.println("    get: albums");
+
+		System.out.println("• Get a list of playlists");
+		System.out.println("    get: playlists");
+
+		System.out.println("• Get a list of favorite songs");
+		System.out.println("    get: favorites");
+
 		System.out.println();
+
+
 
 		System.out.println("|--======================================--|");
 	}

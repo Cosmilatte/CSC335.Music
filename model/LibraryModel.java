@@ -16,49 +16,90 @@ public class LibraryModel
 	private ArrayList<Song> songs;
 	private ArrayList<Album> albums;
 	private ArrayList<PlayList> playlists;
+	private ArrayList<Song> favorites;
 	
 	
 	// CONSTRUCTOR
+	/** @pre Input != null */
 	public LibraryModel(MusicStore ms)
 	{
 		store = ms;
 		songs = new ArrayList<>();
 		albums = new ArrayList<>();
 		playlists = new ArrayList<>();
+		favorites = new ArrayList<>();
 	}
 	
 	
-	// GETTERS+SETTERS
-	public ArrayList<Album> getAlbums()
+	// MISCELLANEOUS (RATING)
+	/** @pre Inputs != null, int >= 1, int <= 5 */
+	public void rateSong(String title, String artist, int r)
 	{
-		ArrayList<Album> albums = new ArrayList<>();
-		for (Album album : this.albums)
-			albums.add(album.albumCpy());
-
-		return albums;
-	}
-
-	
-	public ArrayList<PlayList> getPlaylists()
-	{
-		return playlists;
-	}
-	
-	
-	// MISC. METHODS
-	public void addSong(Song song) {
-		if (!isInLibrary(song) && isInStore(song)) 
-			songs.add(song.songCpy());
-	}
-
-	
-	public void addAlbum(Album album)
-	{
-		if (isInStore(album))
+		// If the Song is in the Library and store, find and rate it
+		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
-			albums.add(album.albumCpy());
-			for (Song song : album.getSongs())
-				addSong(song);
+			for (Song song : songs)
+			{
+				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+				{
+					song.setRating(r);
+					if (r == 5)
+						favorites.add(song);
+				}
+			}
+		}
+	}
+	
+	
+	// ADDERS
+	/** @pre Inputs != null */
+	public void addSong(String title, String artist)
+	{
+		// If the Song is not in the Library and is in store, find and add it
+		if ( (!isInLibrarySong(title, artist)) && isInStoreSong(title, artist) ) 
+		{
+			for (Album album : store.getAlbums())
+			{
+				for (Song song : album.getSongs())
+				{
+					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+						songs.add(song.songCpy());
+				}
+			}
+		}
+	}
+
+	
+	/** @pre Inputs != null */
+	public void addAlbum(String title, String artist)
+	{
+		// If the Song is not in the Library and is in store, find and add it
+		if (!isInLibraryAlbum(title, artist) && isInStoreAlbum(title, artist)) 
+		{
+			for (Album album : store.getAlbums())
+			{
+				if (title.contentEquals(album.getTitle()) && artist.contentEquals(album.getArtist()))
+				{
+					albums.add(album);
+					for (Song song : album.getSongs())
+						songs.add(song.songCpy());
+				}
+			}
+		}
+	}
+	
+	
+	/** @pre Inputs != null */
+	public void addFavorite(String title, String artist)
+	{
+		// If the Song is in the Library and store, find and rate it
+		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
+		{
+			for (Song song : songs)
+			{
+				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+					favorites.add(song);
+			}
 		}
 	}
 
@@ -195,92 +236,150 @@ public class LibraryModel
 	}
 
 	
-	public PlayList getPlaylist(String name)
+	// SEARCHERS (LIST EDITION)
+	public String[] getSongTitles()
+	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> titlesArr = new HashSet<>();
+		
+		for (Song song : songs)
+			titlesArr.add(song.getTitle());
+		String arr[] = new String[titlesArr.size()];
+
+		return titlesArr.toArray(arr);
+	}
+
+	
+	public String[] getArtists()
+	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> artistsArr = new HashSet<>();
+		
+		for (Song song : songs)
+			artistsArr.add(song.getArtist());
+		String arr[] = new String[artistsArr.size()];
+
+		return artistsArr.toArray(arr);
+	}
+	
+	
+	public String[] getAlbums()
+	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> albumsArr = new HashSet<>();
+		
+		for (Album album : albums)
+			albumsArr.add(album.getTitle());
+		String arr[] = new String[albumsArr.size()];
+
+		return albumsArr.toArray(arr);
+	}
+	
+	
+	public String[] getPlaylistNames()
+	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> playlistsArr = new HashSet<>();
+		
+		for (PlayList playlist : playlists)
+			playlistsArr.add(playlist.getName());
+		String arr[] = new String[playlistsArr.size()];
+
+		return playlistsArr.toArray(arr);
+	}
+
+	
+	public String[] getFavorites()
+	{
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> favoritesArr = new HashSet<>();
+		
+		for (Song song : favorites)
+		{
+				favoritesArr.add(song.getTitle());
+		}
+		String arr[] = new String[favoritesArr.size()];
+
+		return favoritesArr.toArray(arr);
+	}
+	
+	
+	// PLAYLIST METHODS
+	private PlayList getPlaylist(String name)
 	{
 		for (PlayList playlist : playlists)
 		{
 			if (playlist.getName().equals(name))
-			{
-				PlayList foundPlaylist = new PlayList(name);
-				System.out.println("Playlist Name: " + name + "\nSongs: ");
-				for (Song song : playlist.getSongs())
-				{
-					System.out.println("\t•" + song.getTitle() + " by " + song.getArtist());
-					foundPlaylist.addSong(song.songCpy());
-				}
-
-				return foundPlaylist;
-			}
+				return playlist;
 		}
 
 		return null;
 	}
 
 	
-	public String[] getSongTitles()
+	/** @pre Input != null */
+	public void createPlaylist(String name)
 	{
-		Set<String> titles = new HashSet<>();
-		for (Song song : songs)
-			titles.add(song.getArtist());
-
-		return (String[]) titles.toArray();
-	}
-
-	
-	public String[] getArtists()
-	{
-		Set<String> artists = new HashSet<>();
-		for (Song song : songs)
-			artists.add(song.getArtist());
-
-		return (String[]) artists.toArray();
-	}
-
-	
-	public ArrayList<Song> getFavorite()
-	{
-		ArrayList<Song> favorites = new ArrayList<>();
-		for (Song song : songs)
-		{
-			if (song.getRating() == 5)
-				favorites.add(song.songCpy());
-		}
-
-		return favorites;
-	}
-
-	
-	public void createPlaylist(String name) {
 		playlists.add(new PlayList(name));
 	}
 
 	
-	public void addToPlaylist(String name, Song song)
+	/** @pre Inputs != null */
+	public void addToPlaylist(String pName, String title, String artist)
 	{
-		if (isInLibrary(song))
+		// If the Song exists, find and add it to the playlist
+		if (isInLibrarySong(title, artist))
 		{
-			if (!isInLibrary(name))
-				createPlaylist(name);
-			getPlaylist(name).addSong(song);
+			// If the playlist doesn't exist, create that first
+			if (!isInLibraryPlaylist(pName))
+				createPlaylist(pName);
+			
+			for (Song s : songs)
+			{
+				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+					getPlaylist(pName).addSong(s);
+			}
+		}
+	}
+
+	
+	/** @pre Inputs != null */
+	public void removeFromPlaylist(String pName, String title, String artist)
+	{
+		// If the Song exists, find and remove from the playlist
+		if (isInLibrarySong(title, artist))
+		{
+			// If the playlist doesn't exist, exist
+			if (!isInLibraryPlaylist(pName))
+				return;
+			
+			for (Song s : songs)
+			{
+				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
+					getPlaylist(pName).removeSong(s);
+			}
+		}
+	}
+
+
+	// HELPERS
+	private boolean isInLibrarySong(String title, String artist)
+	{
+		for (Song song : songs)
+		{
+			if (title.equals(song.getTitle()) && artist.equals(song.getArtist()))
+				return true;
 		}
 
-		else
-			System.err.println("ERROR: The song" + song.toString() + "hasn't been added to this library");
+		return false;
 	}
-
 	
-	public void removeFromPlaylist(String name, Song song)
-	{
-		if (isInLibrary(song) && isInLibrary(name))
-			getPlaylist(name).removeSong(song);
-	}
-
 	
-	private boolean isInLibrary(Song song)
+	private boolean isInLibraryAlbum(String title, String artist)
 	{
-		for (Song s : songs)
+		for (Album album : albums)
 		{
-			if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
+			if (title.equals(album.getTitle()) && artist.equals(album.getArtist()))
 				return true;
 		}
 
@@ -289,7 +388,7 @@ public class LibraryModel
 
 	
 	// only for PlayList name
-	private boolean isInLibrary(String name)
+	private boolean isInLibraryPlaylist(String name)
 	{
 		for (PlayList playlist : playlists)
 		{
@@ -301,14 +400,13 @@ public class LibraryModel
 	}
 
 	
-	// Helper Methods
-	private boolean isInStore(Song song)
+	private boolean isInStoreSong(String title, String artist)
 	{
 		for (Album album : store.getAlbums())
 		{
-			for (Song s : album.getSongs())
+			for (Song song : album.getSongs())
 			{
-				if (song.getTitle().equals(s.getTitle()) && song.getArtist().equals(s.getArtist()))
+				if (title.equals(song.getTitle()) && artist.equals(song.getArtist()))
 					return true;
 			}
 		}
@@ -317,11 +415,11 @@ public class LibraryModel
 	}
 
 	
-	private boolean isInStore(Album album)
+	private boolean isInStoreAlbum(String title, String artist)
 	{
-		for (Album a : store.getAlbums())
+		for (Album album : store.getAlbums())
 		{
-			if (album.getTitle().equals(a.getTitle()) && album.getArtist().equals(a.getArtist()))
+			if (title.equals(album.getTitle()) && artist.equals(album.getArtist()))
 				return true;
 		}
 
