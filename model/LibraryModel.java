@@ -75,7 +75,7 @@ public class LibraryModel
 	/** @pre Inputs != null */
 	public void addAlbum(String title, String artist)
 	{
-		// If the Song is not in the Library and is in store, find and add it
+		// If the Album is not in the Library and is in store, find and add it
 		if (!isInLibraryAlbum(title, artist) && isInStoreAlbum(title, artist)) 
 		{
 			for (Album album : store.getAlbums())
@@ -84,7 +84,10 @@ public class LibraryModel
 				{
 					albums.add(album);
 					for (Song song : album.getSongs())
-						songs.add(song.songCpy());
+					{
+						if (!songs.contains(song))
+							songs.add(song.songCpy());
+					}
 				}
 			}
 		}

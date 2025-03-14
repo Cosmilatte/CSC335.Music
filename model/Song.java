@@ -13,6 +13,7 @@ class Song
 	private String title;
 	private String artist;
 	private int rating;
+	private int plays;
 	private String album;
 	
 	
@@ -23,6 +24,7 @@ class Song
 		this.title = title;
 		this.artist = artist;
 		this.rating = 0;
+		this.plays = 0;
 		this.album = album;
 	}
 	
@@ -46,6 +48,12 @@ class Song
 	}
 	
 	
+	int getPlays()
+	{
+		return plays;
+	}
+	
+	
 	String getAlbum() {
 		return album;
 	}
@@ -59,12 +67,26 @@ class Song
 	}
 	
 	
+	// Exclusively for use in songCpy
+	private void setPlays(int r)
+	{
+		this.plays = r;
+	}
+	
+	
 	// MISC. METHODS
 	Song songCpy()
 	{
 		// Clones the item to prevent escaping reference
 		Song song = new Song(title, artist, album);
 		song.setRating(getRating());
+		song.setPlays(getPlays());
 		return song;
+	}
+	
+	
+	void addPlay()
+	{
+		this.plays = plays++;
 	}
 }
