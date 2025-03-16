@@ -48,7 +48,14 @@ class PlayList
 	/** @pre Input != null */
 	void addSong(Song song)
 	{
-		songs.add(song);
+		songs.add(0, song);
+	}
+	
+	
+	/** @pre Input != null */
+	void removeEnd()
+	{
+		songs.remove(songs.size()-1);
 	}
 
 	

@@ -18,7 +18,6 @@ public class LibraryModel
 	private ArrayList<Song> songs;
 	private ArrayList<Album> albums;
 	private ArrayList<PlayList> playlists;
-	private ArrayList<Song> favorites;
 	
 	
 	// CONSTRUCTOR
@@ -29,7 +28,11 @@ public class LibraryModel
 		songs = new ArrayList<>();
 		albums = new ArrayList<>();
 		playlists = new ArrayList<>();
-		favorites = new ArrayList<>();
+		
+		createPlaylist("favorites");
+		createPlaylist("Recently Played");
+		createPlaylist("Frequently Played");
+		createPlaylist("Top Rated");
 	}
 	
 	
@@ -37,6 +40,8 @@ public class LibraryModel
 	/** @pre Inputs != null, int >= 1, int <= 5 */
 	public void rateSong(String title, String artist, int r)
 	{
+		PlayList favorites = getPlaylist("favorites");
+		PlayList topRated = getPlaylist("Top Rated");
 		// If the Song is in the Library and store, find and rate it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
@@ -46,10 +51,43 @@ public class LibraryModel
 				{
 					song.setRating(r);
 					if (r == 5)
-						favorites.add(song);
+					{
+						favorites.addSong(song);
+						topRated.addSong(song);
+					}
+					else if (r == 4)
+						topRated.addSong(song);
+					
 				}
 			}
 		}
+	}
+	
+	
+	/** @pre Inputs != null */
+	public String playSong(String title, String artist)
+	{
+		PlayList recentlyPlayed = getPlaylist("Recently Played");
+		// If the Song is in the Library and store, find and play it
+		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
+		{
+			for (Song song : songs)
+			{
+				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+				{
+					song.addPlay();
+					if (recentlyPlayed.getSongs().size() < 10)
+						recentlyPlayed.addSong(song);
+					else
+					{
+						recentlyPlayed.removeEnd();
+						recentlyPlayed.addSong(song);
+					}
+					return "Now playing: " + title + " by " + artist;
+				}
+			}
+		}
+		return "Song not found";
 	}
 	
 	
@@ -97,6 +135,7 @@ public class LibraryModel
 	/** @pre Inputs != null */
 	public void addFavorite(String title, String artist)
 	{
+		ArrayList<Song> favorites = getPlaylist("favorites").getSongs();
 		// If the Song is in the Library and store, find and rate it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
@@ -296,6 +335,7 @@ public class LibraryModel
 	
 	public String[] getFavorites()
 	{
+		ArrayList<Song> favorites = getPlaylist("favorites").getSongs();
 		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> favoritesArr = new HashSet<>();
 		
@@ -306,6 +346,56 @@ public class LibraryModel
 		String arr[] = new String[favoritesArr.size()];
 
 		return favoritesArr.toArray(arr);
+	}
+	
+	
+	public String[] getRecentlyPlayed()
+	{
+		// TODO: NOT DONE
+		ArrayList<Song> recent = getPlaylist("Recently Played").getSongs();
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> recentsArr = new HashSet<>();
+		
+		for (Song song : recent)
+		{
+			recentsArr.add(song.getTitle());
+		}
+		String arr[] = new String[recentsArr.size()];
+
+		return recentsArr.toArray(arr);
+	}
+	
+	
+	public String[] getFrequentlyPlayed()
+	{
+		// TODO: NOT DONE
+		ArrayList<Song> frequent = getPlaylist("Frequently Played").getSongs();
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> frequentsArr = new HashSet<>();
+		
+		for (Song song : frequent)
+		{
+			frequentsArr.add(song.getTitle());
+		}
+		String arr[] = new String[frequentsArr.size()];
+
+		return frequentsArr.toArray(arr);
+	}
+	
+	
+	public String[] getTopRated()
+	{
+		ArrayList<Song> top = getPlaylist("Top Rated").getSongs();
+		// Find the item(s), store into a no-duplicates Hash to be printed
+		Set<String> topsArr = new HashSet<>();
+		
+		for (Song song : top)
+		{
+			topsArr.add(song.getTitle());
+		}
+		String arr[] = new String[topsArr.size()];
+
+		return topsArr.toArray(arr);
 	}
 	
 	
