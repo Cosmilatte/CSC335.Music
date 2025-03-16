@@ -76,6 +76,12 @@ public class Access
 				else if (command.equals("rate_S"))
 					library.rateSong(option.split("/")[0], option.split("/")[1], Integer.valueOf(option.split("/")[2]));
 				
+				else if (command.equals("play_S"))
+				{
+					System.out.println(library.playSong(option.split("/")[0], option.split("/")[1]));
+					System.out.println("♫♩ ♪♩ ♫");
+				}
+				
 				else if (command.equals("add_P"))
 				{
 					String[] newSong = option.split("/");
@@ -86,6 +92,11 @@ public class Access
 				{
 					String[] newSong = option.split("/");
 					library.removeFromPlaylist(newSong[0], newSong[1], newSong[2]);
+				}
+				
+				else if (command.equals("new"))
+				{
+					library.createPlaylist(option);
 				}
 
 				else if (command.equals("song_TS")) {
@@ -152,12 +163,6 @@ public class Access
 							System.out.println(album);
 					}
 
-					else if (option.equals("albums"))
-					{
-						for (String album : library.getAlbums())
-							System.out.println(album);
-					}
-
 					else if (option.equals("playlists"))
 					{
 						for (String playlist : library.getPlaylistNames())
@@ -167,6 +172,26 @@ public class Access
 					else if (option.equals("favorites"))
 					{
 						for (String goodSong : library.getFavorites())
+							System.out.println(goodSong);
+					}
+					
+					// TODO: NOT DONE
+					else if (option.equals("recent"))
+					{
+						for (String goodSong : library.getFavorites())
+							System.out.println(goodSong);
+					}
+					
+					// TODO: NOT DONE
+					else if (option.equals("frequent"))
+					{
+						for (String goodSong : library.getFavorites())
+							System.out.println(goodSong);
+					}
+					
+					else if (option.equals("top_rated"))
+					{
+						for (String goodSong : library.getTopRated())
 							System.out.println(goodSong);
 					}
 					
@@ -226,6 +251,10 @@ public class Access
 		System.out.println("• Rate a SONG in the LIBRARY");
 		System.out.println("    rate_S: <song title>/<artist name>/int");
 		System.out.println("    Ex: rate_S: Little Lion Man/Mumford & Sons/5\n");
+		
+		System.out.println("• Play a SONG in the LIBRARY");
+		System.out.println("    play_S: <song title>/<artist name>/int");
+		System.out.println("    Ex: play_S: Little Lion Man/Mumford & Sons/5\n");
 
 		System.out.println("• Add a SONG to the PLAYLIST");
 		System.out.println("    add_P: <playlist name/<song title>/<artist name>");
@@ -256,20 +285,20 @@ public class Access
 		System.out.println("    Ex: song_AL: Adele\n");
 		
 		System.out.println("• Search for ALBUM by TITLE from the STORE");
-		System.out.println("    album_T: <album title>");
-		System.out.println("    Ex: album_T: Coat of Many Colors\n");
+		System.out.println("    album_TS: <album title>");
+		System.out.println("    Ex: album_TS: Coat of Many Colors\n");
 
 		System.out.println("• Search for ALBUM by TITLE from the LIBRARY");
-		System.out.println("    album_T: <album title>");
-		System.out.println("    Ex: album_T: Coat of Many Colors\n");
+		System.out.println("    album_TL: <album title>");
+		System.out.println("    Ex: album_TL: Coat of Many Colors\n");
 
 		System.out.println("• Search for ALBUMS by ARTIST from the STORE");
-		System.out.println("    album_A: <artist name>");
-		System.out.println("    Ex: album_A: Adele\n");
+		System.out.println("    album_AS: <artist name>");
+		System.out.println("    Ex: album_AS: Adele\n");
 
 		System.out.println("• Search for ALBUMS by ARTIST from the LIBRARY");
-		System.out.println("    album_A: <artist name>");
-		System.out.println("    Ex: album_A: Adele\n");
+		System.out.println("    album_AL: <artist name>");
+		System.out.println("    Ex: album_AL: Adele\n");
 
 		System.out.println("• Search for a PLAYLIST");
 		System.out.println("    playlist: <playlist name>");
@@ -289,6 +318,15 @@ public class Access
 
 		System.out.println("• Get a list of favorite songs");
 		System.out.println("    get: favorites");
+		
+		System.out.println("• Get a list of Recently Played songs");
+		System.out.println("    get: recent");
+		
+		System.out.println("• Get a list of Frequently Played songs");
+		System.out.println("    get: frequent");
+		
+		System.out.println("• Get a list of Top Rated songs");
+		System.out.println("    get: top_rated");
 
 		System.out.println();
 
