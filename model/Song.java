@@ -3,7 +3,9 @@ package model;
 // Song.java
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: Song is a Class that represents, in String and int
+//    form, the Title, Artist, Rating, and Album that a song
+//    belongs to.
 
 class Song
 {
@@ -11,15 +13,18 @@ class Song
 	private String title;
 	private String artist;
 	private int rating;
+	private int plays;
 	private String album;
 	
 	
 	// CONSTRUCTOR
+	/** @pre Inputs != null */
 	Song(String title, String artist, String album)
 	{
 		this.title = title;
 		this.artist = artist;
 		this.rating = 0;
+		this.plays = 0;
 		this.album = album;
 	}
 	
@@ -43,29 +48,45 @@ class Song
 	}
 	
 	
+	int getPlays()
+	{
+		return plays;
+	}
+	
+	
 	String getAlbum() {
 		return album;
 	}
 	
 	
-	int setRating(int r)
+	/** @pre Input >= 1, input <= 5 */
+	void setRating(int r)
 	{
-		// NOTE: This only works if the song has not been rated before
-		// This helps with making this Class almost immutable
-		
-		if ((r > 5) || (r < 1))
-			return 1;
-		else if (r == 0)
+		if (rating == 0)
 			this.rating = r;
-		return 0;
+	}
+	
+	
+	// Exclusively for use in songCpy
+	private void setPlays(int r)
+	{
+		this.plays = r;
 	}
 	
 	
 	// MISC. METHODS
 	Song songCpy()
 	{
+		// Clones the item to prevent escaping reference
 		Song song = new Song(title, artist, album);
 		song.setRating(getRating());
+		song.setPlays(getPlays());
 		return song;
+	}
+	
+	
+	void addPlay()
+	{
+		this.plays = plays++;
 	}
 }

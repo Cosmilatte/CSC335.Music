@@ -3,7 +3,9 @@ package view;
 // Access.java
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
-// Purpose: 
+// Purpose: This program initializes a MusicStore and LibraryModel
+//   from which to simulate an online music store and library for
+//   a user to interact with. This is the View Class.
 
 import model.LibraryModel;
 import model.MusicStore;
@@ -14,6 +16,7 @@ public class Access
 	// PRIVATE INSTANCE VARIABLES
 	private static MusicStore store;
 	private static LibraryModel library;
+	
 	
 	// Main
 	public static void main(String[] args)
@@ -35,25 +38,26 @@ public class Access
 	// Method
 	private static void run()
 	{
-		System.out.println("|--======================================--|");
-		System.out.println("\n");
-		System.out.println(" Hello User! Welcome to Lilian and Lucian's ");
-		System.out.println("            MUSIC LIBRARY MODEL!            ");
-		System.out.println("\n");
-		System.out.println("|--======================================--|");
-		System.out.println("\n");
-		System.out.println("Please type ''help'' to begin, or whenever you need help! ");
+		System.out.println("|--==============================================--|");
+		System.out.println("");
+		System.out.println("     Hello User! Welcome to Lilian and Lucian's     ");
+		System.out.println("                MUSIC LIBRARY MODEL!                ");
+		System.out.println("");
+		System.out.println("|--==============================================--|");
+		System.out.println("");
+		System.out.println(" 'help' gives you a list of commands, 'exit' exits! ");
 		
+		System.out.print(">: ");
 		Scanner scanner = new Scanner(System.in);
 		String response = scanner.nextLine();		
-		while (!response.equals("quit"))
+		while (!response.equals("exit"))
 		{
-			System.out.print(">: ");
 			String[] keywords = response.split(": ");
+			
 			if (response.contentEquals("help"))
 				help();
 
-			else if (keywords.length != 2)
+			else if (keywords.length > 3)
 				System.out.println("Invalid Command: Please type again");
 
 			else
@@ -63,9 +67,27 @@ public class Access
 				if (command.equals("add_S"))
 					library.addSong(option.split("/")[0], option.split("/")[1]);
 
+				else if (command.equals("rem_S"))
+					library.removeSong(option.split("/")[0], option.split("/")[1]);
+				
 				else if (command.equals("add_A"))
 					library.addAlbum(option.split("/")[0], option.split("/")[1]);
 
+				else if (command.equals("rem_A"))
+					library.removeAlbum(option.split("/")[0], option.split("/")[1]);
+				
+				else if (command.equals("add_F"))
+					library.addFavorite(option.split("/")[0], option.split("/")[1]);
+				
+				else if (command.equals("rate_S"))
+					library.rateSong(option.split("/")[0], option.split("/")[1], Integer.valueOf(option.split("/")[2]));
+				
+				else if (command.equals("play_S"))
+				{
+					System.out.println(library.playSong(option.split("/")[0], option.split("/")[1]));
+					System.out.println("♫♩ ♪♩ ♫");
+				}
+				
 				else if (command.equals("add_P"))
 				{
 					String[] newSong = option.split("/");
@@ -76,6 +98,11 @@ public class Access
 				{
 					String[] newSong = option.split("/");
 					library.removeFromPlaylist(newSong[0], newSong[1], newSong[2]);
+				}
+				
+				else if (command.equals("new"))
+				{
+					library.createPlaylist(option);
 				}
 
 				else if (command.equals("song_TS")) {
@@ -142,12 +169,6 @@ public class Access
 							System.out.println(album);
 					}
 
-					else if (option.equals("albums"))
-					{
-						for (String album : library.getAlbums())
-							System.out.println(album);
-					}
-
 					else if (option.equals("playlists"))
 					{
 						for (String playlist : library.getPlaylistNames())
@@ -157,6 +178,26 @@ public class Access
 					else if (option.equals("favorites"))
 					{
 						for (String goodSong : library.getFavorites())
+							System.out.println(goodSong);
+					}
+					
+					// TODO: NOT DONE
+					else if (option.equals("recent"))
+					{
+						for (String goodSong : library.getRecentlyPlayed())
+							System.out.println(goodSong);
+					}
+					
+					// TODO: NOT DONE
+					else if (option.equals("frequent"))
+					{
+						for (String goodSong : library.getFrequentlyPlayed())
+							System.out.println(goodSong);
+					}
+					
+					else if (option.equals("top_rated"))
+					{
+						for (String goodSong : library.getTopRated())
 							System.out.println(goodSong);
 					}
 					
@@ -172,20 +213,27 @@ public class Access
 				}
 			}
 
+			System.out.print(">: ");
 			response = scanner.nextLine();
 		}
 
+		System.out.println("|--==============================================--|");
+		System.out.println("");
+		System.out.println("          Exit recieved; closing program!           ");
+		System.out.println("                  Have a nice day!                  ");
+		System.out.println("");
+		System.out.println("|--==============================================--|");
 		scanner.close();
 	}
 	
 	
 	private static void help()
 	{
-		System.out.println("|--======================================--|");
-		System.out.println("\n");
+		System.out.println("|--==============================================--|");
+		System.out.println("");
 		System.out.println("Type 'help' at any time to return to this page.");
 		System.out.println("Type 'quit' at any time to exit the program.");
-		System.out.println("\n");
+		System.out.println("");
 		System.out.println("USABLE COMMANDS:");
 
 		/*
@@ -197,10 +245,30 @@ public class Access
 		System.out.println("• Add a SONG to the library");
 		System.out.println("    add_S: <song title>/<artist name>");
 		System.out.println("    Ex: add_S: My Same/Adele\n");
+		
+		System.out.println("• Remove a SONG from the library");
+		System.out.println("    rem_S: <song title>/<artist name>");
+		System.out.println("    Ex: rem_S: My Same/Adele\n");
 
 		System.out.println("• Add an ALBUM to the library");
 		System.out.println("    add_A: <album title>/<artist name>");
-		System.out.println("    Ex: add_A: 1/Adele9\n");
+		System.out.println("    Ex: add_A: 19/Adele\n");
+		
+		System.out.println("• Remove an ALBUM from the library");
+		System.out.println("    rem_A: <album title>/<artist name>");
+		System.out.println("    Ex: rem_A:  19/Adele\n");
+		
+		System.out.println("• Add a SONG to favorites");
+		System.out.println("    add_F: <song title>/<artist name>");
+		System.out.println("    Ex: add_F: Awake My Soul/Mumford & Sons\n");
+		
+		System.out.println("• Rate a SONG in the LIBRARY");
+		System.out.println("    rate_S: <song title>/<artist name>/int");
+		System.out.println("    Ex: rate_S: Little Lion Man/Mumford & Sons/5\n");
+		
+		System.out.println("• Play a SONG in the LIBRARY");
+		System.out.println("    play_S: <song title>/<artist name>/int");
+		System.out.println("    Ex: play_S: Little Lion Man/Mumford & Sons/5\n");
 
 		System.out.println("• Add a SONG to the PLAYLIST");
 		System.out.println("    add_P: <playlist name/<song title>/<artist name>");
@@ -231,44 +299,51 @@ public class Access
 		System.out.println("    Ex: song_AL: Adele\n");
 		
 		System.out.println("• Search for ALBUM by TITLE from the STORE");
-		System.out.println("    album_T: <album title>");
-		System.out.println("    Ex: album_T: Coat of Many Colors\n");
+		System.out.println("    album_TS: <album title>");
+		System.out.println("    Ex: album_TS: Coat of Many Colors\n");
 
 		System.out.println("• Search for ALBUM by TITLE from the LIBRARY");
-		System.out.println("    album_T: <album title>");
-		System.out.println("    Ex: album_T: Coat of Many Colors\n");
+		System.out.println("    album_TL: <album title>");
+		System.out.println("    Ex: album_TL: Coat of Many Colors\n");
 
 		System.out.println("• Search for ALBUMS by ARTIST from the STORE");
-		System.out.println("    album_A: <artist name>");
-		System.out.println("    Ex: album_A: Adele\n");
+		System.out.println("    album_AS: <artist name>");
+		System.out.println("    Ex: album_AS: Adele\n");
 
 		System.out.println("• Search for ALBUMS by ARTIST from the LIBRARY");
-		System.out.println("    album_A: <artist name>");
-		System.out.println("    Ex: album_A: Adele\n");
+		System.out.println("    album_AL: <artist name>");
+		System.out.println("    Ex: album_AL: Adele\n");
 
 		System.out.println("• Search for a PLAYLIST");
 		System.out.println("    playlist: <playlist name>");
-		System.out.println("    Ex: playlist: recent");
+		System.out.println("    Ex: playlist: recent\n");
 
 		System.out.println("• Get a list of song titles");
-		System.out.println("    get: songs");
+		System.out.println("    get: songs\n");
 
 		System.out.println("• Get a list of artists");
-		System.out.println("    get: artists");
+		System.out.println("    get: artists\n");
 
 		System.out.println("• Get a list of albums");
-		System.out.println("    get: albums");
+		System.out.println("    get: albums\n");
 
 		System.out.println("• Get a list of playlists");
-		System.out.println("    get: playlists");
+		System.out.println("    get: playlists\n");
 
 		System.out.println("• Get a list of favorite songs");
-		System.out.println("    get: favorites");
+		System.out.println("    get: favorites\n");
+		
+		System.out.println("• Get a list of Recently Played songs");
+		System.out.println("    get: recent\n");
+		
+		System.out.println("• Get a list of Frequently Played songs");
+		System.out.println("    get: frequent\n");
+		
+		System.out.println("• Get a list of Top Rated songs");
+		System.out.println("    get: top_rated\n");
 
 		System.out.println();
 
-
-
-		System.out.println("|--======================================--|");
+		System.out.println("|--==============================================--|");
 	}
 }
