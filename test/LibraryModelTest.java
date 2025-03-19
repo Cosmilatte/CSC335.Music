@@ -245,6 +245,9 @@ class LibraryModelTest
 	{
 		String[] artistsArr = lm.getArtists();
 		assertEquals(3, artistsArr.length);
+		
+		//for (String s : artistsArr)
+			//System.out.println(s);
 	}
 	
 	
@@ -253,6 +256,9 @@ class LibraryModelTest
 	{
 		String[] albumsArr = lm.getAlbums();
 		assertEquals(3, albumsArr.length);
+		
+		//for (String s : artistsArr)
+			//System.out.println(s);
 	}
 	
 	
@@ -261,6 +267,8 @@ class LibraryModelTest
 	{
 		String[] playlistsArr = lm.getPlaylistNames();
 		assertEquals(1, playlistsArr.length);
+		
+		assertTrue("Some songs I know".contentEquals(playlistsArr[0]));
 	}
 	
 	
