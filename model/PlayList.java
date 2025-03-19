@@ -44,11 +44,19 @@ class PlayList
 	}
 	
 	
+	/** @pre Use only when shuffling! */
+	ArrayList<Song> getSongsNONCOPY()
+	{
+		return songs;
+	}
+	
+	
 	// MISC. METHODS
 	/** @pre Input != null */
 	void addSong(Song song)
 	{
-		songs.add(0, song);
+		if (!songs.contains(song))
+			songs.add(0, song);
 	}
 	
 	

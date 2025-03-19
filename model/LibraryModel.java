@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class LibraryModel
 	}
 	
 	
-	// MISCELLANEOUS (RATING)
+	// MISCELLANEOUS
 	/** @pre Inputs != null, int >= 1, int <= 5 */
 	public void rateSong(String title, String artist, int r)
 	{
@@ -91,7 +92,25 @@ public class LibraryModel
 	}
 	
 	
-	// ADDERS
+	/** @pre Inputs != null */
+	public void shuffleSongs()
+	{
+		Collections.shuffle(songs);
+	}
+	
+	
+	/** @pre Inputs != null */
+	public void shufflePlaylist(String title, String artist)
+	{
+		for (PlayList playlist : playlists)
+		{
+			if (title.contentEquals(playlist.getName()))
+				Collections.shuffle(playlist.getSongsNONCOPY());
+		}
+	}
+	
+	
+	// ADDERS + REMOVERS
 	/** @pre Inputs != null */
 	public void addSong(String title, String artist)
 	{
@@ -106,6 +125,27 @@ public class LibraryModel
 						songs.add(song.songCpy());
 				}
 			}
+		}
+	}
+	
+	
+	/** @pre Inputs != null */
+	public void removeSong(String title, String artist)
+	{
+		// If the Song is in the Library and store, find and remove it
+		int save = 0;
+		Song curr = null;
+		if ( (isInLibrarySong(title, artist)) && isInStoreSong(title, artist) ) 
+		{
+			// Iterate over until you find the index of the Song you wish to remove
+			while (save != songs.size())
+			{
+				curr = songs.get(save);
+				if (title.contentEquals(curr.getTitle()) && artist.contentEquals(curr.getArtist()))
+					break;
+				save++;
+			}
+			songs.remove(save);
 		}
 	}
 
@@ -124,10 +164,46 @@ public class LibraryModel
 					for (Song song : album.getSongs())
 					{
 						if (!songs.contains(song))
-							songs.add(song.songCpy());
+							songs.add(song);
 					}
 				}
 			}
+		}
+	}
+	
+	
+	/** @pre Inputs != null */
+	public void removeAlbum(String title, String artist)
+	{
+		// If the Album is in the Library and store, find and remove it
+		int save = 0;
+		int saveS = 0;
+		Album curr = null;
+		Song first = null;
+		
+		if ( (isInLibraryAlbum(title, artist)) && isInStoreAlbum(title, artist) ) 
+		{
+			// Iterate until you find the index of the Album you want to remove
+			while (save != albums.size())
+			{
+				curr = albums.get(save);
+				if (title.contentEquals(curr.getTitle()) && artist.contentEquals(curr.getArtist()))
+					break;
+				save++;
+			}
+
+			// Now establish the first song of that Album - find where it is in Songs
+			first = albums.get(save).getSongs().get(0);
+			for (Song song : songs)
+			{
+				if (first.getTitle().contentEquals(song.getTitle()) && first.getArtist().contentEquals(song.getArtist()))
+					break;
+				saveS++;
+			}
+			// Then cut out all the songs from (first song) to (length of album's songs)
+			for (int i = saveS; i < albums.get(save).getSongs().size(); i++)
+				songs.remove(saveS);
+			albums.remove(save);
 		}
 	}
 	
