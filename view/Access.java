@@ -67,13 +67,13 @@ public class Access
 				if (command.equals("add_S"))
 					library.addSong(option.split("/")[0], option.split("/")[1]);
 
-				else if (command.equals("rem_S"))
+				else if (command.equals("rm_S"))
 					library.removeSong(option.split("/")[0], option.split("/")[1]);
 				
 				else if (command.equals("add_A"))
 					library.addAlbum(option.split("/")[0], option.split("/")[1]);
 
-				else if (command.equals("rem_A"))
+				else if (command.equals("rm_A"))
 					library.removeAlbum(option.split("/")[0], option.split("/")[1]);
 				
 				else if (command.equals("add_F"))
@@ -126,16 +126,18 @@ public class Access
 				}
 
 				else if (command.equals("album_TS")) {
-					System.out.println(store.albumByTitle(option).get(0));
+					for (String str : store.albumByTitle(option))
+						System.out.println(str);
 				}
 
 				else if (command.equals("album_TL")) {
-					System.out.println(library.albumByTitle(option).get(0));
+					for (String str : library.albumByTitle(option))
+						System.out.println(str);
 				}
 
 				else if (command.equals("album_AS")) {
-					for (String album : store.albumByArtist(option))
-						System.out.println(album);
+					for (String str : store.albumByArtist(option))
+						System.out.println(str);
 				}
 
 				else if (command.equals("album_AL")) {
@@ -247,16 +249,16 @@ public class Access
 		System.out.println("    Ex: add_S: My Same/Adele\n");
 		
 		System.out.println("• Remove a SONG from the library");
-		System.out.println("    rem_S: <song title>/<artist name>");
-		System.out.println("    Ex: rem_S: My Same/Adele\n");
+		System.out.println("    rm_S: <song title>/<artist name>");
+		System.out.println("    Ex: rm_S: My Same/Adele\n");
 
 		System.out.println("• Add an ALBUM to the library");
 		System.out.println("    add_A: <album title>/<artist name>");
 		System.out.println("    Ex: add_A: 19/Adele\n");
 		
 		System.out.println("• Remove an ALBUM from the library");
-		System.out.println("    rem_A: <album title>/<artist name>");
-		System.out.println("    Ex: rem_A:  19/Adele\n");
+		System.out.println("    rm_A: <album title>/<artist name>");
+		System.out.println("    Ex: rm_A: 19/Adele\n");
 		
 		System.out.println("• Add a SONG to favorites");
 		System.out.println("    add_F: <song title>/<artist name>");
@@ -342,7 +344,7 @@ public class Access
 		System.out.println("• Get a list of Top Rated songs");
 		System.out.println("    get: top_rated\n");
 
-		System.out.println();
+		System.out.println("");
 
 		System.out.println("|--==============================================--|");
 	}
