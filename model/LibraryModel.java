@@ -121,8 +121,29 @@ public class LibraryModel
 			{
 				for (Song song : album.getSongs())
 				{
-					if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+					// If the album doesn't yet exist, make the album
+					if ((title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+							&& !(isInLibraryAlbum(album.getTitle(), album.getArtist())))
+					{
+						Album albumCpy = new Album(album.getTitle(), album.getArtist(), album.getGenre(), 
+								album.getYear());
+						albumCpy.addSong(song.songCpy());
+						albums.add(albumCpy);
 						songs.add(song.songCpy());
+					}
+					// If the album DOES exist, make sure to add to that album
+					else if ((title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
+							&& (isInLibraryAlbum(album.getTitle(), album.getArtist())))
+					{
+						Song songCpy = song.songCpy();
+						songs.add(songCpy);
+						for (Album storeAlbum : albums)
+						{
+							if (song.getAlbum().contentEquals(storeAlbum.getTitle()) && 
+									song.getArtist().contentEquals(storeAlbum.getArtist()))
+								storeAlbum.addSong(songCpy);
+						}
+					}
 				}
 			}
 		}
@@ -165,6 +186,32 @@ public class LibraryModel
 					{
 						if (!songs.contains(song))
 							songs.add(song);
+					}
+				}
+			}
+		}
+		
+		// If the Album is in the Library and is in store, find and check if it needs filling
+		else if (isInLibraryAlbum(title, artist) && isInStoreAlbum(title, artist)) 
+		{
+			Album storeAlbum = null;
+			for (Album album : store.getAlbums())
+			{
+				if (title.contentEquals(album.getTitle()) && artist.contentEquals(album.getArtist()))
+					storeAlbum = album;
+			}
+			
+			for (Album album : albums)
+			{
+				if (title.contentEquals(album.getTitle()) && artist.contentEquals(album.getArtist()))
+				{
+					for (Song song : storeAlbum.getSongs())
+					{
+						if (!songs.contains(song))
+						{
+							songs.add(song);
+							album.addSong(song);
+						}
 					}
 				}
 			}
@@ -287,7 +334,9 @@ public class LibraryModel
 				albumsArr.add("Songs: ");
 				
 				for (Song song : album.getSongs())
+				{
 					albumsArr.add(song.getTitle());
+				}
 			}
 		}
 
