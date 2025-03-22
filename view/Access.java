@@ -9,6 +9,8 @@ package view;
 
 import model.LibraryModel;
 import model.MusicStore;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Access 
@@ -105,42 +107,69 @@ public class Access
 					library.createPlaylist(option);
 				}
 
-				else if (command.equals("song_TS")) {
+				else if (command.equals("song_TS"))
+				{
+					ArrayList<String> albumTitles = new ArrayList<String>();
 					for (String song : store.songsByTitle(option))
 						System.out.println(song);
 				}
 
-				else if (command.equals("song_TL")) {
+				else if (command.equals("song_TL"))
+				{
 					for (String song : library.songsByTitle(option))
 						System.out.println(song);
+					
+					System.out.println("Do you want the Album info? Type 'Y' or 'N': ");
+					System.out.print(">: ");
+					response = scanner.nextLine();
+					if (response.contentEquals("Y"))
+					{
+						for (String song : library.albumBySong(option, true))
+							System.out.println(song);
+					}
 				}
 
-				else if (command.equals("song_AS")) {
+				else if (command.equals("song_AS"))
+				{
 					for (String song : store.songsByArtist(option))
 						System.out.println(song);
 				}
 				
-				else if (command.equals("song_AL")) {
+				else if (command.equals("song_AL"))
+				{
 					for (String song : library.songsByArtist(option))
 						System.out.println(song);
+					
+					System.out.println("Do you want the Album info? Type 'Y' or 'N': ");
+					System.out.print(">: ");
+					response = scanner.nextLine();
+					if (response.contentEquals("Y"))
+					{
+						for (String song : library.albumBySong(option, false))
+							System.out.println(song);
+					}
 				}
 
-				else if (command.equals("album_TS")) {
+				else if (command.equals("album_TS"))
+				{
 					for (String str : store.albumByTitle(option))
 						System.out.println(str);
 				}
 
-				else if (command.equals("album_TL")) {
+				else if (command.equals("album_TL"))
+				{
 					for (String str : library.albumByTitle(option))
 						System.out.println(str);
 				}
 
-				else if (command.equals("album_AS")) {
+				else if (command.equals("album_AS"))
+				{
 					for (String str : store.albumByArtist(option))
 						System.out.println(str);
 				}
 
-				else if (command.equals("album_AL")) {
+				else if (command.equals("album_AL"))
+				{
 					for (String album : library.albumByArtist(option))
 						System.out.println(album);
 				}
@@ -183,7 +212,6 @@ public class Access
 							System.out.println(goodSong);
 					}
 					
-					// TODO: NOT DONE
 					else if (option.equals("recent"))
 					{
 						for (String goodSong : library.getRecentlyPlayed())
