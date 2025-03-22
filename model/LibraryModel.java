@@ -207,7 +207,7 @@ public class LibraryModel
 				{
 					for (Song song : storeAlbum.getSongs())
 					{
-						if (!songs.contains(song))
+						if (!isInLibrarySong(song.getTitle(), song.getArtist()))
 						{
 							songs.add(song);
 							album.addSong(song);
@@ -224,9 +224,7 @@ public class LibraryModel
 	{
 		// If the Album is in the Library and store, find and remove it
 		int save = 0;
-		int saveS = 0;
 		Album curr = null;
-		Song first = null;
 		
 		if ( (isInLibraryAlbum(title, artist)) && isInStoreAlbum(title, artist) ) 
 		{
@@ -239,17 +237,9 @@ public class LibraryModel
 				save++;
 			}
 
-			// Now establish the first song of that Album - find where it is in Songs
-			first = albums.get(save).getSongs().get(0);
-			for (Song song : songs)
-			{
-				if (first.getTitle().contentEquals(song.getTitle()) && first.getArtist().contentEquals(song.getArtist()))
-					break;
-				saveS++;
-			}
-			// Then cut out all the songs from (first song) to (length of album's songs)
-			for (int i = saveS; i < albums.get(save).getSongs().size(); i++)
-				songs.remove(saveS);
+			// Then cut out all the songs 
+			for (Song song : albums.get(save).getSongs())
+				removeSong(song.getTitle(), song.getArtist());
 			albums.remove(save);
 		}
 	}
@@ -317,6 +307,60 @@ public class LibraryModel
 		return songsArr;
 	}
 
+	
+	/** @pre Input != null */
+	public ArrayList<String> albumBySong(String str, boolean isTitle)
+	{
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> albumsArr = new ArrayList<String>();
+		ArrayList<String> curr = new ArrayList<String>();
+		
+		// If the string is the title of the Song
+		if (isTitle == true)
+		{
+			for (Song song : this.songs)
+			{
+				if (song.getTitle().equals(str))
+				{
+					// Add the album info
+					curr = store.albumByTitle(str);
+					albumsArr.addAll(curr);
+					
+					// Then, pull the album's title and artist from that Array
+					String[] arr = curr.get(0).split(" by ");
+					int stop = arr[1].indexOf(",");
+					// Is it in the Library? Check the lengths
+					if (curr.size()-2 != getSize(arr[0], arr[1].substring(0, stop)))
+						albumsArr.add("ALBUM CONTAINED IN LIBRARY: NO");
+					else
+						albumsArr.add("ALBUM CONTAINED IN LIBRARY: YES");
+				}
+			}
+		}
+		// Else if the string is the artist of the Song
+		else
+		{
+			// Add the album info
+			curr = store.albumByArtist(str);
+			albumsArr.addAll(curr);
+			
+			// Then, pull the album's title and artist from that Array
+			String[] arr = curr.get(0).split(" by ");
+			// Is it in the Library? Check the lengths
+			if (curr.size()-2 != getSize(arr[0], str))
+				albumsArr.add("ALBUM(S) CONTAINED IN LIBRARY: NO");
+			else
+				albumsArr.add("ALBUM(S) CONTAINED IN LIBRARY: YES");
+		}
+		
+		if (albumsArr.size() == 0)
+		{
+			albumsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return albumsArr;
+	}
+	
 	
 	/** @pre Input != null */
 	public ArrayList<String> albumByTitle(String title)
@@ -644,5 +688,16 @@ public class LibraryModel
 		}
 
 		return false;
+	}
+	
+	
+	private int getSize(String title, String artist)
+	{
+		for (Album album : albums)
+		{
+			if (title.equals(album.getTitle()) && artist.equals(album.getArtist()))
+				return album.getSongs().size();
+		}
+		return 0;
 	}
 }
