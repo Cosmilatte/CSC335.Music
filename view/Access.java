@@ -90,26 +90,29 @@ public class Access
 					System.out.println("♫♩ ♪♩ ♫");
 				}
 				
+				else if (command.equals("shuffle_S"))
+					library.shuffleSongs(option);
+				
+				else if (command.equals("new_P"))
+					library.createPlaylist(option);
+				
+				else if (command.equals("shuffle_P"))
+					library.shufflePlaylist(option);
+				
 				else if (command.equals("add_P"))
 				{
 					String[] newSong = option.split("/");
 					library.addToPlaylist(newSong[0], newSong[1], newSong[2]);
 				}
 
-				else if (command.equals("rm"))
+				else if (command.equals("rm_P"))
 				{
 					String[] newSong = option.split("/");
 					library.removeFromPlaylist(newSong[0], newSong[1], newSong[2]);
 				}
-				
-				else if (command.equals("new"))
-				{
-					library.createPlaylist(option);
-				}
 
 				else if (command.equals("song_TS"))
 				{
-					ArrayList<String> albumTitles = new ArrayList<String>();
 					for (String song : store.songsByTitle(option))
 						System.out.println(song);
 				}
@@ -148,6 +151,12 @@ public class Access
 						for (String song : library.albumBySong(option, false))
 							System.out.println(song);
 					}
+				}
+				
+				else if (command.equals("song_GL"))
+				{
+					for (String song : library.songsByGenre(option))
+						System.out.println(song);
 				}
 
 				else if (command.equals("album_TS"))
@@ -212,17 +221,19 @@ public class Access
 							System.out.println(goodSong);
 					}
 					
-					else if (option.equals("recent"))
+					else if (option.equals("recents"))
 					{
-						for (String goodSong : library.getRecentlyPlayed())
+						for (String goodSong : library.getRecents())
 							System.out.println(goodSong);
 					}
 					
-					// TODO: NOT DONE
-					else if (option.equals("frequent"))
+					else if (option.equals("frequents"))
 					{
-						for (String goodSong : library.getFrequentlyPlayed())
-							System.out.println(goodSong);
+						for (String goodSong : library.getFrequents())
+						{
+							if (goodSong != null)
+								System.out.println(goodSong);
+						}
 					}
 					
 					else if (option.equals("top_rated"))
@@ -299,18 +310,26 @@ public class Access
 		System.out.println("• Play a SONG in the LIBRARY");
 		System.out.println("    play_S: <song title>/<artist name>/int");
 		System.out.println("    Ex: play_S: Little Lion Man/Mumford & Sons/5\n");
+		
+		System.out.println("• Shuffle SONGs in the LIBRARY");
+		System.out.println("    shuffle_S: N/A");
+		System.out.println("    Ex: shuffle_S: N/A\n");
 
+		System.out.println("• Create a PLAYLIST");
+		System.out.println("    new_P: <playlist name>");
+		System.out.println("    Ex: new_P: driving\n");
+		
+		System.out.println("• Shuffle a PLAYLIST");
+		System.out.println("    shuffle_P: <playlist name>");
+		System.out.println("    Ex: shuffle_P: driving\n");
+		
 		System.out.println("• Add a SONG to the PLAYLIST");
-		System.out.println("    add_P: <playlist name/<song title>/<artist name>");
+		System.out.println("    add_P: <playlist name>/<song title>/<artist name>");
 		System.out.println("    Ex: add_P: Driving/My Same/Adele\n");
 
 		System.out.println("• Remove a SONG from the PLAYLIST");
-		System.out.println("    rm: <playlist name/<song title>/<artist name>");
-		System.out.println("    Ex: rm: Driving/My Same/Adele\n");
-
-		System.out.println("• Create a PLAYLIST");
-		System.out.println("    new: <playlist name>");
-		System.out.println("    Ex: new: driving\n");
+		System.out.println("    rm_P: <playlist name>/<song title>/<artist name>");
+		System.out.println("    Ex: rm_P: Driving/My Same/Adele\n");
 
 		System.out.println("• Search for SONGS by TITLE from the STORE");
 		System.out.println("    song_TS: <song title>");
@@ -327,6 +346,10 @@ public class Access
 		System.out.println("• Search for SONGS by ARTIST from the LIBRARY");
 		System.out.println("    song_AL: <artist name>");
 		System.out.println("    Ex: song_AL: Adele\n");
+		
+		System.out.println("• Search for SONGS by GENRE from the LIBRARY");
+		System.out.println("    song_GL: <artist name>");
+		System.out.println("    Ex: song_GL: Adele\n");
 		
 		System.out.println("• Search for ALBUM by TITLE from the STORE");
 		System.out.println("    album_TS: <album title>");
@@ -363,13 +386,13 @@ public class Access
 		System.out.println("• Get a list of favorite songs");
 		System.out.println("    get: favorites\n");
 		
-		System.out.println("• Get a list of Recently Played songs");
-		System.out.println("    get: recent\n");
+		System.out.println("• Get a list of recently played songs");
+		System.out.println("    get: recents\n");
 		
-		System.out.println("• Get a list of Frequently Played songs");
-		System.out.println("    get: frequent\n");
+		System.out.println("• Get a list of frequently played songs");
+		System.out.println("    get: frequents\n");
 		
-		System.out.println("• Get a list of Top Rated songs");
+		System.out.println("• Get a list of top rated songs");
 		System.out.println("    get: top_rated\n");
 
 		System.out.println("");
