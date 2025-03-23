@@ -19,6 +19,7 @@ public class LibraryModel
 	private ArrayList<Song> songs;
 	private ArrayList<Album> albums;
 	private ArrayList<PlayList> playlists;
+	private ArrayList<String> frequentsCount;
 	
 	
 	// CONSTRUCTOR
@@ -29,11 +30,12 @@ public class LibraryModel
 		songs = new ArrayList<>();
 		albums = new ArrayList<>();
 		playlists = new ArrayList<>();
+		frequentsCount = new ArrayList<>();
 		
 		createPlaylist("favorites");
-		createPlaylist("Recently Played");
-		createPlaylist("Frequently Played");
-		createPlaylist("Top Rated");
+		createPlaylist("recents");
+		createPlaylist("frequents");
+		createPlaylist("top_rated");
 	}
 	
 	
@@ -42,7 +44,7 @@ public class LibraryModel
 	public void rateSong(String title, String artist, int r)
 	{
 		PlayList favorites = getPlaylist("favorites");
-		PlayList topRated = getPlaylist("Top Rated");
+		PlayList topRated = getPlaylist("top_rated");
 		// If the Song is in the Library and store, find and rate it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
@@ -68,7 +70,12 @@ public class LibraryModel
 	/** @pre Inputs != null */
 	public String playSong(String title, String artist)
 	{
-		PlayList recentlyPlayed = getPlaylist("Recently Played");
+		PlayList recentlyPlayed = getPlaylist("recents");
+		boolean found = false;
+		int dashIndex = 0;
+		int currCount = 0;
+		int freqIndex = 0;
+		
 		// If the Song is in the Library and store, find and play it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
@@ -77,6 +84,25 @@ public class LibraryModel
 				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
 				{
 					song.addPlay();
+					
+					// Frequents
+					for (String string : frequentsCount)
+					{
+						// FORMAT: ### - title by artist
+						if (string.contains(title + " by " + artist))
+						{
+							dashIndex = string.indexOf(" - ");
+							currCount = Integer.valueOf(string.substring(0, dashIndex))+1;
+							frequentsCount.set(freqIndex, String.valueOf(currCount) + " - " 
+									+ title + " by " + artist);
+							found = true;
+						}
+						freqIndex++;
+					}
+					if (found == false)
+						frequentsCount.add("1" + " - " + title + " by " + artist);
+					
+					// Recents
 					if (recentlyPlayed.getSongs().size() < 10)
 						recentlyPlayed.addSong(song);
 					else
@@ -93,18 +119,18 @@ public class LibraryModel
 	
 	
 	/** @pre Inputs != null */
-	public void shuffleSongs()
+	public void shuffleSongs(String str)
 	{
 		Collections.shuffle(songs);
 	}
 	
 	
-	/** @pre Inputs != null */
-	public void shufflePlaylist(String title, String artist)
+	/** @pre Input != null */
+	public void shufflePlaylist(String name)
 	{
 		for (PlayList playlist : playlists)
 		{
-			if (title.contentEquals(playlist.getName()))
+			if (name.contentEquals(playlist.getName()))
 				Collections.shuffle(playlist.getSongsNONCOPY());
 		}
 	}
@@ -114,6 +140,8 @@ public class LibraryModel
 	/** @pre Inputs != null */
 	public void addSong(String title, String artist)
 	{
+		String genre = "GENRE ";
+		
 		// If the Song is not in the Library and is in store, find and add it
 		if ( (!isInLibrarySong(title, artist)) && isInStoreSong(title, artist) ) 
 		{
@@ -130,6 +158,11 @@ public class LibraryModel
 						albumCpy.addSong(song.songCpy());
 						albums.add(albumCpy);
 						songs.add(song.songCpy());
+						
+						// And add to the Genre playlist!
+						genre += album.getGenre();
+						addToPlaylist(genre, title, artist);
+						genre = "GENRE ";
 					}
 					// If the album DOES exist, make sure to add to that album
 					else if ((title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
@@ -141,7 +174,14 @@ public class LibraryModel
 						{
 							if (song.getAlbum().contentEquals(storeAlbum.getTitle()) && 
 									song.getArtist().contentEquals(storeAlbum.getArtist()))
+							{
 								storeAlbum.addSong(songCpy);
+								
+								// And add to the Genre playlist!
+								genre += album.getGenre();
+								addToPlaylist(genre, title, artist);
+								genre = "GENRE ";
+							}
 						}
 					}
 				}
@@ -174,6 +214,8 @@ public class LibraryModel
 	/** @pre Inputs != null */
 	public void addAlbum(String title, String artist)
 	{
+		String genre = "GENRE ";
+		
 		// If the Album is not in the Library and is in store, find and add it
 		if (!isInLibraryAlbum(title, artist) && isInStoreAlbum(title, artist)) 
 		{
@@ -185,7 +227,14 @@ public class LibraryModel
 					for (Song song : album.getSongs())
 					{
 						if (!songs.contains(song))
+						{
 							songs.add(song);
+							
+							// And add to the Genre playlist!
+							genre += album.getGenre();
+							addToPlaylist(genre, song.getTitle(), song.getArtist());
+							genre = "GENRE ";
+						}
 					}
 				}
 			}
@@ -211,6 +260,11 @@ public class LibraryModel
 						{
 							songs.add(song);
 							album.addSong(song);
+							
+							// And add to the Genre playlist!
+							genre += album.getGenre();
+							addToPlaylist(genre, song.getTitle(), song.getArtist());
+							genre = "GENRE ";
 						}
 					}
 				}
@@ -297,6 +351,33 @@ public class LibraryModel
 			if (song.getArtist().equals(artist))
 				songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
 						song.getAlbum());
+		}
+		
+		if (songsArr.size() == 0)
+		{
+			songsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return songsArr;
+	}
+	
+	
+	/** @pre Input != null */
+	public ArrayList<String> songsByGenre(String genre)
+	{
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
+		for (Album album : this.albums)
+		{
+			// Format: "Title by Artist in Album"
+			
+			if (album.getGenre().equals(genre))
+			{
+				for (Song song : album.getSongs())
+					songsArr.add(song.getTitle() + " by " + song.getArtist() + " in " +
+							song.getAlbum());
+			}
 		}
 		
 		if (songsArr.size() == 0)
@@ -495,7 +576,18 @@ public class LibraryModel
 		Set<String> playlistsArr = new HashSet<>();
 		
 		for (PlayList playlist : playlists)
-			playlistsArr.add(playlist.getName());
+		{
+			
+			if (playlist.getName().contains("GENRE "))
+			{
+				if (playlist.getSongs().size() >= 10)
+					playlistsArr.add(playlist.getName());
+			}
+			else
+			{
+				playlistsArr.add(playlist.getName());
+			}
+		}
 		String arr[] = new String[playlistsArr.size()];
 
 		return playlistsArr.toArray(arr);
@@ -518,10 +610,9 @@ public class LibraryModel
 	}
 	
 	
-	public String[] getRecentlyPlayed()
+	public String[] getRecents()
 	{
-		// TODO: NOT DONE
-		ArrayList<Song> recent = getPlaylist("Recently Played").getSongs();
+		ArrayList<Song> recent = getPlaylist("recents").getSongs();
 		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> recentsArr = new HashSet<>();
 		
@@ -535,26 +626,54 @@ public class LibraryModel
 	}
 	
 	
-	public String[] getFrequentlyPlayed()
+	private void updateFrequents()
 	{
-		// TODO: NOT DONE
-		ArrayList<Song> frequent = getPlaylist("Frequently Played").getSongs();
-		// Find the item(s), store into a no-duplicates Hash to be printed
-		Set<String> frequentsArr = new HashSet<>();
+		PlayList frequent = getPlaylist("frequents");
+		String curr = "";
+		int dashIndex = 0;
+		int byIndex = 0;
+		int i = 0;
 		
+		// First, clear all songs
+		frequent.clearSongs();
+		
+		// Now sort and add the first 10
+		Collections.sort(frequentsCount);
+		while ((i < 10) && (i < frequentsCount.size()))
+		{
+			curr = frequentsCount.get(i);
+			dashIndex = curr.indexOf(" - ");
+			byIndex = curr.indexOf(" by ");
+			addToPlaylist("frequents", curr.substring(dashIndex+3,byIndex),
+					curr.substring(byIndex+4));
+			i++;
+		}
+	}
+	
+	
+	public String[] getFrequents()
+	{
+		// First, update our frequents based on the play count
+		updateFrequents();
+		
+		ArrayList<Song> frequent = getPlaylist("frequents").getSongs();
+		String[] frequentsArr = new String[10];
+		int i = 0;
+		
+		// Now store those first 10 into an array for printing
 		for (Song song : frequent)
 		{
-			frequentsArr.add(song.getTitle());
+			frequentsArr[i] = song.getTitle();
+			i++;
 		}
-		String arr[] = new String[frequentsArr.size()];
 
-		return frequentsArr.toArray(arr);
+		return frequentsArr;
 	}
 	
 	
 	public String[] getTopRated()
 	{
-		ArrayList<Song> top = getPlaylist("Top Rated").getSongs();
+		ArrayList<Song> top = getPlaylist("top_rated").getSongs();
 		// Find the item(s), store into a no-duplicates Hash to be printed
 		Set<String> topsArr = new HashSet<>();
 		
@@ -598,10 +717,13 @@ public class LibraryModel
 			if (!isInLibraryPlaylist(pName))
 				createPlaylist(pName);
 			
-			for (Song s : songs)
+			for (Song song : songs)
 			{
-				if (title.equals(s.getTitle()) && artist.equals(s.getArtist()))
-					getPlaylist(pName).addSong(s);
+				if (title.equals(song.getTitle()) && artist.equals(song.getArtist()))
+				{
+					if (!(getPlaylist(pName).getSongsNONCOPY().contains(song)))
+						getPlaylist(pName).addSong(song);
+				}
 			}
 		}
 	}
