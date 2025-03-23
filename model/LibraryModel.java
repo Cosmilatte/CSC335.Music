@@ -302,14 +302,13 @@ public class LibraryModel
 	/** @pre Inputs != null */
 	public void addFavorite(String title, String artist)
 	{
-		ArrayList<Song> favorites = getPlaylist("favorites").getSongs();
 		// If the Song is in the Library and store, find and rate it
 		if ( isInLibrarySong(title, artist) && isInStoreSong(title, artist) ) 
 		{
 			for (Song song : songs)
 			{
 				if (title.contentEquals(song.getTitle()) && artist.contentEquals(song.getArtist()))
-					favorites.add(song);
+					getPlaylist("favorites").addSong(song);
 			}
 		}
 	}
@@ -404,7 +403,7 @@ public class LibraryModel
 				if (song.getTitle().equals(str))
 				{
 					// Add the album info
-					curr = store.albumByTitle(str);
+					curr = store.albumByTitle(song.getAlbum());
 					albumsArr.addAll(curr);
 					
 					// Then, pull the album's title and artist from that Array
@@ -419,7 +418,7 @@ public class LibraryModel
 			}
 		}
 		// Else if the string is the artist of the Song
-		else
+		else if (isTitle == false)
 		{
 			// Add the album info
 			curr = store.albumByArtist(str);
@@ -612,17 +611,19 @@ public class LibraryModel
 	
 	public String[] getRecents()
 	{
-		ArrayList<Song> recent = getPlaylist("recents").getSongs();
+		ArrayList<Song> recents = getPlaylist("recents").getSongs();
 		// Find the item(s), store into a no-duplicates Hash to be printed
-		Set<String> recentsArr = new HashSet<>();
+		String[] recentsArr = new String[10];
+		int i = 0;
 		
-		for (Song song : recent)
+		// Now store those first 10 into an array for printing
+		for (Song song : recents)
 		{
-			recentsArr.add(song.getTitle());
+			recentsArr[i] = song.getTitle();
+			i++;
 		}
-		String arr[] = new String[recentsArr.size()];
 
-		return recentsArr.toArray(arr);
+		return recentsArr;
 	}
 	
 	
