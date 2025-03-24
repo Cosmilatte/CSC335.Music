@@ -18,20 +18,11 @@ public class Access
 	private LibraryModel library;
 	public final static Scanner SCANNER = new Scanner(System.in);;
 	
-	// Main
-	// public static void main(String[] args)
-	// {
-	// 	Access runProgram = new Access();
-	// 	run();
-	// }
-	
-	
 	// Constructor
 	public Access()
 	{
 		this.store = new MusicStore();
 		this.library = new LibraryModel(store);
-		// run();
 	}
 	
 	
@@ -46,9 +37,7 @@ public class Access
 		System.out.println("|--==============================================--|");
 		System.out.println("");
 		System.out.println(" 'help' gives you a list of commands, 'exit' exits! ");
-		
 		System.out.print(">: ");
-		// Scanner scanner = new Scanner(System.in);
 		String response = SCANNER.nextLine();		
 		while (!response.equals("exit"))
 		{
@@ -345,10 +334,5 @@ public class Access
 		System.out.println();
 
 		System.out.println("|--==============================================--|");
-	}
-
-	public Access getAccess()
-	{
-		return this;
 	}
 }

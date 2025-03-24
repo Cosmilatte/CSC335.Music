@@ -2,7 +2,6 @@ package view;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
-// import java.util.Scanner;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.BufferedReader;
@@ -20,16 +19,15 @@ public class Users {
 	}
 
     private static HashMap<String, Access> libraries;
-    // private static Scanner scanner;
 
     public Users()
     {
-        // scanner = Access.scanner;
         libraries = new HashMap<String, Access>();
     }
 
     private static String hash(String username, String password, byte[] cryptography, boolean write) throws NoSuchAlgorithmException, IOException {
-        try {
+        try
+        {
             byte[] salt;
             if (write)
             {
@@ -39,25 +37,20 @@ public class Users {
             }
 
             else
-            {
                 salt = cryptography.clone();
-            }
 
             MessageDigest hashFunct = MessageDigest.getInstance("MD5");
             byte[] salted = new byte[2 + password.length()];
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 2; i++)
                 salted[i] = salt[i];
-            }
 
-            for (int i = 2; i < 2 + password.length(); i++) {
+            for (int i = 2; i < 2 + password.length(); i++)
                 salted[i] = password.getBytes()[i - 2];
-            }
 
             String saltMsg = "";
             byte[] digest = hashFunct.digest(salted);
-            for (byte b : digest) {
+            for (byte b : digest)
                 saltMsg += b + " ";
-            }
             
             saltMsg = saltMsg.trim();
             if (write)
@@ -66,7 +59,8 @@ public class Users {
             return saltMsg;
         }
         
-        catch (NoSuchAlgorithmException e) {
+        catch (NoSuchAlgorithmException e)
+        {
             throw new RuntimeException(e);
         }
     }
@@ -76,9 +70,7 @@ public class Users {
         fr.write(username + "\n");
         fr.write(password + "\n");
         for (byte b : salt)
-        {
             fr.write(b + " ");
-        }
 
         fr.write("\n");
         fr.close();
@@ -117,20 +109,14 @@ public class Users {
                             String[] saltLine = accountsReader.readLine().trim().split(" ");
                             byte[] salt = new byte[saltLine.length];
                             for (int i = 0; i < saltLine.length; i++)
-                            {
                                 salt[i] = Byte.parseByte(saltLine[i]);
-                            }
 
                             password = hash(line, password, salt, false);
                             if (username.equals(line) && password.equals(dataKey))
-                            {
                                 libraries.get(line).run();
-                            }
 
                             else
-                            {
                                 System.out.println("Warning: wrong username or password");
-                            }
 
                             break;
                         }
@@ -153,18 +139,13 @@ public class Users {
                 System.out.println("\n Enter your Password: ");
                 String password = Access.SCANNER.nextLine();
                 hash(username, password, null, true);
-                // scanner.close();
                 Access library = new Access();
-                // library.main(null);
-                // scanner = new Scanner(System.in);
                 library.run();
                 libraries.put(username, library);
             }
 
             else
-            {
                 System.out.println("Invalid Command: Please type again");
-            }
 
             System.out.println(" LOG IN: \n");
             System.out.println(" Type 'login' if you have an account.");
