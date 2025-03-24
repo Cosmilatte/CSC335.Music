@@ -72,8 +72,7 @@ public class Users {
     }
 
     private static void writeData(String username, String password, byte[] salt) throws IOException{
-        File file = new File("view/accounts.txt");
-        FileWriter fr = new FileWriter(file, true);
+        FileWriter fr = new FileWriter(new File("view/accounts.txt"), true);
         fr.write(username + "\n");
         fr.write(password + "\n");
         for (byte b : salt)
@@ -173,5 +172,8 @@ public class Users {
             System.out.println(" Don't have an account? Type 'create' to create one.");
             action = scanner.nextLine();
         }
+
+        FileWriter fr = new FileWriter(new File("view/accounts.txt"), false);
+        fr.close();
     }
 }
