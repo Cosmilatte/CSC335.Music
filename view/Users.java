@@ -2,7 +2,7 @@ package view;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Scanner;
+// import java.util.Scanner;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.io.BufferedReader;
@@ -16,15 +16,15 @@ public class Users {
 	{
 		new Users();
         run();
-        scanner.close();
+        Access.SCANNER.close();
 	}
 
     private static HashMap<String, Access> libraries;
-    private static Scanner scanner;
+    // private static Scanner scanner;
 
     public Users()
     {
-        scanner = Access.scanner;
+        // scanner = Access.scanner;
         libraries = new HashMap<String, Access>();
     }
 
@@ -96,15 +96,15 @@ public class Users {
         System.out.println(" Type 'login' if you have an account.");
         System.out.println(" Type 'close' to end this application.");
         System.out.println(" Don't have an account? Type 'create' to create one.");
-        String action = scanner.nextLine();
+        String action = Access.SCANNER.nextLine();
         while (!action.equals("close"))
         {
             if (action.equals("login"))
             {
                 System.out.println(" User Name: ");
-                String username = scanner.nextLine();
+                String username = Access.SCANNER.nextLine();
                 System.out.println(" Password: ");
-                String password = scanner.nextLine();
+                String password = Access.SCANNER.nextLine();
                 try
                 {
                     BufferedReader accountsReader = new BufferedReader(new FileReader("view/accounts.txt"));
@@ -149,9 +149,9 @@ public class Users {
             else if (action.equals("create"))
             {
                 System.out.println(" Enter your User Name: ");
-                String username = scanner.nextLine();
+                String username = Access.SCANNER.nextLine();
                 System.out.println("\n Enter your Password: ");
-                String password = scanner.nextLine();
+                String password = Access.SCANNER.nextLine();
                 hash(username, password, null, true);
                 // scanner.close();
                 Access library = new Access();
@@ -170,7 +170,7 @@ public class Users {
             System.out.println(" Type 'login' if you have an account.");
             System.out.println(" Type 'close' to end this application.");
             System.out.println(" Don't have an account? Type 'create' to create one.");
-            action = scanner.nextLine();
+            action = Access.SCANNER.nextLine();
         }
 
         FileWriter fr = new FileWriter(new File("view/accounts.txt"), false);

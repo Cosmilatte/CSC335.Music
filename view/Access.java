@@ -16,7 +16,7 @@ public class Access
 	// PRIVATE INSTANCE VARIABLES
 	private MusicStore store;
 	private LibraryModel library;
-	public final static Scanner scanner = new Scanner(System.in);;
+	public final static Scanner SCANNER = new Scanner(System.in);;
 	
 	// Main
 	// public static void main(String[] args)
@@ -49,7 +49,7 @@ public class Access
 		
 		System.out.print(">: ");
 		// Scanner scanner = new Scanner(System.in);
-		String response = scanner.nextLine();		
+		String response = SCANNER.nextLine();		
 		while (!response.equals("exit"))
 		{
 			String[] keywords = response.split(": ");
@@ -214,7 +214,7 @@ public class Access
 			}
 
 			System.out.print(">: ");
-			response = scanner.nextLine();
+			response = SCANNER.nextLine();
 		}
 
 		System.out.println("|--==============================================--|");
