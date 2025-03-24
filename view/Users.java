@@ -77,14 +77,13 @@ public class Users {
     }
 
     private static void run() throws NoSuchAlgorithmException, IOException {
-        System.out.println("|--==============================================--|");
-		System.out.println("");
+        System.out.println("|--==============================================--|\n");
 		System.out.println("     Hello User! Welcome to Lilian and Lucian's     ");
-		System.out.println("                MUSIC LIBRARY MODEL!                ");
-		System.out.println("");
-		System.out.println("|--==============================================--|");
-		System.out.println("");
-        System.out.println(" LOG IN: \n");
+		System.out.println("                MUSIC LIBRARY MODEL!                \n");
+		System.out.println("|--==============================================--|\n");
+        System.out.println(" --------");
+        System.out.println("| LOG IN |");
+        System.out.println(" --------");
         System.out.println(" Type 'login' if you have an account.");
         System.out.println(" Type 'close' to end this application.");
         System.out.println(" Don't have an account? Type 'create' to create one.");
@@ -93,9 +92,9 @@ public class Users {
         {
             if (action.equals("login"))
             {
-                System.out.println(" User Name: ");
+                System.out.print(" User Name: ");
                 String username = Access.SCANNER.nextLine();
-                System.out.println(" Password: ");
+                System.out.print(" Password: ");
                 String password = Access.SCANNER.nextLine();
                 try
                 {
@@ -116,7 +115,7 @@ public class Users {
                                 libraries.get(line).run();
 
                             else
-                                System.out.println("Warning: wrong username or password");
+                                System.out.println(" Warning: wrong username or password");
 
                             break;
                         }
@@ -134,10 +133,12 @@ public class Users {
 
             else if (action.equals("create"))
             {
-                System.out.println(" Enter your User Name: ");
+                System.out.println(" ** Warning: Don't type in any space **");
+                System.out.print("    Enter your User Name: ");
                 String username = Access.SCANNER.nextLine();
-                System.out.println("\n Enter your Password: ");
+                System.out.print("    Enter your Password: ");
                 String password = Access.SCANNER.nextLine();
+                System.out.println();
                 hash(username, password, null, true);
                 Access library = new Access();
                 library.run();
@@ -145,9 +146,11 @@ public class Users {
             }
 
             else
-                System.out.println("Invalid Command: Please type again");
+                System.out.println(" Invalid Command: Please type again");
 
-            System.out.println(" LOG IN: \n");
+            System.out.println("\n --------");
+            System.out.println("| LOG IN |");
+            System.out.println(" --------");
             System.out.println(" Type 'login' if you have an account.");
             System.out.println(" Type 'close' to end this application.");
             System.out.println(" Don't have an account? Type 'create' to create one.");

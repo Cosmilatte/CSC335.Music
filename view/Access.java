@@ -31,7 +31,7 @@ public class Access
 	{
 		System.out.println("|--==============================================--|");
 		System.out.println("");
-		System.out.println("     Hello User! Welcome to Lilian and Lucian's     ");
+		System.out.println("   Hello User! Welcome back to Lilian and Lucian's   ");
 		System.out.println("                MUSIC LIBRARY MODEL!                ");
 		System.out.println("");
 		System.out.println("|--==============================================--|");
