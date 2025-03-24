@@ -3,7 +3,8 @@ package view;
 // Users.java
 // Created 3 - 20 - 2025
 // Authors: Lilian and Lucian
-// Purpose: This program is the GUI serving mutiple users to get access to their own music library account.
+// Purpose: This program is the GUI serving mutiple users to get access to 
+// their own music library account.
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -30,7 +31,8 @@ public class Users {
         libraries = new HashMap<String, Access>();
     }
 
-    private static String hash(String username, String password, byte[] cryptography, boolean write) throws NoSuchAlgorithmException, IOException {
+    private static String hash(String username, String password, byte[] cryptography, 
+    		boolean write) throws NoSuchAlgorithmException, IOException {
         try
         {
             byte[] salt;
@@ -71,7 +73,8 @@ public class Users {
     }
 
     private static void writeData(String username, String password, byte[] salt) throws IOException{
-        FileWriter fr = new FileWriter(new File("view/accounts.txt"), true);
+    	String absolutePath = "C:\\Users\\akjon\\300sWorkspace\\CSC335la1\\src\\view\\accounts.txt";
+    	FileWriter fr = new FileWriter(new File(absolutePath), true);
         fr.write(username + "\n");
         fr.write(password + "\n");
         for (byte b : salt)
@@ -82,18 +85,24 @@ public class Users {
     }
 
     private static void run() throws NoSuchAlgorithmException, IOException {
-        System.out.println("|--==============================================--|\n");
+    	String absolutePath = "C:\\Users\\akjon\\300sWorkspace\\CSC335la1\\src\\view\\accounts.txt";
+    	
+    	System.out.println("|--==============================================--|");
+    	System.out.println("");
 		System.out.println("     Hello User! Welcome to Lilian and Lucian's     ");
-		System.out.println("                MUSIC LIBRARY MODEL!                \n");
-		System.out.println("|--==============================================--|\n");
-        System.out.println(" --------");
-        System.out.println("| LOG IN |");
-        System.out.println(" --------");
+		System.out.println("                MUSIC LIBRARY MODEL!                ");
+		System.out.println("               (this is the startup!)               ");
+		System.out.println("");
+		System.out.println("|--==============================================--|");
+        System.out.println("                     --------                        ");
+        System.out.println("                    | LOG IN |                       ");
+        System.out.println("                     --------                        ");
         System.out.println(" Type 'login' if you have an account.");
-        System.out.println(" Type 'close' to end this application.");
-        System.out.println(" Don't have an account? Type 'create' to create one.");
+        System.out.println(" Type 'exit' to end this application.");
+        System.out.println(" Don't have an account? Type 'create' to create one.\n");
+        System.out.print(">: ");
         String action = Access.SCANNER.nextLine();
-        while (!action.equals("close"))
+        while (!action.equals("exit"))
         {
             if (action.equals("login"))
             {
@@ -103,7 +112,7 @@ public class Users {
                 String password = Access.SCANNER.nextLine();
                 try
                 {
-                    BufferedReader accountsReader = new BufferedReader(new FileReader("view/accounts.txt"));
+                    BufferedReader accountsReader = new BufferedReader(new FileReader(absolutePath));
                     String line = accountsReader.readLine().trim();                    
                     while (line != null)
                     {
@@ -159,10 +168,11 @@ public class Users {
             System.out.println(" Type 'login' if you have an account.");
             System.out.println(" Type 'close' to end this application.");
             System.out.println(" Don't have an account? Type 'create' to create one.");
+            System.out.print(">: ");
             action = Access.SCANNER.nextLine();
         }
 
-        FileWriter fr = new FileWriter(new File("view/accounts.txt"), false);
+        FileWriter fr = new FileWriter(new File(absolutePath), false);
         fr.close();
     }
 }
