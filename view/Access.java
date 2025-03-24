@@ -4,8 +4,8 @@ package view;
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
 // Purpose: This program initializes a MusicStore and LibraryModel
-//   from which to simulate an online music store and library .
-//   This is the View Class.
+//   from which to simulate an online music store and library for
+//   a user to interact with. This is the View Class.
 
 import model.LibraryModel;
 import model.MusicStore;
@@ -18,7 +18,8 @@ public class Access
 	// PRIVATE INSTANCE VARIABLES
 	private MusicStore store;
 	private LibraryModel library;
-	public final static Scanner SCANNER = new Scanner(System.in);;
+	public final static Scanner SCANNER = new Scanner(System.in);
+	
 	
 	// Constructor
 	public Access()
@@ -33,12 +34,13 @@ public class Access
 	{
 		System.out.println("|--==============================================--|");
 		System.out.println("");
-		System.out.println("   Hello User! Welcome back to Lilian and Lucian's   ");
+		System.out.println("     Hello User! Welcome to Lilian and Lucian's     ");
 		System.out.println("                MUSIC LIBRARY MODEL!                ");
 		System.out.println("");
 		System.out.println("|--==============================================--|");
 		System.out.println("");
 		System.out.println(" 'help' gives you a list of commands, 'exit' exits! ");
+		
 		System.out.print(">: ");
 		String response = SCANNER.nextLine();		
 		while (!response.equals("exit"))
@@ -113,7 +115,7 @@ public class Access
 					
 					System.out.println("Do you want the Album info? Type 'Y' or 'N': ");
 					System.out.print(">: ");
-					response = scanner.nextLine();
+					response = SCANNER.nextLine();
 					if (response.contentEquals("Y"))
 					{
 						for (String song : library.albumBySong(option, true))
@@ -134,7 +136,7 @@ public class Access
 					
 					System.out.println("Do you want the Album info? Type 'Y' or 'N': ");
 					System.out.print(">: ");
-					response = scanner.nextLine();
+					response = SCANNER.nextLine();
 					if (response.contentEquals("Y"))
 					{
 						for (String song : library.albumBySong(option, false))
@@ -145,6 +147,13 @@ public class Access
 				else if (command.equals("song_GL"))
 				{
 					for (String song : library.songsByGenre(option))
+						System.out.println(song);
+				}
+				
+				
+				else if (command.equals("song_OL"))
+				{
+					for (String song : library.songsByOption(option))
 						System.out.println(song);
 				}
 
@@ -237,30 +246,6 @@ public class Access
 					}
 				}
 
-				else if (command.equals("sort"))
-				{
-					if (option.equals("titles"))
-					{
-						for (String song : library.sortByTitle())
-							System.out.println(song);
-					}
-
-					else if (option.equals("artists"))
-					{
-						for (String song : library.sortByArtist())
-							System.out.println(song);
-					}
-
-					else if (option.equals("ratings"))
-					{
-						for (String song : library.sortByRating())
-							System.out.println(song);
-					}
-
-					else
-						System.out.println("Invalid Command: Please type again");
-				}
-
 				else
 				{
 					System.out.println("Invalid Command: Please type again");
@@ -277,11 +262,10 @@ public class Access
 		System.out.println("                  Have a nice day!                  ");
 		System.out.println("");
 		System.out.println("|--==============================================--|");
-		// scanner.close();
 	}
 	
 	
-	private void help()
+	private static void help()
 	{
 		System.out.println("|--==============================================--|");
 		System.out.println("");
@@ -364,6 +348,10 @@ public class Access
 		System.out.println("    song_GL: <artist name>");
 		System.out.println("    Ex: song_GL: Adele\n");
 		
+		System.out.println("• Search for SONGS by OPTION from the LIBRARY");
+		System.out.println("    song_OL: <title OR artist OR rating>");
+		System.out.println("    Ex: song_OL: title\n");
+		
 		System.out.println("• Search for ALBUM by TITLE from the STORE");
 		System.out.println("    album_TS: <album title>");
 		System.out.println("    Ex: album_TS: Coat of Many Colors\n");
@@ -407,18 +395,9 @@ public class Access
 		
 		System.out.println("• Get a list of top rated songs");
 		System.out.println("    get: top_rated\n");
-    
-    System.out.println("• Sort the songs by Titles");
-		System.out.println("    sort: titles\n");
-
-		System.out.println("• Sort the songs by Artists");
-		System.out.println("    sort: artists\n");
-
-		System.out.println("• Sort the songs by Ratings");
-		System.out.println("    sort: ratings\n");
 
 		System.out.println("");
-    
+
 		System.out.println("|--==============================================--|");
 	}
 }
