@@ -14,15 +14,16 @@ import java.util.Scanner;
 public class Access 
 {
 	// PRIVATE INSTANCE VARIABLES
-	private static MusicStore store;
-	private static LibraryModel library;
-	
+	private MusicStore store;
+	private LibraryModel library;
+	public final static Scanner scanner = new Scanner(System.in);;
 	
 	// Main
-	public static void main(String[] args)
-	{
-		Access runProgram = new Access();
-	}
+	// public static void main(String[] args)
+	// {
+	// 	Access runProgram = new Access();
+	// 	run();
+	// }
 	
 	
 	// Constructor
@@ -30,13 +31,12 @@ public class Access
 	{
 		this.store = new MusicStore();
 		this.library = new LibraryModel(store);
-		
-		run();
+		// run();
 	}
 	
 	
 	// Method
-	private static void run()
+	public void run()
 	{
 		System.out.println("|--==============================================--|");
 		System.out.println("");
@@ -48,7 +48,7 @@ public class Access
 		System.out.println(" 'help' gives you a list of commands, 'exit' exits! ");
 		
 		System.out.print(">: ");
-		Scanner scanner = new Scanner(System.in);
+		// Scanner scanner = new Scanner(System.in);
 		String response = scanner.nextLine();		
 		while (!response.equals("exit"))
 		{
@@ -223,11 +223,11 @@ public class Access
 		System.out.println("                  Have a nice day!                  ");
 		System.out.println("");
 		System.out.println("|--==============================================--|");
-		scanner.close();
+		// scanner.close();
 	}
 	
 	
-	private static void help()
+	private void help()
 	{
 		System.out.println("|--==============================================--|");
 		System.out.println("");
@@ -345,5 +345,10 @@ public class Access
 		System.out.println();
 
 		System.out.println("|--==============================================--|");
+	}
+
+	public Access getAccess()
+	{
+		return this;
 	}
 }
