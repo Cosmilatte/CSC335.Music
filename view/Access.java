@@ -196,6 +196,30 @@ public class Access
 					}
 				}
 
+				else if (command.equals("sort"))
+				{
+					if (option.equals("titles"))
+					{
+						for (String song : library.sortByTitle())
+							System.out.println(song);
+					}
+
+					else if (option.equals("artists"))
+					{
+						for (String song : library.sortByArtist())
+							System.out.println(song);
+					}
+
+					else if (option.equals("ratings"))
+					{
+						for (String song : library.sortByRating())
+							System.out.println(song);
+					}
+
+					else
+						System.out.println("Invalid Command: Please type again");
+				}
+
 				else
 				{
 					System.out.println("Invalid Command: Please type again");
@@ -330,6 +354,15 @@ public class Access
 		
 		System.out.println("• Get a list of Top Rated songs");
 		System.out.println("    get: top_rated\n");
+
+		System.out.println("• Sort the songs by Titles");
+		System.out.println("    sort: titles\n");
+
+		System.out.println("• Sort the songs by Artists");
+		System.out.println("    sort: artists\n");
+
+		System.out.println("• Sort the songs by Ratings");
+		System.out.println("    sort: ratings\n");
 
 		System.out.println();
 
