@@ -386,6 +386,62 @@ public class LibraryModel
 		
 		return songsArr;
 	}
+	
+	
+	/** @pre Input != null */
+	public ArrayList<String> songsByOption(String option)
+	{
+		// Find the item(s), store into a String array to be printed
+		ArrayList<String> songsArr = new ArrayList<String>();
+		
+		// First, check what option it is
+		if (option.contentEquals("title"))
+		{
+			// Then, iterate alphabetically through the lowercase ASCII
+			for (int i = 97; i <= 122; i++)
+			{
+				// Finally, iterate over the list of songs
+				for (Song song : songs)
+				{
+					if ((int)(song.getTitle().toLowerCase().charAt(0)) == i)
+						songsArr.add(song.getTitle());
+				}
+			}
+		}
+		else if (option.contentEquals("artist"))
+		{
+			for (int i = 97; i <= 122; i++)
+			{
+				for (Song song : songs)
+				{
+					if ((int)(song.getArtist().toLowerCase().charAt(0)) == i)
+						songsArr.add(song.getTitle());
+				}
+			}
+		}
+		else if (option.contentEquals("rating"))
+		{
+			for (int i = 0; i <= 5; i++)
+			{
+				for (Song song : songs)
+				{
+					if (song.getRating() == i)
+						songsArr.add(song.getTitle());
+				}
+			}
+		}
+		else
+		{
+			songsArr.add("INCORRECT INPUT.");
+		}
+		
+		if (songsArr.size() == 0)
+		{
+			songsArr.add("ITEM NOT FOUND.");
+		}
+		
+		return songsArr;
+	}
 
 	
 	/** @pre Input != null */
@@ -689,6 +745,7 @@ public class LibraryModel
 	
 	
 	// PLAYLIST METHODS
+	/** @pre Input != null */
 	private PlayList getPlaylist(String name)
 	{
 		for (PlayList playlist : playlists)
@@ -748,120 +805,6 @@ public class LibraryModel
 		}
 	}
 
-	/** @pre Inputs != null */
-	public ArrayList<String> sortByTitle()
-	{
-		ArrayList<Song> songList = new ArrayList<>();
-		ArrayList<String> songTitles = new ArrayList<>();
-		
-		// No song added
-		if (songs.size() == 0)
-			return songTitles;
-
-		songList.add(songs.get(0));
-		if (songs.size() > 1)
-		{
-			if (songs.get(1).getTitle().compareTo(songs.get(0).getTitle()) > 0)
-				songList.add(songs.get(1));
-
-			else
-				songList.add(0, songs.get(1));
-		}
-
-		for (int i = 2; i < songs.size(); i++)
-		{
-			int j = 0;
-			while (songs.get(i).getTitle().compareTo(songList.get(j).getTitle()) > 0 && j < i)
-			{
-				j++;
-
-				// Prevent out of range
-				if (j == songList.size())
-					break;
-			}
-
-			songList.add(j, songs.get(i));
-		}
-
-		for (Song song : songList)
-			songTitles.add(song.getTitle() + " / " + song.getArtist() + " / " + song.getRating());
-
-		return songTitles;
-	}
-
-	/** @pre Inputs != null */
-	public ArrayList<String> sortByArtist()
-	{
-		ArrayList<Song> songList = new ArrayList<>();
-		ArrayList<String> songTitles = new ArrayList<>();
-		if (songs.size() == 0)
-			return songTitles;
-
-		songList.add(songs.get(0));
-		if (songs.size() > 1)
-		{
-			if (songs.get(1).getArtist().compareTo(songs.get(0).getArtist()) > 0)
-				songList.add(songs.get(1));
-
-			else
-				songList.add(0, songs.get(1));
-		}
-
-		for (int i = 2; i < songs.size(); i++)
-		{
-			int j = 0;
-			while (songs.get(i).getArtist().compareTo(songList.get(j).getArtist()) > 0 && j < i)
-			{
-				j++;
-				if (j == songList.size())
-					break;
-			}
-
-			songList.add(j, songs.get(i));
-		}
-
-		for (Song song : songList)
-			songTitles.add(song.getTitle() + " / " + song.getArtist() + " / " + song.getRating());
-
-		return songTitles;
-	}
-
-	/** @pre Inputs != null */
-	public ArrayList<String> sortByRating()
-	{
-		ArrayList<Song> songList = new ArrayList<>();
-		ArrayList<String> songTitles = new ArrayList<>();
-		if (songs.size() == 0)
-			return songTitles;
-
-		songList.add(songs.get(0));
-		if (songs.size() > 1)
-		{
-			if (songs.get(1).getRating()> songs.get(0).getRating())
-				songList.add(songs.get(1));
-
-			else
-				songList.add(0, songs.get(1));
-		}
-
-		for (int i = 2; i < songs.size(); i++)
-		{
-			int j = 0;
-			while (songs.get(i).getRating() > songList.get(j).getRating() && j < i)
-			{
-				j++;
-				if (j == songList.size())
-					break;
-			}
-
-			songList.add(j, songs.get(i));
-		}
-
-		for (Song song : songList)
-			songTitles.add(song.getTitle() + " / " + song.getArtist() + " / " + song.getRating());
-
-		return songTitles;
-	}
 
 	// HELPERS
 	private boolean isInLibrarySong(String title, String artist)
