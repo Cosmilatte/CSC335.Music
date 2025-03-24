@@ -532,6 +532,68 @@ public class LibraryModel
 		}
 	}
 
+	/** @pre Inputs != null */
+	public ArrayList<String> sortByTitle()
+	{
+		ArrayList<Song> songList = new ArrayList<>();
+		ArrayList<String> songTitles = new ArrayList<>();
+		songList.add(songs.get(0));
+		for (int i = 1; i < songs.size(); i++)
+		{
+			int j = 0;
+			while (songs.get(i).getTitle().compareTo(songList.get(j).getTitle()) > 0 && j < i)
+				j++;
+
+			songList.add(j, songs.get(i));
+		}
+
+		for (Song song : songList)
+			songTitles.add(song.getTitle() + "/" + song.getArtist() + "/" + song.getRating());
+
+		return songTitles;
+	}
+
+	/** @pre Inputs != null */
+	public ArrayList<String> sortByArtist()
+	{
+		ArrayList<Song> songList = new ArrayList<>();
+		ArrayList<String> songTitles = new ArrayList<>();
+		songList.add(songs.get(0));
+		for (int i = 1; i < songs.size(); i++)
+		{
+			int j = 0;
+			while (songs.get(i).getArtist().compareTo(songList.get(j).getArtist()) > 0 && j < i)
+				j++;
+
+			songList.add(j, songs.get(i));
+		}
+
+		for (Song song : songList)
+			songTitles.add(song.getTitle() + "/" + song.getArtist() + "/" + song.getRating());
+
+		return songTitles;
+	}
+
+	/** @pre Inputs != null */
+	public ArrayList<String> sortByRating()
+	{
+		ArrayList<Song> songList = new ArrayList<>();
+		ArrayList<String> songTitles = new ArrayList<>();
+		songList.add(songs.get(0));
+		for (int i = 1; i < songs.size(); i++)
+		{
+			int j = 0;
+			while (songs.get(i).getRating() > songList.get(j).getRating() && j < i)
+				j++;
+
+			songList.add(j, songs.get(i));
+		}
+
+		for (Song song : songList)
+			songTitles.add(song.getTitle() + "/" + song.getArtist() + "/" + song.getRating());
+
+		return songTitles;
+	}
 
 	// HELPERS
 	private boolean isInLibrarySong(String title, String artist)
@@ -597,5 +659,3 @@ public class LibraryModel
 		return false;
 	}
 }
-
-// Right Branch
