@@ -18,14 +18,6 @@ class LibraryModelTest
 	private MusicStore ms;
 	
 	
-	// MAIN
-	public void main()
-	{
-		@SuppressWarnings("unused")
-		LibraryModelTest tester = new LibraryModelTest();
-	}
-	
-	
 	// CONSTRUCTOR
 	public LibraryModelTest()
 	{
@@ -52,9 +44,20 @@ class LibraryModelTest
 		// Rating + favorite
 		lm.rateSong("Rise to the Sun", "Alabama Shakes", 5);
 		lm.rateSong("Cold Shoulder", "Adele", 5);
-		lm.rateSong("Rumor has it", "Adele", 3);
+		lm.rateSong("Rumour Has It", "Adele", 4);
 		lm.rateSong("Give a Man a Home", "Ben Harper", 5);
 		lm.addFavorite("Burn One Down", "Ben Harper");
+		
+		// Plays
+		lm.playSong("Don't You Remember", "Adele");
+		lm.playSong("Don't You Remember", "Adele");
+		lm.playSong("Don't You Remember", "Adele");
+		lm.playSong("One and Only", "Adele");
+		lm.playSong("Rolling in the Deep", "Adele");
+		lm.playSong("Rolling in the Deep", "Adele");
+		lm.playSong("Rolling in the Deep", "Adele");
+		lm.playSong("Rolling in the Deep", "Adele");
+		lm.playSong("Rolling in the Deep", "Adele");
 	}
 	
 	
@@ -75,6 +78,18 @@ class LibraryModelTest
 	void testSongsByTitleEMPTY()
 	{
 		ArrayList<String> songsArr = lm.songsByTitle("Reciever of Wreck");
+		
+		assertTrue(songsArr.size() == 1);
+		assertTrue(songsArr.get(0).contentEquals("ITEM NOT FOUND."));
+	}
+	
+	
+	@Test
+	void testSongsByTitleRM()
+	{
+		lm.addSong("I Found You", "Alabama Shakes");
+		lm.removeSong("I Found You", "Alabama Shakes");
+		ArrayList<String> songsArr = lm.songsByTitle("I Found You");
 		
 		assertTrue(songsArr.size() == 1);
 		assertTrue(songsArr.get(0).contentEquals("ITEM NOT FOUND."));
@@ -128,6 +143,22 @@ class LibraryModelTest
 	
 	
 	@Test
+	void testSongsByGenre()
+	{
+		lm.addSong("City Of Angels", "Ozomatli");
+		lm.addSong("Magnolia Soul", "Ozomatli");
+		lm.addSong("La Temperatura", "Ozomatli");
+		ArrayList<String> songsArr = lm.songsByGenre("Rock");
+		
+		assertEquals(3, songsArr.size());
+		
+		assertTrue(songsArr.get(0).contentEquals("City Of Angels by Ozomatli in Don't Mess With the Dragon"));
+		assertTrue(songsArr.get(1).contentEquals("Magnolia Soul by Ozomatli in Don't Mess With the Dragon"));
+		assertTrue(songsArr.get(2).contentEquals("La Temperatura by Ozomatli in Don't Mess With the Dragon"));
+	}
+	
+	
+	@Test
 	void testAlbumByTitle()
 	{
 		ArrayList<String> albumsArr = lm.albumByTitle("Fight for Your Mind");
@@ -155,6 +186,31 @@ class LibraryModelTest
 	void testAlbumByTitleEMPTY()
 	{
 		ArrayList<String> albumsArr = lm.albumByTitle("The Raven Locks");
+		
+		assertTrue(albumsArr.size() == 1);
+		assertTrue(albumsArr.get(0).contentEquals("ITEM NOT FOUND."));
+	}
+	
+	
+	@Test
+	void testAlbumByTitlePARTIAL()
+	{
+		// This is to test adding a song + album not causing duplicates
+		lm.addSong("I Gave You All", "Mumford & Sons");
+		lm.addAlbum("Sigh No More", "Mumford & Sons");
+		ArrayList<String> albumsArr = lm.albumByTitle("Sigh No More");
+		
+		// 14 = Album info + "Songs: " + song list (12 songs)
+		assertEquals(14, albumsArr.size());
+	}
+	
+	
+	@Test
+	void testAlbumByTitleRM()
+	{
+		lm.addAlbum("Sigh No More", "Mumford & Sons");
+		lm.removeAlbum("Sigh No More", "Mumford & Sons");
+		ArrayList<String> albumsArr = lm.albumByTitle("Sigh No More");
 		
 		assertTrue(albumsArr.size() == 1);
 		assertTrue(albumsArr.get(0).contentEquals("ITEM NOT FOUND."));
@@ -210,15 +266,44 @@ class LibraryModelTest
 	
 	
 	@Test
+	void testAlbumBySongTITLE()
+	{
+		ArrayList<String> songsArr = lm.albumBySong("Set Fire to the Rain", true);
+		
+		assertTrue(songsArr.size() == 15);
+	}
+	
+
+	@Test
+	void testAlbumBySongARTIST()
+	{
+		ArrayList<String> songsArr = lm.albumBySong("Alabama Shakes", false);
+		
+		assertEquals(15, songsArr.size());
+	}
+	
+	
+	@Test
+	void testAlbumBySongEMPTY()
+	{
+		ArrayList<String> songsArr = lm.albumBySong("Louis Armstrong", false);
+		
+		assertEquals(2, songsArr.size());
+		assertTrue(songsArr.get(0).contentEquals("ITEM NOT FOUND."));
+		assertTrue(songsArr.get(1).contentEquals("ALBUM(S) CONTAINED IN LIBRARY: NO"));
+	}
+	
+	
+	@Test
 	void testPlaylistByTitle()
 	{
 		ArrayList<String> playlistArr = lm.playlistByTitle("Some songs I know");
 		assertEquals(4, playlistArr.size());
 		
 		assertTrue(playlistArr.get(0).contentEquals("Playlist: Some songs I know"));
-		assertTrue(playlistArr.get(1).contentEquals("Rise to the Sun by Alabama Shakes"));
+		assertTrue(playlistArr.get(3).contentEquals("Rise to the Sun by Alabama Shakes"));
 		assertTrue(playlistArr.get(2).contentEquals("Chasing Pavements by Adele"));
-		assertTrue(playlistArr.get(3).contentEquals("Set Fire to the Rain by Adele"));
+		assertTrue(playlistArr.get(1).contentEquals("Set Fire to the Rain by Adele"));
 	}
 	
 	
@@ -229,6 +314,31 @@ class LibraryModelTest
 		assertEquals(1, playlistArr.size());
 		
 		assertTrue(playlistArr.get(0).contentEquals("ITEM NOT FOUND."));
+	}
+	
+	
+	@Test
+	void testPlaylistByTitleSHUFFLE()
+	{
+		lm.shufflePlaylist("Some songs I know");
+		ArrayList<String> playlistArr = lm.playlistByTitle("Some songs I know");
+		assertEquals(4, playlistArr.size());
+		
+		boolean isSame = true;
+		
+		assertTrue(playlistArr.get(0).contentEquals("Playlist: Some songs I know"));
+		
+		// Due to the randomness of shuffling;
+		// Check if every index is as it was in testPlaylistByTitle()
+		// We know the shuffling works if any one of them isn't where they're supposed to be
+		if (!playlistArr.get(3).contentEquals("Rise to the Sun by Alabama Shakes"))
+			isSame = false;
+		if (!playlistArr.get(2).contentEquals("Chasing Pavements by Adele"))
+			isSame = false;
+		if (!playlistArr.get(1).contentEquals("Set Fire to the Rain by Adele"))
+			isSame = false;
+		
+		assertFalse(isSame);
 	}
 	
 	
@@ -255,10 +365,7 @@ class LibraryModelTest
 	void testGetAlbums()
 	{
 		String[] albumsArr = lm.getAlbums();
-		assertEquals(3, albumsArr.length);
-		
-		//for (String s : artistsArr)
-			//System.out.println(s);
+		assertEquals(4, albumsArr.length);
 	}
 	
 	
@@ -266,9 +373,9 @@ class LibraryModelTest
 	void testGetPlaylistNames()
 	{
 		String[] playlistsArr = lm.getPlaylistNames();
-		assertEquals(1, playlistsArr.length);
 		
-		assertTrue("Some songs I know".contentEquals(playlistsArr[0]));
+		// Will be 7 due to: favorites, top_rated, frequents, recents, 2 GENREs, made playlist
+		assertEquals(7, playlistsArr.length);
 	}
 	
 	
@@ -277,5 +384,51 @@ class LibraryModelTest
 	{
 		String[] favoritesArr = lm.getFavorites();
 		assertEquals(4, favoritesArr.length);
+	}
+	
+	
+	@Test
+	void testGetRecents()
+	{
+		int count = 0;
+		String[] recentsArr = lm.getRecents();
+		
+		for (String song : recentsArr)
+		{
+			if (song != null)
+				count++;
+		}
+		
+		assertEquals(3, count);
+		assertTrue(recentsArr[0].contentEquals("Rolling in the Deep"));
+		assertTrue(recentsArr[1].contentEquals("One and Only"));
+		assertTrue(recentsArr[2].contentEquals("Don't You Remember"));
+	}
+	
+	
+	@Test
+	void testGetFrequents()
+	{
+		int count = 0;
+		String[] frequentsArr = lm.getFrequents();
+		
+		for (String song : frequentsArr)
+		{
+			if (song != null)
+				count++;
+		}
+		
+		assertEquals(3, count);
+		assertTrue(frequentsArr[0].contentEquals("Rolling in the Deep"));
+		assertTrue(frequentsArr[1].contentEquals("Don't You Remember"));
+		assertTrue(frequentsArr[2].contentEquals("One and Only"));
+	}
+	
+	
+	@Test
+	void testGetTopRated()
+	{
+		String[] topratedarr = lm.getTopRated();
+		assertEquals(4, topratedarr.length);
 	}
 }

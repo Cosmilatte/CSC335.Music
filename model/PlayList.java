@@ -44,10 +44,17 @@ class PlayList
 	}
 	
 	
-	/** @pre Use only when shuffling! */
+	/** @pre Use only internally! */
 	ArrayList<Song> getSongsNONCOPY()
 	{
 		return songs;
+	}
+	
+	
+	/** @pre Use only internally! */
+	void clearSongs()
+	{
+		songs.clear();
 	}
 	
 	
