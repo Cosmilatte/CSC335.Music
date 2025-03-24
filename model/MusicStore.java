@@ -173,7 +173,8 @@ public class MusicStore
 	private void readAlbums() throws IOException
 	{
 		try {
-			String absolutePath = "C:\\Users\\akjon\\300sWorkspace\\CSC335la1\\src\\albums\\";
+			// String absolutePath = "C:\\Users\\akjon\\300sWorkspace\\CSC335la1\\src\\albums\\";
+			String absolutePath = "albums/";
 			BufferedReader titlesReader = new BufferedReader(new FileReader(absolutePath + "albums.txt"));
 			String title_artist = titlesReader.readLine();
 			
