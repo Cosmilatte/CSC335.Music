@@ -4,8 +4,8 @@ package view;
 // Created 2 - 15 - 2025
 // Authors: Lilian and Lucian
 // Purpose: This program initializes a MusicStore and LibraryModel
-//   from which to simulate an online music store and library for
-//   a user to interact with. This is the View Class.
+//   from which to simulate an online music store and library .
+//   This is the View Class.
 
 import model.LibraryModel;
 import model.MusicStore;

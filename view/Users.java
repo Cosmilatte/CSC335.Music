@@ -1,5 +1,10 @@
 package view;
 
+// Users.java
+// Created 3 - 20 - 2025
+// Authors: Lilian and Lucian
+// Purpose: This program is the GUI serving mutiple users to get access to their own music library account.
+
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.security.MessageDigest;

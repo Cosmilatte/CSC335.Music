@@ -537,18 +537,38 @@ public class LibraryModel
 	{
 		ArrayList<Song> songList = new ArrayList<>();
 		ArrayList<String> songTitles = new ArrayList<>();
+		
+		// No song added
+		if (songs.size() == 0)
+			return songTitles;
+
 		songList.add(songs.get(0));
-		for (int i = 1; i < songs.size(); i++)
+		if (songs.size() > 1)
+		{
+			if (songs.get(1).getTitle().compareTo(songs.get(0).getTitle()) > 0)
+				songList.add(songs.get(1));
+
+			else
+				songList.add(0, songs.get(1));
+		}
+
+		for (int i = 2; i < songs.size(); i++)
 		{
 			int j = 0;
 			while (songs.get(i).getTitle().compareTo(songList.get(j).getTitle()) > 0 && j < i)
+			{
 				j++;
+
+				// Prevent out of range
+				if (j == songList.size())
+					break;
+			}
 
 			songList.add(j, songs.get(i));
 		}
 
 		for (Song song : songList)
-			songTitles.add(song.getTitle() + "/" + song.getArtist() + "/" + song.getRating());
+			songTitles.add(song.getTitle() + " / " + song.getArtist() + " / " + song.getRating());
 
 		return songTitles;
 	}
@@ -558,18 +578,34 @@ public class LibraryModel
 	{
 		ArrayList<Song> songList = new ArrayList<>();
 		ArrayList<String> songTitles = new ArrayList<>();
+		if (songs.size() == 0)
+			return songTitles;
+
 		songList.add(songs.get(0));
-		for (int i = 1; i < songs.size(); i++)
+		if (songs.size() > 1)
+		{
+			if (songs.get(1).getArtist().compareTo(songs.get(0).getArtist()) > 0)
+				songList.add(songs.get(1));
+
+			else
+				songList.add(0, songs.get(1));
+		}
+
+		for (int i = 2; i < songs.size(); i++)
 		{
 			int j = 0;
 			while (songs.get(i).getArtist().compareTo(songList.get(j).getArtist()) > 0 && j < i)
+			{
 				j++;
+				if (j == songList.size())
+					break;
+			}
 
 			songList.add(j, songs.get(i));
 		}
 
 		for (Song song : songList)
-			songTitles.add(song.getTitle() + "/" + song.getArtist() + "/" + song.getRating());
+			songTitles.add(song.getTitle() + " / " + song.getArtist() + " / " + song.getRating());
 
 		return songTitles;
 	}
@@ -579,18 +615,34 @@ public class LibraryModel
 	{
 		ArrayList<Song> songList = new ArrayList<>();
 		ArrayList<String> songTitles = new ArrayList<>();
+		if (songs.size() == 0)
+			return songTitles;
+
 		songList.add(songs.get(0));
-		for (int i = 1; i < songs.size(); i++)
+		if (songs.size() > 1)
+		{
+			if (songs.get(1).getRating()> songs.get(0).getRating())
+				songList.add(songs.get(1));
+
+			else
+				songList.add(0, songs.get(1));
+		}
+
+		for (int i = 2; i < songs.size(); i++)
 		{
 			int j = 0;
 			while (songs.get(i).getRating() > songList.get(j).getRating() && j < i)
+			{
 				j++;
+				if (j == songList.size())
+					break;
+			}
 
 			songList.add(j, songs.get(i));
 		}
 
 		for (Song song : songList)
-			songTitles.add(song.getTitle() + "/" + song.getArtist() + "/" + song.getRating());
+			songTitles.add(song.getTitle() + " / " + song.getArtist() + " / " + song.getRating());
 
 		return songTitles;
 	}
